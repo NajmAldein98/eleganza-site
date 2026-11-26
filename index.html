@@ -370,7 +370,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 @keyframes lstamp{0%{opacity:0;transform:scale(2.4) rotate(-30deg)}60%{opacity:1;transform:scale(.9) rotate(4deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
 @keyframes lring{from{opacity:1;transform:scale(.6)}to{opacity:0;transform:scale(1.5)}}
 .lbot{display:flex;justify-content:space-between;align-items:center;font-size:clamp(11px,1.5vw,13px);color:var(--mut);position:relative;z-index:1}
-.lbadge{position:absolute;z-index:3;top:-14px;inset-inline-start:-10px;background:var(--g);color:#111;font-weight:700;font-size:15px;padding:8px 16px;border-radius:999px;box-shadow:0 10px 30px #0008;opacity:0;transform:translateY(10px) scale(.8);transition:.5s cubic-bezier(.2,1.4,.4,1)}
+.lbadge{position:absolute;z-index:3;top:-16px;left:50%;margin-left:-60px;width:120px;text-align:center;background:var(--g);color:#111;font-weight:700;font-size:15px;padding:8px 16px;border-radius:999px;box-shadow:0 10px 30px #0008;opacity:0;transform:translateY(10px) scale(.8);transition:.5s cubic-bezier(.2,1.4,.4,1)}
 .lbadge.show{opacity:1;transform:none}
 .lwin{position:absolute;inset:0;z-index:4;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(circle,#2a2208f5 0%,#0b0a08f7 75%);opacity:0;pointer-events:none;transition:opacity .5s}
 .lwin.show{opacity:1}
@@ -442,9 +442,9 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
       <h2 class="rv" data-t="lyH">كل ثوب… ختم. وعاشر ختم هديتك.</h2>
       <p class="lead rv" data-t="lyL">بطاقة إلكترونية تنحفظ في جوالك، تجمع فيها أختامك مع كل ثوب تفصّله عندنا.</p>
       <ol class="steps rv">
-        <li><b>١</b><span data-t="ly1">سجّل بطاقتك باسمك أو كمجهول، وبرمز سري لك</span></li>
-        <li><b>٥</b><span data-t="ly2">الختم الخامس: خصم ٥٠٪ على ثوبك السادس</span></li>
-        <li><b>١٠</b><span data-t="ly3">الختم العاشر: ثوبك الحادي عشر مجاناً</span></li>
+        <li><b data-n="1">١</b><span data-t="ly1">سجّل بطاقتك باسمك أو كمجهول، وبرمز سري لك</span></li>
+        <li><b data-n="5">٥</b><span data-t="ly2">الختم الخامس: خصم ٥٠٪ على ثوبك السادس</span></li>
+        <li><b data-n="10">١٠</b><span data-t="ly3">الختم العاشر: ثوبك الحادي عشر مجاناً</span></li>
       </ol>
       <div class="ctas rv"><a class="btn p" href="card/" data-t="lyB">احصل على بطاقتك الآن</a><a class="btn s" href="card/" data-t="lyB2">افتح بطاقتي</a></div>
     </div>
@@ -1036,7 +1036,7 @@ $("reset").addEventListener("click",()=>{CD={...DEF};fillForm();$("msg").textCon
   const num=n=>document.documentElement.lang==="en"?String(n):String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
   const slots=[];
   for(let i=0;i<10;i++){const d=document.createElement("div");d.className="lslot"+(i===4||i===9?" sp":"");d.innerHTML='<b class="lab"></b><span class="ink">'+crown+'</span>';box.appendChild(d);slots.push(d)}
-  function labels(){slots.forEach((d,i)=>{d.querySelector(".lab").textContent=i===4?"٥٠٪":i===9?(document.documentElement.lang==="en"?"FREE":"مجاناً"):num(i+1)})}
+  function labels(){document.querySelectorAll("#loyalty [data-n]").forEach(b=>b.textContent=num(b.dataset.n));slots.forEach((d,i)=>{d.querySelector(".lab").textContent=i===4?"٥٠٪":i===9?(document.documentElement.lang==="en"?"FREE":"مجاناً"):num(i+1)})}
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   let n=0,timer=null,running=false,parts=[],raf=null;
   function set(k){n=k;cnt.textContent=num(k)+" / "+num(10);slots.forEach((d,i)=>d.classList.toggle("on",i<k))}
