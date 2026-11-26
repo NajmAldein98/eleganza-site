@@ -15,52 +15,52 @@
 <body>
 <div class="wrap">
   <header class="card">
-    <div class="brand"><div class="word"><span>El</span>eganza</div><svg width="32" height="24" viewBox="0 0 34 24" aria-hidden="true"><path d="M3 20 L1 6 L10 13 L17 2 L24 13 L33 6 L31 20 Z" fill="#F2C200"/></svg></div>
-    <div class="sub">لوحة المالك · الأختام</div>
+    <div class="brand"><div class="word"><span>El</span>eganza</div><div class="right"><button class="langb" id="langBtn" type="button">English</button><svg width="32" height="24" viewBox="0 0 34 24" aria-hidden="true"><path d="M3 20 L1 6 L10 13 L17 2 L24 13 L33 6 L31 20 Z" fill="#F2C200"/></svg></div></div>
+    <div class="sub" data-i="ownerSub"></div>
   </header>
 
   <section id="vLogin" class="view">
-    <div><label for="lCode">رمز المالك</label><input id="lCode" type="password" inputmode="numeric" maxlength="7" autocomplete="current-password" dir="ltr"></div>
+    <div><label for="lCode" data-i="ownerCode"></label><input id="lCode" type="password" inputmode="numeric" maxlength="7" autocomplete="current-password" dir="ltr"></div>
     <div class="err" id="lErr" role="alert"></div>
-    <button class="btn" id="lBtn">دخول</button>
+    <button class="btn" id="lBtn" data-i="login"></button>
   </section>
 
   <section id="vHome" class="view hidden">
     <button class="btn gold" id="scanBtn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-5px;margin-left:6px"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg>
-      صوّر بطاقة العميل وأضف ختم
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-5px;margin-inline-end:6px"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg>
+      <span data-i="scan"></span>
     </button>
     <div id="scanBox" class="hidden" style="display:flex;flex-direction:column;gap:10px">
       <video id="video" playsinline muted></video>
       <canvas id="canvas" class="hidden"></canvas>
-      <button class="btn ghost" id="stopScan">إيقاف الكاميرا</button>
+      <button class="btn ghost" id="stopScan" data-i="stopCam"></button>
     </div>
     <div class="err" id="hErr" role="alert"></div>
 
     <div id="result" class="hidden view">
       <div class="ok" id="rMsg" role="status"></div>
       <div class="row">
-        <div><div class="lbl">البطاقة</div><div class="name" id="rLabel"></div><div class="lbl" dir="ltr" style="text-align:right" id="rPhone"></div></div>
-        <div style="text-align:left"><div class="lbl">الأختام</div><div class="count" id="rCount"></div></div>
+        <div><div class="lbl" data-i="card"></div><div class="name" id="rLabel"></div><div class="lbl" dir="ltr" id="rPhone"></div></div>
+        <div><div class="lbl" data-i="stamps"></div><div class="count" id="rCount"></div></div>
       </div>
       <div class="grid" id="rGrid"></div>
       <div id="rBanners"></div>
       <div class="actions">
-        <button class="btn sm" id="aStamp">إضافة ختم</button>
-        <button class="btn sm ghost" id="aUndo">تراجع عن آخر ختم</button>
-        <button class="btn sm gold hidden" id="aDisc">استخدم خصم ٥٠٪</button>
-        <button class="btn sm gold hidden" id="aFree">سلّم الثوب المجاني</button>
+        <button class="btn sm" id="aStamp" data-i="addStamp"></button>
+        <button class="btn sm ghost" id="aUndo" data-i="undo"></button>
+        <button class="btn sm gold hidden" id="aDisc" data-i="useDisc"></button>
+        <button class="btn sm gold hidden" id="aFree" data-i="giveFree"></button>
       </div>
-      <details class="hist"><summary>نسي العميل رمزه؟</summary>
-        <div style="display:flex;gap:8px;margin-top:8px"><input id="newCode" inputmode="numeric" maxlength="7" dir="ltr" placeholder="رمز جديد ٧ أرقام" aria-label="رمز جديد"><button class="btn sm" id="aReset" style="width:auto">حفظ</button></div>
+      <details class="hist"><summary data-i="forgot"></summary>
+        <div style="display:flex;gap:8px;margin-top:8px"><input id="newCode" inputmode="numeric" maxlength="7" dir="ltr" data-ip="newCode" data-ia="newCode"><button class="btn sm" id="aReset" style="width:auto" data-i="save"></button></div>
       </details>
-      <details class="hist"><summary>سجل البطاقة</summary><div id="rHist"></div></details>
+      <details class="hist"><summary data-i="history"></summary><div id="rHist"></div></details>
     </div>
 
-    <h2>كل البطايق</h2>
-    <input id="search" placeholder="ابحث بالاسم أو الجوال" aria-label="ابحث بالاسم أو الجوال">
+    <h2 data-i="allCards"></h2>
+    <input id="search" data-ip="searchOwner" data-ia="searchOwner">
     <div id="list" class="list"></div>
-    <button class="btn ghost" id="logout">خروج</button>
+    <button class="btn ghost" id="logout" data-i="logout"></button>
   </section>
 </div>
 
@@ -68,7 +68,7 @@
 <script>
 const OKEY = 'eleganza_owner_token';
 let otoken = null; try { otoken = localStorage.getItem(OKEY); } catch (e) {}
-let cards = [], current = null, stream = null, scanning = false;
+let cards = [], current = null, stream = null, scanning = false, lastMsg = null;
 const $ = id => document.getElementById(id);
 const show = (id, on) => $(id).classList.toggle('hidden', !on);
 
@@ -87,56 +87,57 @@ async function home() {
   catch (e) { if (e.status === 401) return logout(); $('hErr').textContent = e.message; }
 }
 function renderList() {
-  const q = digits($('search').value) || $('search').value.trim();
+  const raw = $('search').value.trim(), q = digits(raw) || raw.toLowerCase();
   const box = $('list'); box.innerHTML = '';
-  const rows = cards.filter(c => !q || c.label.includes(q) || c.phone.includes(q));
-  if (!rows.length) { box.innerHTML = '<div class="hint">ما فيه بطايق</div>'; return; }
+  const rows = cards.filter(c => !q || c.label.includes(raw) || label(c.label).toLowerCase().includes(q) || c.phone.includes(q));
+  if (!rows.length) { box.innerHTML = '<div class="hint">' + tr('noCardsOwner') + '</div>'; return; }
   rows.forEach(c => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'item';
-    b.innerHTML = '<span>' + esc(c.label) + '<br><small dir="ltr">' + esc(c.phone) + '</small></span><small>' + AR(c.stamps) + ' / ' + AR(c.total) + (c.freePending ? ' · مجاني' : c.discountPending ? ' · خصم' : '') + '</small>';
-    b.onclick = () => { showResult(c, ''); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    b.innerHTML = '<span>' + esc(label(c.label)) + '<br><small dir="ltr">' + esc(c.phone) + '</small></span><small>' + AR(c.stamps) + ' / ' + AR(c.total) + (c.freePending ? tr('tagFree') : c.discountPending ? tr('tagDisc') : '') + '</small>';
+    b.onclick = () => { showResult(c, null); window.scrollTo({ top: 0, behavior: 'smooth' }); };
     box.appendChild(b);
   });
 }
 $('search').oninput = renderList;
 
+// msg: [key, ...args] عشان تتترجم عند تغيير اللغة
 function showResult(c, msg) {
-  current = c; show('result', true);
-  $('rMsg').textContent = msg;
-  $('rLabel').textContent = c.label; $('rPhone').textContent = c.phone;
+  current = c; lastMsg = msg; show('result', true);
+  $('rMsg').textContent = msg ? tr(...msg) : '';
+  $('rLabel').textContent = label(c.label); $('rPhone').textContent = c.phone;
   $('rCount').textContent = AR(c.stamps) + ' / ' + AR(c.total);
   renderStamps($('rGrid'), c, !!msg); renderBanners($('rBanners'), c);
   show('aDisc', c.discountPending); show('aFree', c.freePending > 0);
-  $('rHist').innerHTML = c.history.map(h => '• ' + fmtDate(h.t) + ' — ' + esc(h.what)).join('<br>');
+  $('rHist').innerHTML = histHTML(c);
   const i = cards.findIndex(x => x.id === c.id); if (i >= 0) { cards[i] = c; renderList(); }
 }
-async function act(action, extra, okMsg) {
+async function act(action, extra, msgFn) {
   $('hErr').textContent = '';
-  try { const r = await api(action, Object.assign({ token: otoken, id: current.id }, extra)); showResult(r.card, okMsg(r.card)); if (navigator.vibrate) navigator.vibrate(80); return true; }
+  try { const r = await api(action, Object.assign({ token: otoken, id: current.id }, extra)); showResult(r.card, msgFn(r.card)); if (navigator.vibrate) navigator.vibrate(80); return true; }
   catch (e) {
-    if (e.data && e.data.double) { if (confirm('هذي البطاقة انختمت قبل لحظات. تبي تضيف ختم ثاني؟')) return act(action, { force: true }, okMsg); return false; }
+    if (e.data && e.data.double) { if (confirm(tr('confirmDouble'))) return act(action, { force: true }, msgFn); return false; }
     if (e.status === 401) { logout(); return false; }
     $('hErr').textContent = e.message; return false;
   }
 }
-const stampMsg = c => c.stamps === 0 && c.freePending ? 'اكتملت البطاقة! العميل يستحق ثوب مجاني، وتجددت بطاقته' : 'تمت إضافة ختم ✓  (' + AR(c.stamps) + ' من ' + AR(c.total) + ')';
+const stampMsg = c => c.stamps === 0 && c.freePending ? ['msgFull'] : ['msgStamp', AR(c.stamps), AR(c.total)];
 $('aStamp').onclick = () => act('stamp', {}, stampMsg);
-$('aUndo').onclick = () => act('undo', {}, () => 'تم التراجع عن آخر ختم');
-$('aDisc').onclick = () => act('redeem', { kind: 'discount' }, () => 'تم تسجيل استخدام الخصم');
-$('aFree').onclick = () => act('redeem', { kind: 'free' }, () => 'تم تسليم الثوب المجاني');
+$('aUndo').onclick = () => act('undo', {}, () => ['msgUndo']);
+$('aDisc').onclick = () => act('redeem', { kind: 'discount' }, () => ['msgDisc']);
+$('aFree').onclick = () => act('redeem', { kind: 'free' }, () => ['msgFree']);
 $('aReset').onclick = async () => {
   const code = digits($('newCode').value);
-  if (!/^\d{7}$/.test(code)) { $('hErr').textContent = 'الرمز لازم يكون ٧ أرقام'; return; }
-  try { await api('reset-code', { token: otoken, id: current.id, code }); $('rMsg').textContent = 'تم تغيير رمز البطاقة، بلّغ العميل فيه'; $('newCode').value = ''; }
+  if (!/^\d{7}$/.test(code)) { $('hErr').textContent = tr('errCode7'); return; }
+  try { await api('reset-code', { token: otoken, id: current.id, code }); lastMsg = ['msgReset']; $('rMsg').textContent = tr('msgReset'); $('newCode').value = ''; }
   catch (e) { $('hErr').textContent = e.message; }
 };
 
 // ===== الكاميرا =====
 async function startScan() {
   $('hErr').textContent = '';
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $('hErr').textContent = 'المتصفح ما يدعم الكاميرا، افتح الصفحة في Safari أو Chrome'; return; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $('hErr').textContent = tr('noCam'); return; }
   try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false }); }
-  catch (e) { $('hErr').textContent = 'ما قدرت أفتح الكاميرا، اسمح للموقع باستخدامها من إعدادات المتصفح'; return; }
+  catch (e) { $('hErr').textContent = tr('camDenied'); return; }
   const v = $('video'); v.srcObject = stream; await v.play();
   show('scanBox', true); show('scanBtn', false); scanning = true;
   const detector = ('BarcodeDetector' in window) ? new BarcodeDetector({ formats: ['qr_code'] }) : null;
@@ -159,10 +160,10 @@ function stopScan() { scanning = false; if (stream) stream.getTracks().forEach(t
 async function onCode(text) {
   stopScan();
   const m = /^ELGZ:([A-Z0-9]{6,12})$/.exec(text.trim());
-  if (!m) { $('hErr').textContent = 'هذا الرمز مو بطاقة إليجانزا'; return; }
+  if (!m) { $('hErr').textContent = tr('notOurs'); return; }
   current = { id: m[1] };
   const ok = await act('stamp', {}, stampMsg);
-  if (!ok && !current.label) { try { const r = await api('owner-card', { token: otoken, id: m[1] }); showResult(r.card, ''); } catch (e) {} }
+  if (!ok && !current.label) { try { const r = await api('owner-card', { token: otoken, id: m[1] }); showResult(r.card, null); } catch (e) {} }
 }
 $('scanBtn').onclick = startScan;
 $('stopScan').onclick = stopScan;
@@ -170,6 +171,7 @@ $('stopScan').onclick = stopScan;
 function logout() { stopScan(); try { localStorage.removeItem(OKEY); } catch (e) {} otoken = null; show('vHome', false); show('vLogin', true); show('result', false); }
 $('logout').onclick = logout;
 
+initLang('ownerTitle', () => { renderList(); if (current && current.label) showResult(current, lastMsg); });
 if (otoken) home();
 </script>
 </body>

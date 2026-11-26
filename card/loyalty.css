@@ -48,3 +48,6 @@ input[type=radio]{width:auto;height:auto;margin:0 0 0 6px}
 .ok{color:#2E6B2E;font-size:15px;font-weight:700}
 video{width:100%;border-radius:16px;background:#000;aspect-ratio:1/1;object-fit:cover}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.langb{position:relative;z-index:2;align-self:flex-start;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--gold);background:transparent;color:var(--ivory);font-family:inherit;font-size:14px;cursor:pointer}
+.brand .right{display:flex;align-items:center;gap:12px}
+html[dir=ltr] .item{text-align:left}
