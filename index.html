@@ -1212,5 +1212,24 @@ $("reset").addEventListener("click",()=>{CD={...DEF};fillForm();$("msg").textCon
 })();
 </script>
 <script src="extras.js" defer></script>
+<!-- مساعد إليغانزا (MyChatBot) -->
+<link rel="stylesheet" href="https://storage.googleapis.com/mychatbot-widget-assets/v1/style.css" />
+<script src="https://storage.googleapis.com/mychatbot-widget-assets/v1/widget.js"></script>
+<div id="my-chat-widget-container"></div>
+<script>
+try{
+  MyChatBot.mount('#my-chat-widget-container', {
+    account_id: "b411ac70-fa03-4014-aeea-07339ff525cf",
+    widget_id: "eleganza-site",
+    api_url: 'https://api.mychatbot.app',
+    assistant_name: "مساعد إليغانزا",
+    color: "#B69A66",
+    lang: 'en',
+    ad_widget_title: 'مساعد إليغانزا',
+    ad_widget_description: 'نرد عليك الحين، على مدار الساعة',
+    ad_popup_messages: ['محتار في القماش أو المدة؟ اسألني 👑']
+  });
+}catch(e){}
+</script>
 </body>
 </html>
