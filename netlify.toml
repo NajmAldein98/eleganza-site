@@ -1,2 +1,6 @@
 [build]
-  publish = "."
+  command = "rm -rf dist && mkdir dist && cp -r index.html img card .nojekyll dist/"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"

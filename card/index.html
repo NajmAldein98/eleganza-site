@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>بطاقة ولاء إليجانزا</title>
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="بطاقة إليجانزا">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="loyalty.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="card">
+    <div class="brand"><div class="word"><span>El</span>eganza</div><svg width="32" height="24" viewBox="0 0 34 24" aria-hidden="true"><path d="M3 20 L1 6 L10 13 L17 2 L24 13 L33 6 L31 20 Z" fill="#F2C200"/></svg></div>
+    <div class="sub">بطاقة الولاء · للخياطة</div>
+  </header>
+
+  <!-- قائمة كل البطايق -->
+  <section id="vList" class="view">
+    <button class="btn" id="newBtn">سوّ بطاقتك الجديدة</button>
+    <p class="rules">كل ثوب تفصّله = ختم. <b>الختم الخامس</b>: خصم ٥٠٪ على ثوبك السادس. <b>الختم العاشر</b>: ثوبك الحادي عشر مجاناً، والبطاقة تتجدد من نفسها.</p>
+    <h2>البطايق</h2>
+    <input id="search" placeholder="ابحث عن اسمك" aria-label="ابحث عن اسمك">
+    <div id="list" class="list"><div class="hint">جاري التحميل…</div></div>
+  </section>
+
+  <!-- تسجيل -->
+  <section id="vNew" class="view hidden">
+    <h2>بطاقة جديدة</h2>
+    <fieldset class="seg"><legend>كيف يظهر اسمك في قائمة البطايق؟</legend>
+      <label><input type="radio" name="vis" value="name" checked> باسمي</label>
+      <label><input type="radio" name="vis" value="anon"> مجهول</label>
+    </fieldset>
+    <div id="nameBox"><label for="rName">الاسم</label><input id="rName" autocomplete="name" maxlength="40"></div>
+    <div><label for="rPhone">رقم الجوال (ما يشوفه أحد غيرك)</label><input id="rPhone" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="05xxxxxxxx"></div>
+    <div><label for="rCode">اختر رمز سري من ٧ أرقام</label><input id="rCode" type="password" inputmode="numeric" maxlength="7" autocomplete="new-password" dir="ltr"></div>
+    <div><label for="rCode2">أعد كتابة الرمز</label><input id="rCode2" type="password" inputmode="numeric" maxlength="7" autocomplete="new-password" dir="ltr"></div>
+    <div class="err" id="rErr" role="alert"></div>
+    <button class="btn" id="rBtn">إنشاء بطاقتي</button>
+    <button class="btn ghost" data-back>رجوع</button>
+  </section>
+
+  <!-- فتح بطاقة برمز -->
+  <section id="vOpen" class="view hidden">
+    <h2 id="oLabel"></h2>
+    <div><label for="oCode">رمز البطاقة (٧ أرقام)</label><input id="oCode" type="password" inputmode="numeric" maxlength="7" autocomplete="current-password" dir="ltr"></div>
+    <div class="err" id="oErr" role="alert"></div>
+    <button class="btn" id="oBtn">فتح البطاقة</button>
+    <button class="btn ghost" data-back>رجوع</button>
+  </section>
+
+  <!-- البطاقة -->
+  <section id="vCard" class="view hidden">
+    <div class="row">
+      <div><div class="lbl">صاحب البطاقة</div><div class="name" id="cLabel"></div><div class="lbl" dir="ltr" style="text-align:right" id="cPhone"></div></div>
+      <div style="text-align:left"><div class="lbl">الأختام</div><div class="count" id="cCount"></div></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div id="banners"></div>
+    <div class="qrbox"><div id="qr" aria-label="رمز البطاقة للموظف" role="img"></div><div class="hint">اعرض هذا الرمز للموظف عند استلام ثوبك عشان ينختم</div></div>
+    <button class="btn ghost" id="refresh">تحديث</button>
+    <details class="hist"><summary>سجل البطاقة</summary><div id="hist"></div></details>
+    <p class="hint" id="installHint">احفظ البطاقة في جوالك:<br>آيفون: زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»<br>أندرويد: القائمة ⋮ ثم «إضافة إلى الشاشة الرئيسية»</p>
+    <button class="btn ghost" id="logout">قفل البطاقة في هذا الجوال</button>
+  </section>
+</div>
+
+<script src="loyalty-common.js"></script>
+<script>
+const TOKEN_KEY = 'eleganza_card_token';
+let token = null; try { token = localStorage.getItem(TOKEN_KEY); } catch (e) {}
+let allCards = [], openId = null;
+
+function go(v) { document.querySelectorAll('.view').forEach(x => x.classList.toggle('hidden', x.id !== v)); window.scrollTo(0, 0); }
+document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => { go('vList'); loadList(); });
+
+async function loadList() {
+  const box = document.getElementById('list');
+  try { allCards = (await api('list')).cards; renderList(); }
+  catch (e) { box.innerHTML = '<div class="err">' + esc(e.message) + '</div>'; }
+}
+function renderList() {
+  const q = document.getElementById('search').value.trim();
+  const box = document.getElementById('list'); box.innerHTML = '';
+  const rows = allCards.filter(c => !q || c.label.includes(q));
+  if (!rows.length) { box.innerHTML = '<div class="hint">ما فيه بطايق بعد</div>'; return; }
+  rows.forEach(c => {
+    const b = document.createElement('button'); b.className = 'item'; b.type = 'button';
+    b.innerHTML = '<span>' + esc(c.label) + '</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B69A66" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+    b.onclick = () => { openId = c.id; document.getElementById('oLabel').textContent = c.label; document.getElementById('oCode').value = ''; document.getElementById('oErr').textContent = ''; go('vOpen'); document.getElementById('oCode').focus(); };
+    box.appendChild(b);
+  });
+}
+document.getElementById('search').oninput = renderList;
+document.getElementById('newBtn').onclick = () => go('vNew');
+document.querySelectorAll('input[name=vis]').forEach(r => r.onchange = () => document.getElementById('nameBox').classList.toggle('hidden', document.querySelector('input[name=vis]:checked').value === 'anon'));
+
+function saveToken(t) { token = t; try { localStorage.setItem(TOKEN_KEY, t); } catch (e) {} }
+
+document.getElementById('rBtn').onclick = async () => {
+  const e = document.getElementById('rErr'); e.textContent = '';
+  const anonymous = document.querySelector('input[name=vis]:checked').value === 'anon';
+  const code = digits(document.getElementById('rCode').value), code2 = digits(document.getElementById('rCode2').value);
+  if (!/^\d{7}$/.test(code)) { e.textContent = 'الرمز لازم يكون ٧ أرقام'; return; }
+  if (code !== code2) { e.textContent = 'الرمزين غير متطابقين'; return; }
+  busy('rBtn', true);
+  try {
+    const r = await api('register', { anonymous, name: document.getElementById('rName').value, phone: digits(document.getElementById('rPhone').value), code });
+    saveToken(r.token); showCard(r.card);
+  } catch (x) { e.textContent = x.message; }
+  busy('rBtn', false);
+};
+
+document.getElementById('oBtn').onclick = async () => {
+  const e = document.getElementById('oErr'); e.textContent = '';
+  busy('oBtn', true);
+  try { const r = await api('open', { id: openId, code: digits(document.getElementById('oCode').value) }); saveToken(r.token); showCard(r.card); }
+  catch (x) { e.textContent = x.message; }
+  busy('oBtn', false);
+};
+document.getElementById('oCode').addEventListener('keydown', ev => { if (ev.key === 'Enter') document.getElementById('oBtn').click(); });
+
+function showCard(c) {
+  go('vCard');
+  document.getElementById('cLabel').textContent = c.label;
+  document.getElementById('cPhone').textContent = c.phone;
+  document.getElementById('cCount').textContent = AR(c.stamps) + ' / ' + AR(c.total);
+  renderStamps(document.getElementById('grid'), c);
+  renderBanners(document.getElementById('banners'), c);
+  if (window.qrcode) { const qr = qrcode(0, 'M'); qr.addData('ELGZ:' + c.id); qr.make(); document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 6, margin: 2 }); }
+  document.getElementById('hist').innerHTML = c.history.map(h => '• ' + fmtDate(h.t) + ' — ' + esc(h.what)).join('<br>');
+}
+async function refresh() {
+  try { showCard((await api('me', { token })).card); }
+  catch (e) {
+    if (e.status === 401 || e.status === 404) { try { localStorage.removeItem(TOKEN_KEY); } catch (x) {} token = null; }
+    go('vList'); loadList();
+  }
+}
+document.getElementById('refresh').onclick = refresh;
+document.getElementById('logout').onclick = () => { try { localStorage.removeItem(TOKEN_KEY); } catch (e) {} token = null; go('vList'); loadList(); };
+if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) document.getElementById('installHint').style.display = 'none';
+
+if (token) refresh(); else loadList();
+</script>
+</body>
+</html>

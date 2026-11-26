@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>إليجانزا — لوحة المالك</title>
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ختم إليجانزا">
+<link rel="apple-touch-icon" href="../icon-180.png">
+<link rel="stylesheet" href="../loyalty.css">
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="card">
+    <div class="brand"><div class="word"><span>El</span>eganza</div><svg width="32" height="24" viewBox="0 0 34 24" aria-hidden="true"><path d="M3 20 L1 6 L10 13 L17 2 L24 13 L33 6 L31 20 Z" fill="#F2C200"/></svg></div>
+    <div class="sub">لوحة المالك · الأختام</div>
+  </header>
+
+  <section id="vLogin" class="view">
+    <div><label for="lCode">رمز المالك</label><input id="lCode" type="password" inputmode="numeric" maxlength="7" autocomplete="current-password" dir="ltr"></div>
+    <div class="err" id="lErr" role="alert"></div>
+    <button class="btn" id="lBtn">دخول</button>
+  </section>
+
+  <section id="vHome" class="view hidden">
+    <button class="btn gold" id="scanBtn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-5px;margin-left:6px"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg>
+      صوّر بطاقة العميل وأضف ختم
+    </button>
+    <div id="scanBox" class="hidden" style="display:flex;flex-direction:column;gap:10px">
+      <video id="video" playsinline muted></video>
+      <canvas id="canvas" class="hidden"></canvas>
+      <button class="btn ghost" id="stopScan">إيقاف الكاميرا</button>
+    </div>
+    <div class="err" id="hErr" role="alert"></div>
+
+    <div id="result" class="hidden view">
+      <div class="ok" id="rMsg" role="status"></div>
+      <div class="row">
+        <div><div class="lbl">البطاقة</div><div class="name" id="rLabel"></div><div class="lbl" dir="ltr" style="text-align:right" id="rPhone"></div></div>
+        <div style="text-align:left"><div class="lbl">الأختام</div><div class="count" id="rCount"></div></div>
+      </div>
+      <div class="grid" id="rGrid"></div>
+      <div id="rBanners"></div>
+      <div class="actions">
+        <button class="btn sm" id="aStamp">إضافة ختم</button>
+        <button class="btn sm ghost" id="aUndo">تراجع عن آخر ختم</button>
+        <button class="btn sm gold hidden" id="aDisc">استخدم خصم ٥٠٪</button>
+        <button class="btn sm gold hidden" id="aFree">سلّم الثوب المجاني</button>
+      </div>
+      <details class="hist"><summary>نسي العميل رمزه؟</summary>
+        <div style="display:flex;gap:8px;margin-top:8px"><input id="newCode" inputmode="numeric" maxlength="7" dir="ltr" placeholder="رمز جديد ٧ أرقام" aria-label="رمز جديد"><button class="btn sm" id="aReset" style="width:auto">حفظ</button></div>
+      </details>
+      <details class="hist"><summary>سجل البطاقة</summary><div id="rHist"></div></details>
+    </div>
+
+    <h2>كل البطايق</h2>
+    <input id="search" placeholder="ابحث بالاسم أو الجوال" aria-label="ابحث بالاسم أو الجوال">
+    <div id="list" class="list"></div>
+    <button class="btn ghost" id="logout">خروج</button>
+  </section>
+</div>
+
+<script src="../loyalty-common.js"></script>
+<script>
+const OKEY = 'eleganza_owner_token';
+let otoken = null; try { otoken = localStorage.getItem(OKEY); } catch (e) {}
+let cards = [], current = null, stream = null, scanning = false;
+const $ = id => document.getElementById(id);
+const show = (id, on) => $(id).classList.toggle('hidden', !on);
+
+async function login() {
+  $('lErr').textContent = ''; busy('lBtn', true);
+  try { const r = await api('owner-login', { code: digits($('lCode').value) }); otoken = r.token; try { localStorage.setItem(OKEY, otoken); } catch (e) {} home(); }
+  catch (e) { $('lErr').textContent = e.message; }
+  busy('lBtn', false);
+}
+$('lBtn').onclick = login;
+$('lCode').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+
+async function home() {
+  show('vLogin', false); show('vHome', true);
+  try { cards = (await api('owner-cards', { token: otoken })).cards; renderList(); }
+  catch (e) { if (e.status === 401) return logout(); $('hErr').textContent = e.message; }
+}
+function renderList() {
+  const q = digits($('search').value) || $('search').value.trim();
+  const box = $('list'); box.innerHTML = '';
+  const rows = cards.filter(c => !q || c.label.includes(q) || c.phone.includes(q));
+  if (!rows.length) { box.innerHTML = '<div class="hint">ما فيه بطايق</div>'; return; }
+  rows.forEach(c => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'item';
+    b.innerHTML = '<span>' + esc(c.label) + '<br><small dir="ltr">' + esc(c.phone) + '</small></span><small>' + AR(c.stamps) + ' / ' + AR(c.total) + (c.freePending ? ' · مجاني' : c.discountPending ? ' · خصم' : '') + '</small>';
+    b.onclick = () => { showResult(c, ''); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+    box.appendChild(b);
+  });
+}
+$('search').oninput = renderList;
+
+function showResult(c, msg) {
+  current = c; show('result', true);
+  $('rMsg').textContent = msg;
+  $('rLabel').textContent = c.label; $('rPhone').textContent = c.phone;
+  $('rCount').textContent = AR(c.stamps) + ' / ' + AR(c.total);
+  renderStamps($('rGrid'), c, !!msg); renderBanners($('rBanners'), c);
+  show('aDisc', c.discountPending); show('aFree', c.freePending > 0);
+  $('rHist').innerHTML = c.history.map(h => '• ' + fmtDate(h.t) + ' — ' + esc(h.what)).join('<br>');
+  const i = cards.findIndex(x => x.id === c.id); if (i >= 0) { cards[i] = c; renderList(); }
+}
+async function act(action, extra, okMsg) {
+  $('hErr').textContent = '';
+  try { const r = await api(action, Object.assign({ token: otoken, id: current.id }, extra)); showResult(r.card, okMsg(r.card)); if (navigator.vibrate) navigator.vibrate(80); return true; }
+  catch (e) {
+    if (e.data && e.data.double) { if (confirm('هذي البطاقة انختمت قبل لحظات. تبي تضيف ختم ثاني؟')) return act(action, { force: true }, okMsg); return false; }
+    if (e.status === 401) { logout(); return false; }
+    $('hErr').textContent = e.message; return false;
+  }
+}
+const stampMsg = c => c.stamps === 0 && c.freePending ? 'اكتملت البطاقة! العميل يستحق ثوب مجاني، وتجددت بطاقته' : 'تمت إضافة ختم ✓  (' + AR(c.stamps) + ' من ' + AR(c.total) + ')';
+$('aStamp').onclick = () => act('stamp', {}, stampMsg);
+$('aUndo').onclick = () => act('undo', {}, () => 'تم التراجع عن آخر ختم');
+$('aDisc').onclick = () => act('redeem', { kind: 'discount' }, () => 'تم تسجيل استخدام الخصم');
+$('aFree').onclick = () => act('redeem', { kind: 'free' }, () => 'تم تسليم الثوب المجاني');
+$('aReset').onclick = async () => {
+  const code = digits($('newCode').value);
+  if (!/^\d{7}$/.test(code)) { $('hErr').textContent = 'الرمز لازم يكون ٧ أرقام'; return; }
+  try { await api('reset-code', { token: otoken, id: current.id, code }); $('rMsg').textContent = 'تم تغيير رمز البطاقة، بلّغ العميل فيه'; $('newCode').value = ''; }
+  catch (e) { $('hErr').textContent = e.message; }
+};
+
+// ===== الكاميرا =====
+async function startScan() {
+  $('hErr').textContent = '';
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $('hErr').textContent = 'المتصفح ما يدعم الكاميرا، افتح الصفحة في Safari أو Chrome'; return; }
+  try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false }); }
+  catch (e) { $('hErr').textContent = 'ما قدرت أفتح الكاميرا، اسمح للموقع باستخدامها من إعدادات المتصفح'; return; }
+  const v = $('video'); v.srcObject = stream; await v.play();
+  show('scanBox', true); show('scanBtn', false); scanning = true;
+  const detector = ('BarcodeDetector' in window) ? new BarcodeDetector({ formats: ['qr_code'] }) : null;
+  const cv = $('canvas'), ctx = cv.getContext('2d', { willReadFrequently: true });
+  const tick = async () => {
+    if (!scanning) return;
+    let text = null;
+    if (v.readyState >= 2) {
+      try {
+        if (detector) { const r = await detector.detect(v); if (r.length) text = r[0].rawValue; }
+        else if (window.jsQR) { cv.width = v.videoWidth; cv.height = v.videoHeight; ctx.drawImage(v, 0, 0); const img = ctx.getImageData(0, 0, cv.width, cv.height); const r = jsQR(img.data, img.width, img.height); if (r) text = r.data; }
+      } catch (e) {}
+    }
+    if (text) return onCode(text);
+    setTimeout(tick, 180);
+  };
+  tick();
+}
+function stopScan() { scanning = false; if (stream) stream.getTracks().forEach(t => t.stop()); stream = null; show('scanBox', false); show('scanBtn', true); }
+async function onCode(text) {
+  stopScan();
+  const m = /^ELGZ:([A-Z0-9]{6,12})$/.exec(text.trim());
+  if (!m) { $('hErr').textContent = 'هذا الرمز مو بطاقة إليجانزا'; return; }
+  current = { id: m[1] };
+  const ok = await act('stamp', {}, stampMsg);
+  if (!ok && !current.label) { try { const r = await api('owner-card', { token: otoken, id: m[1] }); showResult(r.card, ''); } catch (e) {} }
+}
+$('scanBtn').onclick = startScan;
+$('stopScan').onclick = stopScan;
+
+function logout() { stopScan(); try { localStorage.removeItem(OKEY); } catch (e) {} otoken = null; show('vHome', false); show('vLogin', true); show('result', false); }
+$('logout').onclick = logout;
+
+if (otoken) home();
+</script>
+</body>
+</html>
