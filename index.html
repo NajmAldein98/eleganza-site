@@ -31,6 +31,27 @@ h2{font-size:clamp(30px,4.2vw,46px)}
 .btn.s:hover{background:#b69a6614}
 :focus-visible{outline:2px solid var(--g2);outline-offset:3px}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
+/* اللغة */
+html[lang=en] h1,html[lang=en] h2,html[lang=en] .ocard h3,html[lang=en] .excl h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;letter-spacing:.2px}
+html[lang=en] .hero h1{font-size:clamp(38px,5vw,62px);line-height:1.05}
+
+.hact{display:flex;align-items:center;gap:10px}
+.lang{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 14px 0 12px;border-radius:999px;border:1px solid #b69a6666;background:#ffffff08;color:var(--iv);font:500 14px "IBM Plex Sans Arabic",sans-serif;cursor:pointer;transition:border-color .25s,background .25s}
+.lang:hover{border-color:var(--g);background:#b69a6618}
+.lang svg{width:20px;height:20px;fill:none;stroke:var(--g2);stroke-width:1.5;transition:transform .6s cubic-bezier(.3,.7,.2,1)}
+.lang:hover svg{transform:rotate(180deg)}
+html[lang=en] .lang span{font-family:"IBM Plex Sans Arabic",sans-serif}
+html[dir=ltr] .sc .go::after{content:"→"}html[dir=ltr] a.sc:hover .go::after{transform:translateX(5px)}
+html[dir=rtl] .tl{text-align:right}html[dir=ltr] .tl{text-align:left}
+.grp[hidden]{display:none}
+/* الدفع بالتقسيط */
+.pays{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:28px;max-width:720px}
+.pay{border-radius:20px;padding:26px 24px;display:flex;flex-direction:column;gap:6px;border:1px solid #0000000f;box-shadow:0 10px 30px #0000000d}
+.pay .pw{font:800 30px/1 "IBM Plex Sans Arabic",Arial,sans-serif;letter-spacing:-.5px;direction:ltr;text-align:start}
+.pay small{font-size:14px;color:#222}
+.pay.tb{background:#3effc3}.pay.tb .pw{color:#111}
+.pay.tm{background:linear-gradient(120deg,#fbd0a6,#f5b7cf 55%,#d6c3f5)}.pay.tm .pw{color:#111}
+.fpay{display:inline-flex;gap:8px;direction:ltr}.fpay b{font:800 12px Arial,sans-serif;padding:4px 9px;border-radius:7px;color:#111}.ftb{background:#3effc3}.ftm{background:linear-gradient(120deg,#fbd0a6,#d6c3f5)}
 /* أقسام عاجية */
 .ivs{background:var(--iv);color:#111}
 .ivs.t2{background:var(--ivt)}
@@ -128,7 +149,7 @@ nav a:hover{color:var(--g)}
 .grp{margin-bottom:20px}
 .grp h3{font-size:17px;margin-bottom:10px;color:#e9e3d6}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #3a372f;background:var(--bk3);color:#ddd;font:500 15px "IBM Plex Sans Arabic";cursor:pointer;transition:.2s}
+.chip{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #3a372f;background:var(--bk3);color:#ddd;font:500 15px "IBM Plex Sans Arabic",Tahoma,sans-serif;cursor:pointer;transition:.2s}
 .chip:hover{border-color:#b69a6688}
 .chip[aria-pressed=true]{background:var(--g);color:#111;border-color:var(--g);font-weight:700}
 .sw{width:44px;height:44px;border-radius:50%;border:2px solid #3a372f;cursor:pointer;padding:0;transition:.2s}
@@ -224,7 +245,7 @@ a.sc:hover .go::after{transform:translateX(-5px)}
 footer{border-top:1px solid var(--line);padding:28px max(5vw,16px);color:var(--mut);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 footer img{height:34px;width:auto}
-.wa-float{position:fixed;bottom:18px;inset-inline-end:18px;z-index:35;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px #0009;transition:transform .3s}
+.wa-float{position:fixed;bottom:18px;left:18px;z-index:35;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px #0009;transition:transform .3s}
 .wa-float:hover{transform:scale(1.08)}
 .wa-float svg{width:30px;height:30px}
 /* ظهور تدريجي */
@@ -261,7 +282,7 @@ body.staff .fabbtn{display:inline-flex}
 .ltr{direction:ltr;unicode-bidi:isolate}
 @media(max-width:900px){.jr{grid-template-columns:minmax(0,1fr);gap:0}.jr::before{top:28px;bottom:28px;inset-inline:auto;inset-inline-start:27px;width:2px;height:auto}.jr::after{top:28px;inset-inline:auto;inset-inline-start:27px;width:2px;height:0;transition:height 2.6s cubic-bezier(.3,.6,.2,1)}.jr.go::after{width:2px;height:calc(100% - 56px)}.jr li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:0 16px;text-align:start;padding:0 0 22px}.jr .n{margin:0;grid-row:span 2}
 nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{position:relative;top:0;max-height:520px;margin:0 auto;width:100%}.story-img{display:none}}
-@media(max-width:700px){.hero img.lg{display:none}.tl{font-size:18px}.hero p{font-size:16px}
+@media(max-width:700px){.lang span{display:none}.lang{padding:0 11px}.pays{grid-template-columns:minmax(0,1fr)}.hero img.lg{display:none}.tl{font-size:18px}.hero p{font-size:16px}
 .soc{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.sc{padding:18px;gap:10px}.sc .ic{width:46px;height:46px}.sc b{font-size:17px}
 .fgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tex{height:100px}.fab-card div.t{padding:12px}.fab-card h3{font-size:16px}.fab-card p{font-size:13px}.cmpbtn{padding:0 12px 12px}
 .oempty,.dl{grid-template-columns:minmax(0,1fr)}.oempty img{max-height:220px}
@@ -270,12 +291,12 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 </style>
 </head>
 <body>
-<div id="intro" aria-hidden="true"><img src="img/intro.webp" alt=""><button id="skip" type="button">تخطي</button></div>
+<div id="intro" aria-hidden="true"><img src="img/intro.webp" alt=""><button id="skip" type="button" data-t="skip">تخطي</button></div>
 <div class="ownerbar">وضع الصيانة مفعّل — الزوار يشاهدون صفحة الصيانة، وأنت ترى الموقع لأنك من فريق المحل.</div>
 
 <section class="mt" aria-live="polite">
-  <div><img src="img/logo.png" alt="إليغانزا"><h1>نرجع لكم قريبًا</h1><p id="mtMsg"></p>
-  <a class="btn p" id="mtWa" href="#">راسلنا على واتساب</a></div>
+  <div><img src="img/logo.png" alt="إليغانزا"><h1 data-t="mtH">نرجع لكم قريبًا</h1><p id="mtMsg"></p>
+  <a class="btn p" id="mtWa" href="#" data-t="mtWa">راسلنا على واتساب</a></div>
 </section>
 
 <div class="site">
@@ -283,8 +304,9 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 <header>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="إليغانزا للخياطة"><img src="img/logo.png" alt="إليغانزا"></a>
-    <nav aria-label="أقسام الموقع"><a href="#make">صمّم ثوبك</a><a href="#offers">العروض</a><a href="#story">قصتنا</a><a href="#fabrics">الأقمشة</a><a href="#journey">رحلة الطلب</a><a href="#faq">أسئلة</a><a href="#contact">تواصل</a></nav>
-    <a class="btn p" id="hdrWa" href="#" style="min-height:42px;padding:0 18px;font-size:15px">احجز موعد</a>
+    <nav aria-label="أقسام الموقع"><a href="#make" data-t="n1">صمّم ثوبك</a><a href="#offers" data-t="n2">العروض</a><a href="#story" data-t="n3">قصتنا</a><a href="#fabrics" data-t="n4">الأقمشة</a><a href="#journey" data-t="n5">رحلة الطلب</a><a href="#faq" data-t="n6">أسئلة</a><a href="#contact" data-t="n7">تواصل</a></nav>
+    <div class="hact"><button class="lang" id="langBtn" type="button" aria-label="Change language"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9zM4.6 7.5h14.8M4.6 16.5h14.8"/></svg><span id="langLbl">English</span></button>
+    <a class="btn p" id="hdrC" href="#contact" data-t="hdrC" style="min-height:42px;padding:0 18px;font-size:15px">تواصل معنا</a></div>
   </div>
 </header>
 
@@ -297,40 +319,40 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
     <h1 class="rv" id="heroTitle"></h1>
     <div class="tl rv">Eleganza — Tailored to Your Identity</div>
     <p class="rv" id="heroSub"></p>
-    <div class="btns rv"><a class="btn p" href="#fabrics">اكتشف مجموعتنا</a><a class="btn s" href="#make">صمّم ثوبك</a></div>
+    <div class="btns rv"><a class="btn p" href="#fabrics" data-t="hb1">اكتشف مجموعتنا</a><a class="btn s" href="#make" data-t="hb2">صمّم ثوبك</a></div>
   </div></div>
   <div class="scrollcue" aria-hidden="true"></div>
 </section>
 
 <section class="band offers" id="offers">
   <div class="wrap">
-    <div class="kick rv">العروض والإعلانات</div>
-    <h2 class="rv">عروض بوقت محدود</h2>
+    <div class="kick rv" data-t="ofK">العروض والإعلانات</div>
+    <h2 class="rv" data-t="ofH">عروض بوقت محدود</h2>
     <div class="ogrid" id="ogrid"></div>
     <div class="oempty rv" id="oempty">
       <img src="img/crown.webp" alt="" loading="lazy">
-      <div><h3>عرضنا الجاي… قريب</h3><p>تابعنا على إنستقرام وأول من يعرف بالعروض والإصدارات المحدودة.</p><a class="btn s" id="offIg" href="#">تابعنا</a></div>
+      <div><h3 data-t="oeH">عرضنا الجاي… قريب</h3><p data-t="oeP">تابعنا على إنستقرام وأول من يعرف بالعروض والإصدارات المحدودة.</p><a class="btn s" id="offIg" href="#" data-t="oeB">تابعنا</a></div>
     </div>
   </div>
 </section>
 
 <section class="band ivs" id="make">
   <div class="wrap">
-    <div class="kick rv">صمّم ثوبك بنفسك</div>
-    <h2 class="rv">اختر تفاصيلك… وشوفها قدامك</h2>
-    <p class="lead rv">بعد ما ناخذ مقاسك، اختر اللون والتفاصيل اللي تعجبك، وأرسل لنا بطاقة طلبك بضغطة.</p>
+    <div class="kick rv" data-t="mkK">صمّم ثوبك بنفسك</div>
+    <h2 class="rv" data-t="mkH">اختر تفاصيلك… وشوفها قدامك</h2>
+    <p class="lead rv" data-t="mkL">بعد ما ناخذ مقاسك، اختر اللون والتفاصيل اللي تعجبك، وأرسل لنا بطاقة طلبك بضغطة.</p>
     <div class="cfg">
       <div class="stage rv"><span class="tag" id="stTag"></span><svg id="thobe" viewBox="0 0 400 580" role="img" aria-label="معاينة الثوب"></svg></div>
       <div>
         <div id="opts"></div>
         <div class="order rv">
-          <h3>بطاقة طلبك</h3>
+          <h3 data-t="orH">بطاقة طلبك</h3>
           <ul id="sum"></ul>
           <div class="price" id="price"></div>
-          <label>رقم القياس أو الاسم (إن وجد)<input type="text" id="mref" autocomplete="off"></label>
-          <div class="btns"><a class="btn p" id="sendWa" href="#">أرسل اختياراتي واتساب</a><button class="btn s" id="saveFav" type="button">احفظ في خزانتي</button></div>
+          <label><span data-t="mrefL">رقم القياس أو الاسم (إن وجد)</span><input type="text" id="mref" autocomplete="off"></label>
+          <div class="btns"><a class="btn p" id="sendWa" href="#" data-t="send">أرسل اختياراتي واتساب</a><button class="btn s" id="saveFav" type="button" data-t="save">احفظ في خزانتي</button></div>
           <div class="favs" id="favs"></div>
-          <p class="note">التطريز والقماش النهائي نثبّتها معك في المحل. «خزانتي» تنحفظ على جهازك وترجع لها متى ما بغيت.</p>
+          <p class="note" data-t="mkN">التطريز والقماش النهائي نثبّتها معك في المحل. «خزانتي» تنحفظ على جهازك وترجع لها متى ما بغيت.</p>
         </div>
       </div>
     </div>
@@ -341,9 +363,9 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
   <div class="wrap">
     <div class="excl rv">
       <img src="img/crown.webp" alt="" loading="lazy">
-      <div><div class="kick">حصريًا في المحل</div><h2>تصاميم خاصة… ما تنعرض أونلاين</h2>
-      <p>عندنا موديلات وتصاميم خاصة نحتفظ فيها لزبايننا. مرّ علينا وشوفها بنفسك، وخلّ ثوبك ما يشبه أحد.</p>
-      <a class="btn p" id="exMap" href="#">زورونا في المحل</a></div>
+      <div><div class="kick" data-t="exK">حصريًا في المحل</div><h2 data-t="exH">تصاميم خاصة… ما تنعرض أونلاين</h2>
+      <p data-t="exP">عندنا موديلات وتصاميم خاصة نحتفظ فيها لزبايننا. مرّ علينا وشوفها بنفسك، وخلّ ثوبك ما يشبه أحد.</p>
+      <a class="btn p" id="exMap" href="#" data-t="exB">زورونا في المحل</a></div>
     </div>
   </div>
 </section>
@@ -351,8 +373,8 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 <section class="band" id="story" style="background:var(--bk2)">
   <div class="wrap story-grid">
     <div>
-      <div class="kick rv">قصتنا</div>
-      <h2 class="rv">من الفكرة… إلى ثوب يليق فيك</h2>
+      <div class="kick rv" data-t="stK">قصتنا</div>
+      <h2 class="rv" data-t="stH">من الفكرة… إلى ثوب يليق فيك</h2>
       <p class="lead rv" id="about"></p>
       <div class="story" id="chaps">
         <div class="thread"><i id="thr"></i></div>
@@ -364,65 +386,77 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 
 <section class="band ivs" id="fabrics">
   <div class="wrap">
-    <div class="kick rv">مكتبة الأقمشة</div>
-    <h2 class="rv">لكل موسم قماشه</h2>
-    <p class="lead rv">اضغط على أي قماش لتكبيره. التشكيلة الكاملة تشوفها وتلمسها بنفسك في المحل.</p>
-    <div class="tabs" role="tablist"><button class="chip" role="tab" data-s="صيفي" aria-pressed="true">صيفي</button><button class="chip" role="tab" data-s="شتوي" aria-pressed="false">شتوي</button></div>
+    <div class="kick rv" data-t="fbK">مكتبة الأقمشة</div>
+    <h2 class="rv" data-t="fbH">لكل موسم قماشه</h2>
+    <p class="lead rv" data-t="fbL">اضغط على أي قماش لتكبيره. التشكيلة الكاملة تشوفها وتلمسها بنفسك في المحل.</p>
+    <div class="tabs" role="tablist"><button class="chip" role="tab" data-s="0" aria-pressed="true" data-t="sum">صيفي</button><button class="chip" role="tab" data-s="1" aria-pressed="false" data-t="win">شتوي</button></div>
     <div class="fgrid" id="fgrid"></div>
     <div class="cmp" id="cmp" aria-live="polite"></div>
-    <p class="note">الأقمشة المعروضة أمثلة توضيحية.</p>
+    <p class="note" data-t="fbN">الأقمشة المعروضة أمثلة توضيحية.</p>
   </div>
 </section>
 
 <section class="band" id="journey">
   <div class="wrap">
-    <div class="kick rv">رحلة ثوبك في إليغانزا</div>
-    <h2 class="rv">من القماش… إلى باب بيتك</h2>
-    <p class="lead rv">كل ثوب يمر بست مراحل قبل ما يوصلك، وتقدر تسألنا واتساب وين وصل ثوبك في أي وقت.</p>
+    <div class="kick rv" data-t="jrK">رحلة ثوبك في إليغانزا</div>
+    <h2 class="rv" data-t="jrH">من القماش… إلى باب بيتك</h2>
+    <p class="lead rv" data-t="jrL">كل ثوب يمر بست مراحل قبل ما يوصلك، وتقدر تسألنا واتساب وين وصل ثوبك في أي وقت.</p>
     <ol class="jr" id="jr"></ol>
   </div>
 </section>
 
 <section class="band ivs" id="delivery">
   <div class="wrap">
-    <div class="kick rv">المدة والتوصيل</div>
-    <h2 class="rv">ثوبك يوصلك لين بابك</h2>
+    <div class="kick rv" data-t="dlK">المدة والتوصيل</div>
+    <h2 class="rv" data-t="dlH">ثوبك يوصلك لين بابك</h2>
     <div class="dl rv">
-      <div class="dcard g"><h3>مدة التفصيل</h3><p id="durTxt"></p></div>
-      <div class="dcard"><h3>التوصيل</h3><p id="delTxt"></p></div>
+      <div class="dcard g"><h3 data-t="durH">مدة التفصيل</h3><p id="durTxt"></p></div>
+      <div class="dcard"><h3 data-t="delH">التوصيل</h3><p id="delTxt"></p></div>
     </div>
-    <h2 class="rv" id="policy" style="margin-top:56px;font-size:clamp(26px,3.4vw,36px)">سياسة التعديل والاستبدال</h2>
+    <h2 class="rv" id="policy" style="margin-top:56px;font-size:clamp(26px,3.4vw,36px)" data-t="polH">سياسة التعديل والاستبدال</h2>
     <ul class="pol" id="pol"></ul>
   </div>
 </section>
 
 <section class="band ivs t2" id="faq">
   <div class="wrap">
-    <div class="kick rv">أسئلة شائعة</div>
-    <h2 class="rv">كل اللي تبغى تعرفه</h2>
+    <div class="kick rv" data-t="fqK">أسئلة شائعة</div>
+    <h2 class="rv" data-t="fqH">كل اللي تبغى تعرفه</h2>
     <div class="faq" id="faqs"></div>
   </div>
 </section>
 
 <section class="band" id="contact">
   <div class="wrap">
-    <div class="kick rv">تواصل معنا</div>
-    <h2 class="rv">اختر طريقتك… واضغط</h2>
+    <div class="kick rv" data-t="ctK">تواصل معنا</div>
+    <h2 class="rv" data-t="ctH">اختر طريقتك… واضغط</h2>
     <div class="soc" id="soc"></div>
     <div class="info rv">
-      <div><b>العنوان</b><span id="loc"></span></div>
-      <div><b>أوقات العمل</b><span id="hours"></span></div>
+      <div><b data-t="locL">العنوان</b><span id="loc"></span></div>
+      <div><b data-t="hrsL">أوقات العمل</b><span id="hours"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band ivs t2" id="pay">
+  <div class="wrap">
+    <div class="kick rv" data-t="pyK">الدفع بالتقسيط</div>
+    <h2 class="rv" data-t="pyH">ثوبك الحين… وادفع على راحتك</h2>
+    <p class="lead rv" data-t="pyL">قسّم قيمة طلبك على دفعات مع تابي وتمارا.</p>
+    <div class="pays rv">
+      <div class="pay tb"><span class="pw" lang="en">tabby</span><small data-t="tbS">قسّمها على دفعات</small></div>
+      <div class="pay tm"><span class="pw" lang="en">tamara</span><small data-t="tmS">قسّمها على دفعات</small></div>
     </div>
   </div>
 </section>
 </main>
 
-<footer><div class="wrap"><img src="img/logo.png" alt="إليغانزا"><span>© إليغانزا للخياطة — جدة</span></div></footer>
+<footer><div class="wrap"><img src="img/logo.png" alt="إليغانزا"><span data-t="ftC">© إليغانزا للخياطة — جدة</span><span class="fpay" lang="en"><b class="ftb">tabby</b><b class="ftm">tamara</b></span></div></footer>
 </div>
 
 <a class="wa-float" id="waFloat" href="#" aria-label="واتساب"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.3c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.4 6.4 0 0 0 1.3 3.4 14.7 14.7 0 0 0 5.6 5c2.1.9 2.9 1 3.9.8.6-.1 1.9-.8 2.2-1.5s.3-1.3.2-1.5-.3-.2-.6-.4z"/></svg></a>
 
-<div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-label="تكبير القماش"><div class="box"><div class="tex" id="zTex"></div><div class="t"><h3 id="zName"></h3><button class="x" id="zClose" type="button" aria-label="إغلاق">×</button></div><dl class="spec" id="zSpec"></dl><div class="btns" style="padding:0 20px 20px"><a class="btn p" id="zOrder" href="#">اطلب هذا القماش</a></div></div></div>
+<div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-label="تكبير القماش"><div class="box"><div class="tex" id="zTex"></div><div class="t"><h3 id="zName"></h3><button class="x" id="zClose" type="button" aria-label="إغلاق">×</button></div><dl class="spec" id="zSpec"></dl><div class="btns" style="padding:0 20px 20px"><a class="btn p" id="zOrder" href="#" data-t="zOrd">اطلب هذا القماش</a></div></div></div>
 
 <button class="btn p fabbtn" id="fabbtn" type="button">لوحة التحكم</button>
 <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pT">
@@ -445,7 +479,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
       </fieldset>
       <fieldset><legend>السعر التقديري</legend>
         <label>السعر الابتدائي بالريال (فارغ = لا يظهر سعر)<input type="text" id="i_priceBase" class="ltr" inputmode="numeric"></label>
-        <label>إضافات السعر<textarea id="i_priceAdd" class="ltr"></textarea><span class="hint">zipper = سحاب، collar-stand = رقبة واقفة، collar-medium = رقبة وسط، sleeve-cuff = كبك، emb-yes = تطريز، chest-yes / side-yes = الجيوب. اكتب المبلغ بعد |</span></label>
+        <label>إضافات السعر<textarea id="i_priceAdd" class="ltr"></textarea><span class="hint">closure-zipper = سحاب، placket-hidden = إغلاق مخفي، collar-stand = حشوة واقفة، collar-medium = حشوة وسط، sleeve-cuff = كبك، chest-yes = جيب صدر، acc-yes = إكسسوارات، side-hidden = جيب مخفي، emb-yes = تطريز. اكتب المبلغ بعد |</span></label>
       </fieldset>
       <fieldset><legend>الأقمشة والمدة</legend>
         <label>الأقمشة<textarea id="i_fabrics" style="min-height:130px"></textarea><span class="hint">كل قماش في سطر: صيفي أو شتوي | الاسم | درجة اللون | الملمس | المميزات | العناية | اللون (مثال #f4f1ea)</span></label>
@@ -485,7 +519,7 @@ const DEF={
   delivery:"التوصيل خلال ٤ – ٥ أيام.\n٣٠ ريال لحد ٥ أثواب، والكميات الأكبر حسب العدد.",
   faq:"كم سعر الثوب؟ | السعر يتحدد في المحل بعد ما تختار القماش، لأن كل قماش له سعره.\nلازم أجي المحل؟ | نعم، القياس واختيار القماش يكون في المحل عشان نضمن لك ثوب مضبوط.\nكم ياخذ التفصيل؟ | عادةً من ٣ أيام إلى أسبوع، وفي المواسم المزدحمة قد يطول قليلًا.\nتوصلون للبيت؟ | نعم، التوصيل خلال ٤ – ٥ أيام، ٣٠ ريال لحد ٥ أثواب.\nأقدر أعدّل اختياراتي بعد ما أرسلها؟ | أكيد، راسلنا واتساب قبل البدء بالخياطة ونعدّلها لك.\nوش سياسة التعديل والاستبدال؟ | التعديل مجاني خلال ٧ أيام إذا كان الخطأ من جهتنا، والتفاصيل كاملة في قسم السياسة.",
   priceBase:"",
-  priceAdd:"zipper | 0\ncollar-stand | 0\nsleeve-cuff | 0\nemb-yes | 0",
+  priceAdd:"closure-zipper | 0\nplacket-hidden | 0\ncollar-stand | 0\nsleeve-cuff | 0\nacc-yes | 0\nemb-yes | 0",
   journey:"تم استلام طلبك | تم تسجيل التصميم والمقاسات.\nتجهيز القماش | اختيار القماش وتجهيزه للتفصيل.\nمرحلة الخياطة | يتم العمل على ثوبك بعناية.\nالفحص والجودة | مراجعة التفاصيل والتأكد من جودة التنفيذ.\nالكي والتغليف | تجهيز الثوب للتسليم.\nجاهز للاستلام | ثوبك أصبح جاهزًا.",
   policy:"التعديل مجانًا | أي ملاحظة على المقاس أو الخياطة نعدّلها مجانًا خلال ٧ أيام من الاستلام إذا كان الخطأ من جهتنا.\nتعديلات بطلبك | تغيير التصميم أو التفاصيل بعد الاستلام يكون برسوم بسيطة حسب نوع التعديل.\nالاستبدال والاسترجاع | لأن كل ثوب يُفصَّل على مقاسك، لا يُسترجع ولا يُستبدل إلا إذا كان فيه عيب تصنيع أو اختلاف عن الطلب المتفق عليه.\nافحص ثوبك عند الاستلام | نرجو تجربة الثوب والتأكد منه وقت الاستلام، وإبلاغنا بأي ملاحظة مباشرة.\nالطلبات غير المستلمة | نحتفظ بالثوب الجاهز لمدة ٣٠ يومًا من تاريخ إبلاغك بجاهزيته.",
   location:"جدة، المملكة العربية السعودية",
@@ -496,13 +530,64 @@ const DEF={
   snapchat:"",
   tiktok:""
 };
-let C={...DEF},docRef=null,staff=false;
+/* المحتوى بالإنجليزي */
+const DEF_EN={
+  maintenanceMsg:"We're preparing a better experience for you.\nThe shop is open as usual — message us on WhatsApp anytime.",
+  announce:"",
+  offers:"",
+  heroTitle:"No two thobes are alike… *because every man has his own style*",
+  heroSub:"A thobe is more than clothing — it's a reflection of who you are. At Eleganza we tailor it to your measurements and taste, from our shop in Jeddah to your door.",
+  about:"At Eleganza we believe a thobe is presence, not just clothing. We care about the collar, the cuffs, the stitching and the fit — so you leave with a thobe that feels made for you alone.",
+  story:"The idea | You visit us and tell us about your taste and occasion — we listen before we cut anything.\nThe fabric | Feel the fabrics yourself and choose; the price depends on the fabric.\nThe measurements | We take your measurements precisely and keep them for your next orders.\nThe tailoring | Expert hands cut and sew every detail you chose.\nThe delivery | Pick up your thobe at the shop or have it delivered to your door.",
+  fabrics:"Summer | Soft cotton | Snow white | Soft and matte | Light and breathable, made for Jeddah's heat | Cold wash, medium iron | #f5f2ea\nSummer | Premium Japanese | Ivory white | Smooth with a subtle sheen | Beautiful drape and a formal look | Gentle wash, low-heat iron | #f1ede3\nSummer | Light grey | Silver grey | Light and structured | A practical, elegant colour for work | Cold wash with light colours | #cfd0cf\nWinter | Soft wool | Smoky grey | Warm and velvety | Warmth without weight | Dry cleaning preferred | #8e8a83\nWinter | Winter navy | Deep navy | Thick and soft | A formal presence for occasions | Cold wash, inside out | #28314a\nWinter | Dark brown | Chocolate brown | Warm with a visible texture | A warm, refined colour | Cold wash, medium iron | #5b4636",
+  duration:"Usually 3 days to a week.\nIn busy seasons it may take a little longer.",
+  delivery:"Delivery within 4–5 days.\n30 SAR for up to 5 thobes; larger quantities priced by count.",
+  faq:"How much is a thobe? | The price is set in the shop once you choose the fabric, since each fabric has its own price.\nDo I need to visit the shop? | Yes — measurements and fabric selection happen in the shop so your thobe fits perfectly.\nHow long does tailoring take? | Usually 3 days to a week; it may take a little longer in busy seasons.\nDo you deliver? | Yes, within 4–5 days — 30 SAR for up to 5 thobes.\nCan I change my choices after sending them? | Of course — message us on WhatsApp before tailoring starts and we'll update them.\nWhat is your alteration and exchange policy? | Alterations are free within 7 days if the mistake is ours; full details are in the policy section.",
+  journey:"Order received | Your design and measurements are recorded.\nFabric preparation | Your fabric is selected and prepared for cutting.\nTailoring | Your thobe is crafted with care.\nQuality check | Every detail is reviewed for quality.\nPressing and packaging | Your thobe is prepared for handover.\nReady for pickup | Your thobe is ready.",
+  policy:"Free alterations | Any fit or stitching issue is altered free within 7 days of pickup if the mistake is ours.\nAlterations on request | Design or detail changes after pickup carry a small fee depending on the alteration.\nExchanges and returns | Because every thobe is tailored to your measurements, it can't be returned or exchanged unless it has a manufacturing defect or differs from the agreed order.\nCheck your thobe at pickup | Please try on your thobe at pickup and tell us about any note right away.\nUncollected orders | We keep ready thobes for 30 days from the day we notify you.",
+  location:"Jeddah, Saudi Arabia",
+  hours:"Contact us for opening hours"
+};
+const T={
+ ar:{skip:"تخطي",mtH:"نرجع لكم قريبًا",mtWa:"راسلنا على واتساب",n1:"صمّم ثوبك",n2:"العروض",n3:"قصتنا",n4:"الأقمشة",n5:"رحلة الطلب",n6:"أسئلة",n7:"تواصل",hdrC:"تواصل معنا",hb1:"اكتشف مجموعتنا",hb2:"صمّم ثوبك",
+  ofK:"العروض والإعلانات",ofH:"عروض بوقت محدود",oeH:"عرضنا الجاي… قريب",oeP:"تابعنا على إنستقرام وأول من يعرف بالعروض والإصدارات المحدودة.",oeB:"تابعنا",
+  mkK:"صمّم ثوبك بنفسك",mkH:"اختر تفاصيلك… وشوفها قدامك",mkL:"بعد ما ناخذ مقاسك، اختر اللون والتفاصيل اللي تعجبك، وأرسل لنا بطاقة طلبك بضغطة.",orH:"بطاقة طلبك",mrefL:"رقم القياس أو الاسم (إن وجد)",send:"أرسل اختياراتي واتساب",save:"احفظ في خزانتي",saved:"تم الحفظ ✓",mkN:"التطريز والقماش النهائي نثبّتها معك في المحل. «خزانتي» تنحفظ على جهازك وترجع لها متى ما بغيت.",
+  exK:"حصريًا في المحل",exH:"تصاميم خاصة… ما تنعرض أونلاين",exP:"عندنا موديلات وتصاميم خاصة نحتفظ فيها لزبايننا. مرّ علينا وشوفها بنفسك، وخلّ ثوبك ما يشبه أحد.",exB:"زورونا في المحل",
+  stK:"قصتنا",stH:"من الفكرة… إلى ثوب يليق فيك",fbK:"مكتبة الأقمشة",fbH:"لكل موسم قماشه",fbL:"اضغط على أي قماش لتكبيره. التشكيلة الكاملة تشوفها وتلمسها بنفسك في المحل.",sum:"صيفي",win:"شتوي",fbN:"الأقمشة المعروضة أمثلة توضيحية.",
+  jrK:"رحلة ثوبك في إليغانزا",jrH:"من القماش… إلى باب بيتك",jrL:"كل ثوب يمر بست مراحل قبل ما يوصلك، وتقدر تسألنا واتساب وين وصل ثوبك في أي وقت.",
+  dlK:"المدة والتوصيل",dlH:"ثوبك يوصلك لين بابك",durH:"مدة التفصيل",delH:"التوصيل",polH:"سياسة التعديل والاستبدال",fqK:"أسئلة شائعة",fqH:"كل اللي تبغى تعرفه",
+  ctK:"تواصل معنا",ctH:"اختر طريقتك… واضغط",locL:"العنوان",hrsL:"أوقات العمل",pyK:"الدفع بالتقسيط",pyH:"ثوبك الحين… وادفع على راحتك",pyL:"قسّم قيمة طلبك على دفعات مع تابي وتمارا.",tbS:"قسّمها على دفعات",tmS:"قسّمها على دفعات",
+  ftC:"© إليغانزا للخياطة — جدة",zOrd:"اطلب هذا القماش",color:"اللون",again:"أعد تفصيل نفس الثوب",view:"عرض",del:"حذف",
+  pFrom:"السعر التقديري يبدأ من",pCur:"ريال",pNote:"السعر النهائي يتحدد حسب القماش اللي تختاره في المحل.",
+  shade:"درجة اللون",texture:"الملمس",season:"الموسم",features:"المميزات",care:"العناية",fabric:"القماش",compare:"قارن",cmpH:"مقارنة بين قماشين",cmpPick:"اختر قماش ثاني للمقارنة.",noFab:"لا توجد أقمشة في هذا الموسم بعد.",
+  days:"يوم",hrs:"ساعة",mins:"دقيقة",secs:"ثانية",wa:"واتساب",ig:"إنستقرام",map:"موقعنا على قوقل",mapSub:"افتح الخريطة",sc:"سناب شات",tt:"تيك توك",go:"اضغط هنا",soon:"قريبًا",
+  hi:"السلام عليكم، ",mine:"هذي اختياراتي لثوب من إليغانزا",againMsg:"أبغى أعيد تفصيل نفس الثوب بهذي التفاصيل",ref:"رقم القياس/الاسم: ",book:"السلام عليكم، أبغى أحجز موعد قياس في إليغانزا",fabMsg:"السلام عليكم، أبغى أفصّل ثوب من قماش: ",langBtn:"English",seasons:["صيفي","شتوي"]},
+ en:{skip:"Skip",mtH:"We'll be back soon",mtWa:"Message us on WhatsApp",n1:"Design",n2:"Offers",n3:"Our story",n4:"Fabrics",n5:"Order journey",n6:"FAQ",n7:"Contact",hdrC:"Contact us",hb1:"Explore our collection",hb2:"Design your thobe",
+  ofK:"Offers & announcements",ofH:"Limited-time offers",oeH:"Our next offer… is coming",oeP:"Follow us on Instagram to be the first to hear about offers and limited editions.",oeB:"Follow us",
+  mkK:"Design your own thobe",mkH:"Choose your details… and see them live",mkL:"Once we have your measurements, pick the colour and details you like, then send us your order card in one tap.",orH:"Your order card",mrefL:"Measurement number or name (if any)",send:"Send my choices on WhatsApp",save:"Save to my wardrobe",saved:"Saved ✓",mkN:"Embroidery and the final fabric are confirmed with you in the shop. “My wardrobe” is saved on your device so you can come back anytime.",
+  exK:"Exclusively in store",exH:"Private designs… never shown online",exP:"We keep special models and designs for our customers. Visit us to see them in person — and make sure your thobe looks like no one else's.",exB:"Visit our shop",
+  stK:"Our story",stH:"From an idea… to a thobe worthy of you",fbK:"Fabric library",fbH:"Every season has its fabric",fbL:"Tap any fabric to enlarge it. See and feel the full collection in our shop.",sum:"Summer",win:"Winter",fbN:"Fabrics shown are illustrative examples.",
+  jrK:"Your thobe's journey at Eleganza",jrH:"From fabric… to your door",jrL:"Every thobe goes through six stages before it reaches you — ask us on WhatsApp anytime where yours is.",
+  dlK:"Timing & delivery",dlH:"Your thobe, delivered to your door",durH:"Tailoring time",delH:"Delivery",polH:"Alteration & exchange policy",fqK:"FAQ",fqH:"Everything you want to know",
+  ctK:"Contact us",ctH:"Choose your way… and tap",locL:"Address",hrsL:"Opening hours",pyK:"Pay in instalments",pyH:"Your thobe now… pay at your pace",pyL:"Split your order into payments with Tabby and Tamara.",tbS:"Split it into payments",tmS:"Split it into payments",
+  ftC:"© Eleganza Tailoring — Jeddah",zOrd:"Order this fabric",color:"Colour",again:"Re-tailor the same thobe",view:"View",del:"Delete",
+  pFrom:"Estimated price from",pCur:"SAR",pNote:"The final price depends on the fabric you choose in the shop.",
+  shade:"Shade",texture:"Texture",season:"Season",features:"Features",care:"Care",fabric:"Fabric",compare:"Compare",cmpH:"Compare two fabrics",cmpPick:"Pick a second fabric to compare.",noFab:"No fabrics for this season yet.",
+  days:"days",hrs:"hours",mins:"min",secs:"sec",wa:"WhatsApp",ig:"Instagram",map:"Find us on Google",mapSub:"Open the map",sc:"Snapchat",tt:"TikTok",go:"Tap here",soon:"Coming soon",
+  hi:"Hello, ",mine:"here are my choices for an Eleganza thobe",againMsg:"I'd like to re-tailor the same thobe with these details",ref:"Measurement number/name: ",book:"Hello, I'd like to book a measurement appointment at Eleganza",fabMsg:"Hello, I'd like a thobe tailored from this fabric: ",langBtn:"العربية",seasons:["Summer","Winter"]}
+};
+let lang="ar";try{const q=localStorage.getItem("elg_lang");if(q==="en")lang="en"}catch(e){}
+const t=k=>T[lang][k]??T.ar[k]??"";
+let CD={...DEF},docRef=null,staff=false;
+const TEXT_KEYS=Object.keys(DEF_EN);
+let C={...DEF};
+function compose(){C=lang==="en"?{...CD,...DEF_EN,announce:"",offers:""}:{...CD}}
 const $=id=>document.getElementById(id);
 const txt=(id,v)=>{$(id).textContent=v||""};
 const safe=u=>/^https:\/\//.test(String(u||"").trim())?String(u).trim():"";
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const lines=s=>String(s||"").split("\n").map(l=>l.trim()).filter(Boolean).map(l=>l.split("|").map(x=>x.trim()));
-const ar=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+const num=n=>lang==="ar"?String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]):String(n);
 const wa=(m)=>{const n=String(C.whatsapp||"").replace(/\D/g,"");return n?"https://wa.me/"+n+(m?"?text="+encodeURIComponent(m):""):""};
 const setLink=(id,u)=>{const e=$(id);if(!e)return;e.href=u||"#";e.style.display=u?"":"none";if(u){e.target="_blank";e.rel="noopener"}};
 
@@ -524,17 +609,24 @@ const dustRO=new ResizeObserver(size);dustRO.observe(cv);
 const dustIO=new IntersectionObserver(e=>{vis=e[0].isIntersecting});dustIO.observe(cv);
 if(run)requestAnimationFrame(tick);
 
-/* اصنع ثوبك */
-const COLORS=[["#f8f7f3","أبيض"],["#efe6d2","عاجي"],["#d6c5a3","بيج"],["#c9cacb","رمادي فاتح"],["#6c6d70","رمادي غامق"],["#27324a","كحلي"],["#5b4636","بني"],["#1e1e1e","أسود"]];
+/* صمّم ثوبك */
+const COLORS=[["#f8f7f3","أبيض","White"],["#efe6d2","عاجي","Ivory"],["#d6c5a3","بيج","Beige"],["#c9cacb","رمادي فاتح","Light grey"],["#6c6d70","رمادي غامق","Dark grey"],["#27324a","كحلي","Navy"],["#5b4636","بني","Brown"],["#1e1e1e","أسود","Black"]];
 const GROUPS=[
- {k:"closure",t:"الإغلاق",o:[["buttons","أزرار"],["zipper","سحاب"]]},
- {k:"collar",t:"الرقبة",o:[["light","خفيفة"],["medium","وسط"],["stand","واقفة"]]},
- {k:"sleeve",t:"الكم",o:[["plain","سادة"],["cuff","كبك"]]},
- {k:"chest",t:"جيب الصدر",o:[["yes","مع جيب"],["no","بدون"]]},
- {k:"side",t:"جيب الثوب",o:[["yes","مع جيب"],["no","بدون"]]},
- {k:"emb",t:"التطريز",o:[["no","بدون"],["yes","تطريز خفيف"]]}];
-let S={color:"#f8f7f3",closure:"buttons",collar:"medium",sleeve:"plain",chest:"yes",side:"yes",emb:"no"};
-const lab=(k,v)=>k==="color"?(COLORS.find(c=>c[0]===v)||["","—"])[1]:((GROUPS.find(g=>g.k===k)||{o:[]}).o.find(o=>o[0]===v)||["","—"])[1];
+ {k:"closure",t:{ar:"الصدر",en:"Front"},o:[["buttons","أزرار","Buttons"],["zipper","سحاب","Zipper"]]},
+ {k:"placket",t:{ar:S=>S.closure==="zipper"?"إخفاء السحاب":"إخفاء الأزرار",en:S=>S.closure==="zipper"?"Hide the zipper":"Hide the buttons"},o:[["shown","ظاهر","Visible"],["hidden","مخفي بنفس القماش","Hidden under the fabric"]]},
+ {k:"collar",t:{ar:"حشوة الرقبة",en:"Collar interlining"},o:[["light","خفيفة","Light"],["medium","وسط","Medium"],["stand","واقفة","Standing"]]},
+ {k:"sleeve",t:{ar:"الكم",en:"Sleeve"},o:[["plain","سادة","Plain"],["cuff","كبك","Cufflinks"]]},
+ {k:"chest",t:{ar:"جيب الصدر",en:"Chest pocket"},o:[["yes","مع جيب","With pocket"],["no","بدون","None"]]},
+ {k:"acc",t:{ar:"إكسسوارات الجيب",en:"Pocket accessories"},o:[["yes","مع إكسسوارات","With accessories"],["no","بدون","None"]],show:S=>S.chest==="yes"},
+ {k:"side",t:{ar:"جيب الثوب",en:"Side pockets"},o:[["shown","ظاهر","Visible"],["hidden","مخفي","Hidden"]]},
+ {k:"emb",t:{ar:"التطريز",en:"Embroidery"},o:[["no","بدون","None"],["yes","تطريز خفيف","Light embroidery"]]}];
+const SDEF={color:"#f8f7f3",closure:"buttons",placket:"shown",collar:"medium",sleeve:"plain",chest:"yes",acc:"no",side:"shown",emb:"no"};
+let S={...SDEF};
+const norm=f=>{const o={...SDEF,...f};if(o.side==="yes")o.side="shown";if(o.side==="no")o.side="hidden";return o};
+const LI=lang=>lang==="en"?2:1;
+const gt=(g,st)=>{const v=g.t[lang];return typeof v==="function"?v(st):v};
+const lab=(k,v)=>k==="color"?((COLORS.find(c=>c[0]===v)||[])[LI(lang)]||"—"):(((GROUPS.find(g=>g.k===k)||{o:[]}).o.find(o=>o[0]===v)||[])[LI(lang)]||"—");
+const shown=(g,st)=>!g.show||g.show(st);
 function lum(h){const n=parseInt(h.slice(1),16);return(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))/255}
 function mir(pts){return pts.map(([x,y])=>[400-x,y])}
 const poly=(pts,f,s)=>'<polygon points="'+pts.map(p=>p.join(",")).join(" ")+'" fill="'+f+'" stroke="'+s+'" stroke-width="1.5" stroke-linejoin="round"/>';
@@ -550,55 +642,64 @@ function thobe(){
   /* الكم */
   if(S.sleeve==="cuff"){const L=[[61,265],[101,278],[94,303],[54,290]];s+=poly(L,c,ln)+poly(mir(L),c,ln)+'<path d="M61 265 L101 278" stroke="'+ln+'"/><circle cx="78" cy="286" r="4" fill="'+gold+'"/><circle cx="322" cy="286" r="4" fill="'+gold+'"/>'}
   else s+='<path d="M57 281 L97 294 M343 281 L303 294" stroke="'+ln+'" stroke-width="1.2" stroke-dasharray="3 3"/>';
-  /* الجيوب */
-  if(S.side==="yes")s+='<path d="M262 300 L268 354 M138 300 L132 354" stroke="'+ln+'" stroke-width="2.4" stroke-linecap="round"/>';
-  if(S.chest==="yes")s+='<path d="M226 128 h34 v34 q-17 6 -34 0 z" fill="'+c+'" stroke="'+ln+'" stroke-width="1.5"/><path d="M226 133 h34" stroke="'+ln+'" stroke-dasharray="2 2"/><path d="M226 128 h34 v34 q-17 6 -34 0 z" fill="url(#sh)" opacity=".5"/>';
-  /* الجبزور */
+  /* جيب الثوب */
+  if(S.side==="shown")s+='<path d="M262 300 L268 354 M138 300 L132 354" stroke="'+ln+'" stroke-width="2.6" stroke-linecap="round"/><path d="M257 301 L267 299 M263 355 L273 353 M143 301 L133 299 M137 355 L127 353" stroke="'+ln+'" stroke-width="1.6" stroke-linecap="round"/>';
+  else s+='<path d="M272 296 L273 358 M128 296 L127 358" stroke="'+ln+'" stroke-width="1" stroke-dasharray="2 3" opacity=".55"/>';
+  /* جيب الصدر والإكسسوارات */
+  if(S.chest==="yes"){
+    const pen=S.acc==="yes";
+    if(pen)s+='<rect x="249" y="104" width="7" height="30" rx="3.5" fill="#1d1d1d"/><circle cx="252.5" cy="106" r="3" fill="'+gold+'"/>';
+    s+='<path d="M226 128 h34 v34 q-17 6 -34 0 z" fill="'+c+'" stroke="'+ln+'" stroke-width="1.5"/><path d="M226 133 h34" stroke="'+ln+'" stroke-dasharray="2 2"/><path d="M226 128 h34 v34 q-17 6 -34 0 z" fill="url(#sh)" opacity=".5"/>';
+    if(pen)s+='<rect x="251.4" y="108" width="2.4" height="30" rx="1.2" fill="'+gold+'"/><path d="M232 128 q4 -8 9 -3 q3 -6 7 0" fill="'+(dark?"#e8e3d8":"#ffffff")+'" stroke="'+ln+'" stroke-width="1"/>';
+  }
+  /* الصدر: أزرار أو سحاب، ظاهر أو مخفي */
   s+='<rect x="193" y="84" width="14" height="124" rx="2" fill="'+c+'" stroke="'+ln+'" stroke-width="1.5"/>';
-  if(S.closure==="buttons")s+=[102,128,154,180].map(y=>'<circle cx="200" cy="'+y+'" r="3.8" fill="'+(dark?"#e8e3d8":"#fff")+'" stroke="'+ln+'"/>').join("");
+  if(S.placket==="hidden"){
+    s+='<rect x="191" y="84" width="18" height="124" rx="2" fill="'+c+'" stroke="'+ln+'" stroke-width="1.5"/><rect x="191" y="84" width="18" height="124" rx="2" fill="url(#sh)" opacity=".35"/><path d="M205 90 V204" stroke="'+ln+'" stroke-width="1" stroke-dasharray="2 2.5"/>';
+  }else if(S.closure==="buttons")s+=[102,128,154,180].map(y=>'<circle cx="200" cy="'+y+'" r="3.8" fill="'+(dark?"#e8e3d8":"#fff")+'" stroke="'+ln+'"/>').join("");
   else{s+='<path d="M200 90 V204" stroke="'+(dark?"#d8d3c8":"#9a9a9a")+'" stroke-width="2"/>';for(let y=92;y<204;y+=5)s+='<path d="M197 '+y+' h6" stroke="'+(dark?"#d8d3c8":"#9a9a9a")+'" stroke-width="1"/>';s+='<rect x="196" y="186" width="8" height="15" rx="2" fill="'+gold+'"/>'}
-  /* الرقبة */
+  /* حشوة الرقبة */
   if(S.collar==="light")s+='<path d="M168 68 Q200 89 232 68" fill="none" stroke="'+ln+'" stroke-width="3.5" stroke-linecap="round"/>';
   else if(S.collar==="medium")s+='<path d="M166 62 Q200 84 234 62 L237 73 Q200 97 163 73 Z" fill="'+c+'" stroke="'+ln+'" stroke-width="1.5"/>';
   else s+='<path d="M170 42 Q200 54 230 42 L237 73 Q200 96 163 73 Z" fill="'+c+'" stroke="'+ln+'" stroke-width="1.5"/><path d="M170 42 Q200 56 230 42" fill="none" stroke="'+ln+'"/><path d="M196 52 L196 84 M204 52 L204 84" stroke="'+ln+'"/>';
   /* التطريز */
-  if(S.emb==="yes"){s+='<g fill="none" stroke="'+embc+'" stroke-width="1.6" stroke-dasharray="1.5 3" stroke-linecap="round"><path d="M189 88 V212 M211 88 V212"/><path d="M162 80 Q200 104 238 80"/></g>';for(let y=96;y<210;y+=14)s+='<path d="M200 '+(y-3)+' l3 3 l-3 3 l-3 -3z" fill="'+embc+'" opacity=".7"/>'}
+  if(S.emb==="yes"){s+='<g fill="none" stroke="'+embc+'" stroke-width="1.6" stroke-dasharray="1.5 3" stroke-linecap="round"><path d="M187 88 V212 M213 88 V212"/><path d="M162 80 Q200 104 238 80"/></g>';for(let y=96;y<210;y+=14)s+='<path d="M'+(S.placket==="hidden"?213:200)+' '+(y-3)+' l3 3 l-3 3 l-3 -3z" fill="'+embc+'" opacity=".7"/>'}
   $("thobe").innerHTML=s;
   $("stTag").textContent=lab("color",S.color);
 }
 function opts(){
-  let h='<div class="grp rv"><h3>اللون</h3><div class="chips">'+COLORS.map(([v,n])=>'<button type="button" class="sw" data-k="color" data-v="'+v+'" aria-label="'+n+'" title="'+n+'" aria-pressed="'+(S.color===v)+'" style="background:'+v+'"></button>').join("")+'</div></div>';
-  h+=GROUPS.map(g=>'<div class="grp rv"><h3>'+g.t+'</h3><div class="chips">'+g.o.map(([v,n])=>'<button type="button" class="chip" data-k="'+g.k+'" data-v="'+v+'" aria-pressed="'+(S[g.k]===v)+'">'+n+'</button>').join("")+'</div></div>').join("");
+  let h='<div class="grp rv in"><h3>'+t("color")+'</h3><div class="chips">'+COLORS.map(c=>'<button type="button" class="sw" data-k="color" data-v="'+c[0]+'" aria-label="'+c[LI(lang)]+'" title="'+c[LI(lang)]+'" aria-pressed="'+(S.color===c[0])+'" style="background:'+c[0]+'"></button>').join("")+'</div></div>';
+  h+=GROUPS.map(g=>'<div class="grp rv in" data-g="'+g.k+'"'+(shown(g,S)?'':' hidden')+'><h3>'+esc(gt(g,S))+'</h3><div class="chips">'+g.o.map(o=>'<button type="button" class="chip" data-k="'+g.k+'" data-v="'+o[0]+'" aria-pressed="'+(S[g.k]===o[0])+'">'+o[LI(lang)]+'</button>').join("")+'</div></div>').join("");
   $("opts").innerHTML=h;
 }
-const ROWS=[["اللون","color"]].concat(GROUPS.map(g=>[g.t,g.k]));
-function msgFor(st,ref,again){return "السلام عليكم، "+(again?"أبغى أعيد تفصيل نفس الثوب بهذي التفاصيل":"هذي اختياراتي لثوب من إليغانزا")+":\n"+ROWS.map(([t,k])=>"• "+t+": "+lab(k,st[k])).join("\n")+(ref?"\nرقم القياس/الاسم: "+ref:"")}
+function rows(st){return [[t("color"),"color"]].concat(GROUPS.filter(g=>shown(g,st)).map(g=>[gt(g,st),g.k]))}
+function msgFor(st,ref,again){return t("hi")+(again?t("againMsg"):t("mine"))+":\n"+rows(st).map(([tt,k])=>"• "+tt+": "+lab(k,st[k])).join("\n")+(ref?"\n"+t("ref")+ref:"")}
 function summary(){
-  const rows=ROWS;
-  $("sum").innerHTML=rows.map(([t,k])=>'<li><span>'+t+':</span> '+esc(lab(k,S[k]))+'</li>').join("");
+  $("sum").innerHTML=rows(S).map(([tt,k])=>'<li><span>'+esc(tt)+':</span> '+esc(lab(k,S[k]))+'</li>').join("");
   const ref=$("mref").value.trim();
-  const m=msgFor(S,ref,false);
   const base=parseFloat(String(C.priceBase).replace(/[^\d.]/g,""));
   if(base>0){const add={};lines(C.priceAdd).forEach(([k,v])=>add[k]=parseFloat(v)||0);
-    let t=base;for(const g of GROUPS)t+=add[g.k+"-"+S[g.k]]||0;if(S.closure==="zipper")t+=add.zipper||0;
-    $("price").innerHTML='<small>السعر التقديري يبدأ من</small><b>'+ar(Math.round(t))+' ريال</b><small>السعر النهائي يتحدد حسب القماش اللي تختاره في المحل.</small>';$("price").classList.add("on")}
+    let tot=base;for(const g of GROUPS)if(shown(g,S))tot+=add[g.k+"-"+S[g.k]]||0;
+    $("price").innerHTML='<small>'+t("pFrom")+'</small><b>'+num(Math.round(tot))+' '+t("pCur")+'</b><small>'+t("pNote")+'</small>';$("price").classList.add("on")}
   else $("price").classList.remove("on");
-  setLink("sendWa",wa(m));
+  setLink("sendWa",wa(msgFor(S,ref,false)));
 }
-function syncPressed(){document.querySelectorAll("#opts [data-k]").forEach(b=>b.setAttribute("aria-pressed",String(S[b.dataset.k]===b.dataset.v)))}
+function syncPressed(){
+  document.querySelectorAll("#opts [data-k]").forEach(b=>b.setAttribute("aria-pressed",String(S[b.dataset.k]===b.dataset.v)));
+  GROUPS.forEach(g=>{const el=document.querySelector('#opts [data-g="'+g.k+'"]');if(!el)return;el.hidden=!shown(g,S);el.querySelector("h3").textContent=gt(g,S)});
+}
 $("opts").addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(!b)return;S[b.dataset.k]=b.dataset.v;syncPressed();thobe();summary()});
 $("mref").addEventListener("input",summary);
-let F=[];try{F=JSON.parse(localStorage.getItem("elg_favs")||"[]")}catch(e){F=[]}
-function favs(){ $("favs").innerHTML=F.map((f,i)=>{const u=wa(msgFor(f,f.ref||"",true));return '<span class="fav"><button type="button" data-load="'+i+'" title="عرض">'+esc(lab("color",f.color))+' · '+esc(lab("collar",f.collar))+' · '+esc(lab("sleeve",f.sleeve))+'</button>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener" class="again">أعد تفصيل نفس الثوب</a>':'')+'<button type="button" data-del="'+i+'" aria-label="حذف">×</button></span>'}).join("");try{localStorage.setItem("elg_favs",JSON.stringify(F))}catch(e){} }
-$("saveFav").addEventListener("click",()=>{F.unshift({...S,ref:$("mref").value.trim().slice(0,60)});F=F.slice(0,6);favs();$("saveFav").textContent="تم الحفظ ✓";setTimeout(()=>$("saveFav").textContent="احفظ في خزانتي",1600)});
-$("favs").addEventListener("click",e=>{const l=e.target.dataset.load,d=e.target.dataset.del;if(l!=null){const {ref,...st}=F[+l];S={...S,...st};if(ref)$("mref").value=ref;syncPressed();thobe();summary()}if(d!=null){F.splice(+d,1);favs()}});
+let F=[];try{F=JSON.parse(localStorage.getItem("elg_favs")||"[]").map(f=>({...norm(f),ref:f.ref||""}))}catch(e){F=[]}
+function favs(){ $("favs").innerHTML=F.map((f,i)=>{const u=wa(msgFor(f,f.ref||"",true));return '<span class="fav"><button type="button" data-load="'+i+'" title="'+t("view")+'">'+esc(lab("color",f.color))+' · '+esc(lab("collar",f.collar))+' · '+esc(lab("sleeve",f.sleeve))+'</button>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener" class="again">'+t("again")+'</a>':'')+'<button type="button" data-del="'+i+'" aria-label="'+t("del")+'">×</button></span>'}).join("");try{localStorage.setItem("elg_favs",JSON.stringify(F))}catch(e){} }
+$("saveFav").addEventListener("click",()=>{F.unshift({...S,ref:$("mref").value.trim().slice(0,60)});F=F.slice(0,6);favs();$("saveFav").textContent=t("saved");setTimeout(()=>$("saveFav").textContent=t("save"),1600)});
+$("favs").addEventListener("click",e=>{const l=e.target.dataset.load,d=e.target.dataset.del;if(l!=null){const {ref,...st}=F[+l];S=norm(st);if(ref)$("mref").value=ref;syncPressed();thobe();summary()}if(d!=null){F.splice(+d,1);favs()}});
 
 /* القصة */
 const IC=['<path d="M12 3a6 6 0 0 1 4 10.5V16H8v-2.5A6 6 0 0 1 12 3zM9 20h6"/>','<path d="M3 6h18v12H3zM3 10h18M3 14h18"/>','<path d="M2 15h20v4H2zM6 15v-2M10 15v-3M14 15v-2M18 15v-3"/>','<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5 20 16M8.5 16.5 20 8"/>','<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>'];
-let chapIO=null;
 function story(){
   const box=$("chaps");box.querySelectorAll(".chap").forEach(n=>n.remove());
-  lines(C.story).forEach(([t,d],i)=>{const el=document.createElement("div");el.className="chap rv";el.innerHTML='<div class="dot"><svg viewBox="0 0 24 24">'+IC[i%IC.length]+'</svg></div><h3></h3><p></p>';el.querySelector("h3").textContent=t||"";el.querySelector("p").textContent=d||"";box.appendChild(el)});
+  lines(C.story).forEach(([tt,d],i)=>{const el=document.createElement("div");el.className="chap rv";el.innerHTML='<div class="dot"><svg viewBox="0 0 24 24">'+IC[i%IC.length]+'</svg></div><h3></h3><p></p>';el.querySelector("h3").textContent=tt||"";el.querySelector("p").textContent=d||"";box.appendChild(el)});
   watch();
 }
 function thread(){const b=$("chaps"),r=b.getBoundingClientRect(),h=innerHeight;const p=Math.max(0,Math.min(1,(h*.65-r.top)/r.height));$("thr").style.height=(p*100)+"%";
@@ -606,34 +707,34 @@ function thread(){const b=$("chaps"),r=b.getBoundingClientRect(),h=innerHeight;c
 addEventListener("scroll",()=>requestAnimationFrame(thread),{passive:true});
 
 /* الأقمشة */
-let season="صيفي";
+let season=0;
 function texture(col){const dark=lum(col)<.5,a=dark?"rgba(255,255,255,.07)":"rgba(0,0,0,.06)",b=dark?"rgba(0,0,0,.25)":"rgba(255,255,255,.5)";
   return "background-color:"+col+";background-image:repeating-linear-gradient(0deg,"+a+" 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,"+a+" 0 1px,transparent 1px 3px),linear-gradient(135deg,"+b+",transparent 60%)"}
 let CMP=[],FL=[];
 const fcol=f=>/^#[0-9a-fA-F]{6}$/.test(f[6]||"")?f[6]:"#cccccc";
 const big=col=>texture(col).replace(/3px\)/g,"9px)").replace(/1px,transparent 1px/g,"3px,transparent 3px");
 function fabrics(){
-  FL=lines(C.fabrics);
-  const L=FL.map((f,i)=>[f,i]).filter(([f])=>f[0]===season);
-  $("fgrid").innerHTML=L.map(([f,i])=>'<div class="fwrap rv"><button type="button" class="fab-card" data-i="'+i+'"><div class="tex" style="'+texture(fcol(f))+'"></div><div class="t"><h3>'+esc(f[1])+'</h3><p>'+esc([f[2],f[3]].filter(Boolean).join(" · "))+'</p></div></button><label class="cmpbtn"><input type="checkbox" data-c="'+i+'"'+(CMP.includes(i)?" checked":"")+'> قارن</label></div>').join("")||'<p class="note">لا توجد أقمشة في هذا الموسم بعد.</p>';
+  FL=lines(C.fabrics);const sn=t("seasons")[season];
+  const L=FL.map((f,i)=>[f,i]).filter(([f])=>f[0]===sn);
+  $("fgrid").innerHTML=L.map(([f,i])=>'<div class="fwrap rv"><button type="button" class="fab-card" data-i="'+i+'"><div class="tex" style="'+texture(fcol(f))+'"></div><div class="t"><h3>'+esc(f[1])+'</h3><p>'+esc([f[2],f[3]].filter(Boolean).join(" · "))+'</p></div></button><label class="cmpbtn"><input type="checkbox" data-c="'+i+'"'+(CMP.includes(i)?" checked":"")+'> '+t("compare")+'</label></div>').join("")||'<p class="note">'+t("noFab")+'</p>';
   compare();watch();
 }
 $("fgrid").addEventListener("click",e=>{const b=e.target.closest(".fab-card");if(!b)return;const f=FL[+b.dataset.i];
   $("zTex").setAttribute("style",big(fcol(f)));txt("zName",f[1]);
-  $("zSpec").innerHTML=[["درجة اللون",f[2]],["الملمس",f[3]],["الموسم",f[0]],["المميزات",f[4]],["العناية",f[5]]].filter(r=>r[1]).map(([a,b])=>'<dt>'+a+'</dt><dd>'+esc(b)+'</dd>').join("");
-  setLink("zOrder",wa("السلام عليكم، أبغى أفصّل ثوب من قماش: "+f[1]+(f[2]?" ("+f[2]+")":"")));
+  $("zSpec").innerHTML=[[t("shade"),f[2]],[t("texture"),f[3]],[t("season"),f[0]],[t("features"),f[4]],[t("care"),f[5]]].filter(r=>r[1]).map(([a,b])=>'<dt>'+a+'</dt><dd>'+esc(b)+'</dd>').join("");
+  setLink("zOrder",wa(t("fabMsg")+f[1]+(f[2]?" ("+f[2]+")":"")));
   $("zoom").classList.add("on");$("zClose").focus()});
 $("fgrid").addEventListener("change",e=>{const i=e.target.dataset.c;if(i==null)return;const n=+i;
   if(e.target.checked){CMP=CMP.filter(x=>x!==n);CMP.push(n);if(CMP.length>2)CMP.shift()}else CMP=CMP.filter(x=>x!==n);
   document.querySelectorAll("#fgrid [data-c]").forEach(c=>c.checked=CMP.includes(+c.dataset.c));compare()});
 function compare(){
   const box=$("cmp");const A=CMP.map(i=>FL[i]).filter(Boolean);
-  if(A.length<2){box.classList.toggle("on",A.length===1);box.innerHTML=A.length===1?'<p class="note" style="margin:0">اختر قماش ثاني للمقارنة.</p>':"";return}
-  const row=(t,k)=>'<tr><th>'+t+'</th>'+A.map(f=>'<td>'+esc(f[k]||"—")+'</td>').join("")+'</tr>';
+  if(A.length<2){box.classList.toggle("on",A.length===1);box.innerHTML=A.length===1?'<p class="note" style="margin:0">'+t("cmpPick")+'</p>':"";return}
+  const row=(tt,k)=>'<tr><th>'+tt+'</th>'+A.map(f=>'<td>'+esc(f[k]||"—")+'</td>').join("")+'</tr>';
   box.classList.add("on");
-  box.innerHTML='<h3 style="font-size:20px;margin-bottom:12px">مقارنة بين قماشين</h3><div class="scroll"><table><tr><th></th>'+A.map(f=>'<td><div class="sw2" style="'+big(fcol(f))+'"></div></td>').join("")+'</tr>'+row("القماش",1)+row("درجة اللون",2)+row("الملمس",3)+row("الموسم",0)+row("المميزات",4)+row("العناية",5)+'</table></div>';
+  box.innerHTML='<h3 style="font-size:20px;margin-bottom:12px">'+t("cmpH")+'</h3><div class="scroll"><table><tr><th></th>'+A.map(f=>'<td><div class="sw2" style="'+big(fcol(f))+'"></div></td>').join("")+'</tr>'+row(t("fabric"),1)+row(t("shade"),2)+row(t("texture"),3)+row(t("season"),0)+row(t("features"),4)+row(t("care"),5)+'</table></div>';
 }
-document.querySelectorAll(".tabs .chip").forEach(t=>t.addEventListener("click",()=>{season=t.dataset.s;document.querySelectorAll(".tabs .chip").forEach(x=>x.setAttribute("aria-pressed",String(x===t)));fabrics()}));
+document.querySelectorAll(".tabs .chip").forEach(tb=>tb.addEventListener("click",()=>{season=+tb.dataset.s;CMP=[];document.querySelectorAll(".tabs .chip").forEach(x=>x.setAttribute("aria-pressed",String(x===tb)));fabrics()}));
 $("zClose").addEventListener("click",()=>$("zoom").classList.remove("on"));
 $("zoom").addEventListener("click",e=>{if(e.target.id==="zoom")$("zoom").classList.remove("on")});
 
@@ -641,12 +742,12 @@ $("zoom").addEventListener("click",e=>{if(e.target.id==="zoom")$("zoom").classLi
 let OF=[];
 function offers(){
   const now=Date.now();
-  OF=lines(C.offers).map(([t,d,e])=>({t,d,end:e?Date.parse(e+"T23:59:59+03:00"):NaN})).filter(o=>o.t&&(isNaN(o.end)||o.end>now));
+  OF=lines(C.offers).map(([tt,d,e])=>({t:tt,d,end:e?Date.parse(e+"T23:59:59+03:00"):NaN})).filter(o=>o.t&&(isNaN(o.end)||o.end>now));
   $("ogrid").innerHTML=OF.map((o,i)=>'<div class="ocard rv"><h3>'+esc(o.t)+'</h3><p>'+esc(o.d||"")+'</p>'+(isNaN(o.end)?'':'<div class="cd" data-i="'+i+'"></div>')+'</div>').join("");
   $("oempty").style.display=OF.length?"none":"";$("ogrid").style.display=OF.length?"":"none";cd();watch();
 }
 function cd(){const now=Date.now();document.querySelectorAll(".cd").forEach(el=>{const o=OF[+el.dataset.i];if(!o)return;let s=Math.max(0,Math.floor((o.end-now)/1000));const D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60),Sx=s%60;
-  el.innerHTML=[[D,"يوم"],[H,"ساعة"],[M,"دقيقة"],[Sx,"ثانية"]].map(([n,l])=>'<div><b>'+ar(String(n).padStart(2,"0"))+'</b><span>'+l+'</span></div>').join("")})}
+  el.innerHTML=[[D,t("days")],[H,t("hrs")],[M,t("mins")],[Sx,t("secs")]].map(([n,l])=>'<div><b>'+num(String(n).padStart(2,"0"))+'</b><span>'+l+'</span></div>').join("")})}
 const cdT=setInterval(()=>{if(OF.length)cd()},1000);
 
 /* التواصل */
@@ -659,8 +760,8 @@ const SOC={
 function social(){
   const n=String(C.whatsapp||"").replace(/\D/g,"");
   const igH=(safe(C.instagram).match(/instagram\.com\/([A-Za-z0-9._]+)/)||[])[1];
-  const items=[["wa","واتساب",wa("السلام عليكم، أبغى أحجز موعد قياس"),n?"+"+n:""],["ig","إنستقرام",safe(C.instagram),igH?"@"+igH:""],["map","موقعنا على قوقل",safe(C.mapsUrl),"افتح الخريطة"],["sc","سناب شات",safe(C.snapchat),""],["tt","تيك توك",safe(C.tiktok),""]];
-  $("soc").innerHTML=items.map(([k,t,u,sub])=>{const [bg,ic]=SOC[k];const inner='<span class="ic" style="background:'+bg+'">'+ic+'</span><b>'+t+'</b>'+(sub?'<small>'+esc(sub)+'</small>':'')+'<span class="go">'+(u?'اضغط هنا':'قريبًا')+'</span>';
+  const items=[["wa",t("wa"),wa(t("book")),n?"+"+n:""],["ig",t("ig"),safe(C.instagram),igH?"@"+igH:""],["map",t("map"),safe(C.mapsUrl),t("mapSub")],["sc",t("sc"),safe(C.snapchat),""],["tt",t("tt"),safe(C.tiktok),""]];
+  $("soc").innerHTML=items.map(([k,tt,u,sub])=>{const [bg,ic]=SOC[k];const inner='<span class="ic" style="background:'+bg+'">'+ic+'</span><b>'+tt+'</b>'+(sub?'<small>'+esc(sub)+'</small>':'')+'<span class="go">'+(u?t("go"):t("soon"))+'</span>';
     return u?'<a class="sc rv" style="--c:'+(k==="ig"?"#ee2a7b":k==="map"?"#ea4335":k==="sc"?"#fffc00":k==="tt"?"#25f4ee":"#25d366")+'" href="'+esc(u)+'" target="_blank" rel="noopener">'+inner+'</a>':'<div class="sc soon rv">'+inner+'</div>'}).join("");
   watch();
 }
@@ -669,9 +770,9 @@ function social(){
 const JI=['<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>','<path d="M3 6h18v12H3zM3 10h18M3 14h18"/>','<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5 20 16M8.5 16.5 20 8"/>','<circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5M8 11l2 2 4-4"/>','<path d="M4 16h16l-2-6H6zM12 10V5a2 2 0 1 1 2 2"/>','<path d="M20 7L9 18l-5-5"/>'];
 const jrIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("go");jrIO.unobserve(e.target)}}),{threshold:.3});
 function journey(){
-  $("jr").innerHTML=lines(C.journey).map(([t,d],i)=>'<li class="rv"><div class="n"><svg viewBox="0 0 24 24">'+JI[i%JI.length]+'</svg></div><h3>'+esc(t)+'</h3><p>'+esc(d||"")+'</p></li>').join("");
+  $("jr").innerHTML=lines(C.journey).map(([tt,d],i)=>'<li class="rv"><div class="n"><svg viewBox="0 0 24 24">'+JI[i%JI.length]+'</svg></div><h3>'+esc(tt)+'</h3><p>'+esc(d||"")+'</p></li>').join("");
   $("jr").classList.remove("go");jrIO.observe($("jr"));
-  $("pol").innerHTML=lines(C.policy).map(([t,d])=>'<li class="rv"><b>'+esc(t)+'</b>'+esc(d||"")+'</li>').join("");
+  $("pol").innerHTML=lines(C.policy).map(([tt,d])=>'<li class="rv"><b>'+esc(tt)+'</b>'+esc(d||"")+'</li>').join("");
 }
 /* الأسئلة */
 function faq(){$("faqs").innerHTML=lines(C.faq).map(([q,a])=>'<details class="rv"><summary>'+esc(q)+'</summary><p>'+esc(a||"")+'</p></details>').join("");watch()}
@@ -680,23 +781,33 @@ function faq(){$("faqs").innerHTML=lines(C.faq).map(([q,a])=>'<details class="rv
 const revIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");revIO.unobserve(e.target)}}),{threshold:.12});
 function watch(){document.querySelectorAll(".rv:not(.in)").forEach(el=>revIO.observe(el))}
 
+/* اللغة */
+function applyLang(){
+  const h=document.documentElement;h.lang=lang;h.dir=lang==="ar"?"rtl":"ltr";
+  document.title=lang==="ar"?"إليغانزا للخياطة":"Eleganza Tailoring";
+  document.querySelectorAll("[data-t]").forEach(el=>{const v=t(el.dataset.t);if(v)el.textContent=v});
+  $("langLbl").textContent=t("langBtn");
+  $("langBtn").setAttribute("aria-label",lang==="ar"?"Switch to English":"التبديل إلى العربية");
+}
+$("langBtn").addEventListener("click",()=>{lang=lang==="ar"?"en":"ar";try{localStorage.setItem("elg_lang",lang)}catch(e){}CMP=[];compose();applyLang();opts();thobe();favs();render()});
+
 function render(){
   document.body.classList.toggle("maint",!!C.maintenance&&!staff);
   document.body.classList.toggle("mon",!!C.maintenance);
   txt("mtMsg",C.maintenanceMsg);txt("announce",C.announce);
   const parts=String(C.heroTitle||"").split("*");$("heroTitle").innerHTML=parts.map((p,i)=>i%2?"<em>"+esc(p)+"</em>":esc(p)).join("");
   txt("heroSub",C.heroSub);txt("about",C.about);txt("durTxt",C.duration);txt("delTxt",C.delivery);txt("loc",C.location);txt("hours",C.hours);
-  const book=wa("السلام عليكم، أبغى أحجز موعد قياس في إليغانزا");
-  ["hdrWa","waFloat","mtWa"].forEach(id=>setLink(id,book));
+  const book=wa(t("book"));
+  ["waFloat","mtWa"].forEach(id=>setLink(id,book));
   setLink("offIg",safe(C.instagram));setLink("exMap",safe(C.mapsUrl));
   offers();story();fabrics();journey();social();faq();summary();watch();thread();
 }
-opts();thobe();favs();render();
+compose();applyLang();opts();thobe();favs();render();
 
-/* لوحة التحكم */
+/* لوحة التحكم (النصوص العربية) */
 const keys=Object.keys(DEF);
-function fillForm(){for(const k of keys){const el=$("i_"+k);if(!el)continue;if(el.type==="checkbox")el.checked=!!C[k];else el.value=C[k]??""}}
-function readForm(){const o={};for(const k of keys){const el=$("i_"+k);o[k]=el.type==="checkbox"?el.checked:el.value.trim()}return o}
+function fillForm(){for(const k of keys){const el=$("i_"+k);if(!el)continue;if(el.type==="checkbox")el.checked=!!CD[k];else el.value=CD[k]??""}}
+function readForm(){const o={};for(const k of keys){const el=$("i_"+k);if(!el){o[k]=CD[k];continue}o[k]=el.type==="checkbox"?el.checked:el.value.trim()}return o}
 const panel=$("panel");
 $("fabbtn").addEventListener("click",()=>{fillForm();$("msg").textContent="";panel.classList.add("on");$("close").focus()});
 $("close").addEventListener("click",()=>panel.classList.remove("on"));
@@ -709,7 +820,7 @@ $("save").addEventListener("click",async()=>{
   try{await docRef.set({...readForm(),updatedAt:new Date().toISOString()});$("msg").textContent="تم الحفظ ✓ — التعديلات ظاهرة الآن."}
   catch(e){$("msg").textContent=e&&e.code==="invalid_argument"?"ما عندك صلاحية الحفظ.":"تعذّر الحفظ، حاول مرة ثانية."}
   saving=false});
-$("reset").addEventListener("click",()=>{C={...DEF};fillForm();$("msg").textContent="رجعت النصوص الأصلية في النموذج — اضغط «حفظ ونشر» لتثبيتها."});
+$("reset").addEventListener("click",()=>{CD={...DEF};fillForm();$("msg").textContent="رجعت النصوص الأصلية في النموذج — اضغط «حفظ ونشر» لتثبيتها."});
 
 (async()=>{
   try{
@@ -719,7 +830,7 @@ $("reset").addEventListener("click",()=>{C={...DEF};fillForm();$("msg").textCont
     const db=await window.claude?.use?.("db");
     if(!db)return;
     docRef=db.doc("site/content");
-    docRef.onSnapshot(s=>{if(s.exists){const d=s.data()||{};C={...DEF};for(const k of keys)if(k in d&&typeof d[k]===typeof DEF[k])C[k]=d[k]}render()},()=>{});
+    docRef.onSnapshot(s=>{if(s.exists){const d=s.data()||{};CD={...DEF};for(const k of keys)if(k in d&&typeof d[k]===typeof DEF[k])CD[k]=d[k]}compose();render()},()=>{});
   }catch(e){}
 })();
 }
