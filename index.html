@@ -384,7 +384,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 .lhint i{width:34px;height:34px;border-radius:50%;background:var(--g);display:grid;place-items:center;animation:ltap 1.6s ease-in-out infinite}
 .lhint i svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:2.2}
 @keyframes ltap{0%,100%{transform:scale(1);box-shadow:0 0 0 0 #b69a6688}50%{transform:scale(1.08);box-shadow:0 0 0 12px #b69a6600}}
-@media(max-width:860px){.loy .lg{grid-template-columns:1fr}.loy .lvis{order:-1}.lcard{transform:none}}
+@media(max-width:860px){.loy .lg{grid-template-columns:1fr}.loy .lvis{order:-1;width:100%;max-width:520px;margin:0 auto}.lcard{transform:none}}
 @media(prefers-reduced-motion:reduce){.lslot .ink{opacity:1;transform:none}.lcard:after{display:none}}
 </style>
 </head>
@@ -402,7 +402,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 <header>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="إليغانزا للخياطة"><img src="img/logo.png" alt="إليغانزا"></a>
-    <nav aria-label="أقسام الموقع"><a href="#make" data-t="n1">صمّم ثوبك</a><a href="#offers" data-t="n2">العروض</a><a href="#loyalty" data-t="n8">بطاقة الولاء</a><a href="#story" data-t="n3">قصتنا</a><a href="#fabrics" data-t="n4">الأقمشة</a><a href="#journey" data-t="n5">رحلة الطلب</a><a href="#faq" data-t="n6">أسئلة</a><a href="#contact" data-t="n7">تواصل</a></nav>
+    <nav aria-label="أقسام الموقع"><a href="#make" data-t="n1">صمّم ثوبك</a><a href="#loyalty" data-t="n8">بطاقة الولاء</a><a href="#offers" data-t="n2">العروض</a><a href="#story" data-t="n3">قصتنا</a><a href="#fabrics" data-t="n4">الأقمشة</a><a href="#journey" data-t="n5">رحلة الطلب</a><a href="#faq" data-t="n6">أسئلة</a><a href="#contact" data-t="n7">تواصل</a></nav>
     <div class="hsoc" id="hsoc"></div>
     <div class="hact"><button class="socT" id="socT" type="button" aria-expanded="false" aria-controls="hsoc" aria-label="التواصل الاجتماعي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><button class="lang" id="langBtn" type="button" aria-label="Change language"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9zM4.6 7.5h14.8M4.6 16.5h14.8"/></svg><span id="langLbl">English</span></button>
     <a class="btn p" id="hdrC" href="#contact" data-t="hdrC" style="min-height:42px;padding:0 18px;font-size:15px">تواصل معنا</a></div>
@@ -421,18 +421,6 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
     <div class="btns rv"><a class="btn p" href="#fabrics" data-t="hb1">اكتشف مجموعتنا</a><a class="btn s" href="#make" data-t="hb2">صمّم ثوبك</a></div>
   </div></div>
   <div class="scrollcue" aria-hidden="true"></div>
-</section>
-
-<section class="band offers" id="offers">
-  <div class="wrap">
-    <div class="kick rv" data-t="ofK">العروض والإعلانات</div>
-    <h2 class="rv" data-t="ofH">عروض بوقت محدود</h2>
-    <div class="ogrid" id="ogrid"></div>
-    <div class="oempty rv" id="oempty">
-      <div class="ph"><img src="img/tailor.webp" alt="خيّاط إليغانزا يبتسم ويشير بإصبعه" loading="lazy"></div>
-      <div><h3 data-t="oeH">عرضنا الجاي… قريب</h3><p data-t="oeP">تابعنا على إنستقرام وأول من يعرف بالعروض والإصدارات المحدودة.</p><a class="btn s" id="offIg" href="#" data-t="oeB">تابعنا</a></div>
-    </div>
-  </div>
 </section>
 
 <section class="band loy" id="loyalty">
@@ -463,6 +451,19 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
     </div>
   </div>
 </section>
+
+<section class="band offers" id="offers">
+  <div class="wrap">
+    <div class="kick rv" data-t="ofK">العروض والإعلانات</div>
+    <h2 class="rv" data-t="ofH">عروض بوقت محدود</h2>
+    <div class="ogrid" id="ogrid"></div>
+    <div class="oempty rv" id="oempty">
+      <div class="ph"><img src="img/tailor.webp" alt="خيّاط إليغانزا يبتسم ويشير بإصبعه" loading="lazy"></div>
+      <div><h3 data-t="oeH">عرضنا الجاي… قريب</h3><p data-t="oeP">تابعنا على إنستقرام وأول من يعرف بالعروض والإصدارات المحدودة.</p><a class="btn s" id="offIg" href="#" data-t="oeB">تابعنا</a></div>
+    </div>
+  </div>
+</section>
+
 
 <section class="band ivs" id="make">
   <div class="wrap">
