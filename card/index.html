@@ -54,6 +54,9 @@
   </section>
 
   <section id="vCard" class="view hidden">
+    <div id="ownerBar" class="hidden banner b-disc" style="display:flex;flex-direction:column;gap:10px"><span data-i="ownerView"></span>
+      <div class="actions"><a class="btn sm" href="owner/" data-i="ownerPanel" style="display:flex;align-items:center;justify-content:center;text-decoration:none"></a><button class="btn sm ghost" id="delBtn" type="button" data-i="delCard" style="color:#A12A1F;border-color:#A12A1F"></button></div>
+    </div>
     <div class="row">
       <div><div class="lbl" data-i="holder"></div><div class="name" id="cLabel"></div><div class="lbl" dir="ltr" id="cPhone"></div></div>
       <div><div class="lbl" data-i="stamps"></div><div class="count" id="cCount"></div></div>
@@ -72,11 +75,11 @@
 <script>
 const TOKEN_KEY = 'eleganza_card_token';
 let token = null; try { token = localStorage.getItem(TOKEN_KEY); } catch (e) {}
-let allCards = [], openId = null, openLabel = '', currentCard = null;
+let allCards = [], openId = null, openLabel = '', currentCard = null, ownerMode = false, ownerTok = null;
 const $ = id => document.getElementById(id);
 
 function go(v) { document.querySelectorAll('.view').forEach(x => x.classList.toggle('hidden', x.id !== v)); window.scrollTo(0, 0); }
-document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => { go('vList'); loadList(); });
+document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => { ownerMode = false; go('vList'); loadList(); });
 
 async function loadList() {
   try { allCards = (await api('list')).cards; renderList(); }
@@ -117,7 +120,11 @@ $('rBtn').onclick = async () => {
 $('oBtn').onclick = async () => {
   const e = $('oErr'); e.textContent = '';
   busy('oBtn', true);
-  try { const r = await api('open', { id: openId, code: digits($('oCode').value) }); saveToken(r.token); showCard(r.card); }
+  try {
+    const r = await api('open', { id: openId, code: digits($('oCode').value) });
+    if (r.owner) { ownerMode = true; try { localStorage.setItem('eleganza_owner_token', r.ownerToken); } catch (x) {} ownerTok = r.ownerToken; showCard(r.card); }
+    else { ownerMode = false; saveToken(r.token); showCard(r.card); }
+  }
   catch (x) { e.textContent = x.message; }
   busy('oBtn', false);
 };
@@ -126,6 +133,8 @@ $('oCode').addEventListener('keydown', ev => { if (ev.key === 'Enter') $('oBtn')
 function showCard(c, stay) {
   currentCard = c;
   if (!stay) go('vCard');
+  $('ownerBar').classList.toggle('hidden', !ownerMode);
+  ['refresh', 'logout'].forEach(id => $(id).classList.toggle('hidden', ownerMode));
   $('cLabel').textContent = label(c.label);
   $('cPhone').textContent = c.phone;
   $('cCount').textContent = AR(c.stamps) + ' / ' + AR(c.total);
@@ -142,6 +151,11 @@ async function refresh() {
   }
 }
 $('refresh').onclick = refresh;
+$('delBtn').onclick = async () => {
+  if (!currentCard || !confirm(tr('confirmDel', label(currentCard.label)))) return;
+  try { await api('delete', { token: ownerTok, id: currentCard.id }); alert(tr('msgDeleted')); ownerMode = false; currentCard = null; openLabel = ''; go('vList'); loadList(); }
+  catch (e) { alert(e.message); }
+};
 $('logout').onclick = () => { try { localStorage.removeItem(TOKEN_KEY); } catch (e) {} token = null; currentCard = null; go('vList'); loadList(); };
 if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) $('installHint').style.display = 'none';
 

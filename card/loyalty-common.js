@@ -33,7 +33,7 @@ const I18N = {
     msgUndo: 'تم التراجع عن آخر ختم', msgDisc: 'تم تسجيل استخدام الخصم', msgFree: 'تم تسليم الثوب المجاني', msgReset: 'تم تغيير رمز البطاقة، بلّغ العميل فيه',
     confirmDouble: 'هذي البطاقة انختمت قبل لحظات. تبي تضيف ختم ثاني؟',
     noCam: 'المتصفح ما يدعم الكاميرا، افتح الصفحة في Safari أو Chrome', camDenied: 'ما قدرت أفتح الكاميرا، اسمح للموقع باستخدامها من إعدادات المتصفح',
-    notOurs: 'هذا الرمز مو بطاقة إليجانزا', netErr: 'تعذر الاتصال، تأكد من الإنترنت', genErr: 'صار خطأ، حاول مرة ثانية'
+    notOurs: 'هذا الرمز مو بطاقة إليجانزا', ownerView: 'فتحت البطاقة برمز المالك', delCard: 'حذف البطاقة', confirmDel: l => 'متأكد تبي تحذف بطاقة «' + l + '» نهائياً؟ ما تقدر ترجعها.', msgDeleted: 'تم حذف البطاقة', ownerPanel: 'لوحة المالك', netErr: 'تعذر الاتصال، تأكد من الإنترنت', genErr: 'صار خطأ، حاول مرة ثانية'
   },
   en: {
     title: 'Eleganza Loyalty Card', ownerTitle: 'Eleganza — Owner panel', sub: 'Loyalty card · Tailoring', ownerSub: 'Owner panel · Stamps', langBtn: 'العربية',
@@ -59,7 +59,7 @@ const I18N = {
     msgUndo: 'Last stamp undone', msgDisc: 'Discount marked as used', msgFree: 'Free thobe handed over', msgReset: 'Card code changed, let the customer know',
     confirmDouble: 'This card was stamped a moment ago. Add another stamp?',
     noCam: 'This browser doesn’t support the camera, open the page in Safari or Chrome', camDenied: 'Couldn’t open the camera, allow camera access in your browser settings',
-    notOurs: 'This code isn’t an Eleganza card', netErr: 'Couldn’t connect, check your internet', genErr: 'Something went wrong, please try again'
+    notOurs: 'This code isn’t an Eleganza card', ownerView: 'Opened with the owner code', delCard: 'Delete card', confirmDel: l => 'Delete the card “' + l + '” permanently? This can’t be undone.', msgDeleted: 'Card deleted', ownerPanel: 'Owner panel', netErr: 'Couldn’t connect, check your internet', genErr: 'Something went wrong, please try again'
   }
 };
 const tr = (k, ...a) => { const v = I18N[LANG][k] ?? I18N.ar[k] ?? ''; return typeof v === 'function' ? v(...a) : v; };

@@ -55,6 +55,7 @@
         <div style="display:flex;gap:8px;margin-top:8px"><input id="newCode" inputmode="numeric" maxlength="7" dir="ltr" data-ip="newCode" data-ia="newCode"><button class="btn sm" id="aReset" style="width:auto" data-i="save"></button></div>
       </details>
       <details class="hist"><summary data-i="history"></summary><div id="rHist"></div></details>
+      <button class="btn sm ghost" id="aDel" type="button" data-i="delCard" style="color:#A12A1F;border-color:#A12A1F"></button>
     </div>
 
     <h2 data-i="allCards"></h2>
@@ -165,6 +166,11 @@ async function onCode(text) {
   const ok = await act('stamp', {}, stampMsg);
   if (!ok && !current.label) { try { const r = await api('owner-card', { token: otoken, id: m[1] }); showResult(r.card, null); } catch (e) {} }
 }
+$('aDel').onclick = async () => {
+  if (!current || !current.label || !confirm(tr('confirmDel', label(current.label)))) return;
+  try { await api('delete', { token: otoken, id: current.id }); cards = cards.filter(c => c.id !== current.id); current = null; show('result', false); renderList(); $('hErr').textContent = ''; alert(tr('msgDeleted')); }
+  catch (e) { if (e.status === 401) return logout(); $('hErr').textContent = e.message; }
+};
 $('scanBtn').onclick = startScan;
 $('stopScan').onclick = stopScan;
 

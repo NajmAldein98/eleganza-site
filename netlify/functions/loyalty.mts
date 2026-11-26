@@ -149,6 +149,12 @@ export default async (req: Request, context: Context) => {
     const got = await getCard(body.id);
     if (!got) return err(req, "البطاقة غير موجودة", 404);
     const c = got.card;
+    // رمز المالك يفتح أي بطاقة (بدون ربطها بجوال المالك كصاحب بطاقة)
+    const want = Netlify.env.get("OWNER_CODE") as string;
+    const code = String(body.code || "");
+    if (code.length === want.length && timingSafeEqual(Buffer.from(code), Buffer.from(want))) {
+      return json(req, { owner: true, ownerToken: sign({ role: "owner", exp: Date.now() + 30 * 24 * 3600 * 1000 }), card: full(c) });
+    }
     if (c.lockUntil > Date.now()) return err(req, "محاولات كثيرة، جرّب بعد ربع ساعة", 429);
     if (validCode(body.code) && timingSafeEqual(Buffer.from(hashCode(body.code, c.salt)), Buffer.from(c.hash))) {
       if (c.fails) await updateCard(c.id, (x) => { x.fails = 0; });
@@ -212,6 +218,13 @@ export default async (req: Request, context: Context) => {
       else return "نوع غير معروف";
     });
     return typeof r === "string" ? err(req, r) : json(req, { card: full(r) });
+  }
+  if (action === "delete") { // حذف البطاقة نهائياً (رقم المجهول ما يتكرر لأحد بعده)
+    const got = await getCard(body.id);
+    if (!got) return err(req, "البطاقة غير موجودة", 404);
+    await s.delete(phoneKey(got.card.phone));
+    await s.delete("card/" + got.card.id);
+    return json(req, { ok: true });
   }
   if (action === "reset-code") { // العميل نسي رمزه: المالك يحدد له رمز جديد
     if (!validCode(body.code)) return err(req, "الرمز لازم يكون ٧ أرقام");
