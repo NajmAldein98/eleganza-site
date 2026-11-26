@@ -94,10 +94,15 @@ html[dir=rtl] .tl{text-align:right}html[dir=ltr] .tl{text-align:left}
 .pol b{display:block;font-family:"Reem Kufi";font-size:17px;margin-bottom:4px}
 /* افتتاحية */
 #intro{position:fixed;inset:0;z-index:100;background:#000;display:grid;place-items:center;transition:opacity .9s ease,visibility .9s}
-#intro img{height:min(92vh,900px);width:auto;max-width:100vw;object-fit:contain;opacity:0;transform:scale(1.08);transition:opacity 1.6s ease,transform 3.2s cubic-bezier(.2,.7,.2,1)}
-#intro.on img{opacity:1;transform:scale(1)}
-#intro.out{opacity:0;visibility:hidden}
-#skip{position:absolute;bottom:24px;inset-inline-start:24px;background:none;border:1px solid #ffffff33;color:#ddd;border-radius:999px;min-height:44px;padding:0 18px;font:inherit;cursor:pointer}
+#intro video{height:100vh;height:100dvh;width:auto;max-width:100vw;object-fit:contain;opacity:0;transform:scale(1.03);transition:opacity 1s ease,transform 4s cubic-bezier(.2,.7,.2,1)}
+#intro.on video{opacity:1;transform:scale(1)}
+@media(orientation:portrait){#intro video{width:100vw;height:100dvh;max-width:none;object-fit:cover}}
+.ibtns{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));inset-inline:24px;display:flex;justify-content:space-between;gap:12px;pointer-events:none}
+.ibtns button{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;background:#0008;border:1px solid #ffffff33;color:#eee;border-radius:999px;min-height:44px;padding:0 18px;font:500 15px "IBM Plex Sans Arabic",Tahoma,sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
+.ibtns button:hover{border-color:var(--g)}
+#snd svg{width:20px;height:20px;fill:none;stroke:var(--g2);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+#snd[hidden]{display:none}
+#skip{margin-inline-start:auto}
 /* رأس */
 .announce{background:var(--g);color:#111;text-align:center;font-weight:700;padding:9px 16px;font-size:15px}
 .announce:empty{display:none}
@@ -291,7 +296,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 </style>
 </head>
 <body>
-<div id="intro" aria-hidden="true"><img src="img/intro.webp" alt=""><button id="skip" type="button" data-t="skip">تخطي</button></div>
+<div id="intro"><video id="iv" playsinline muted preload="none" aria-hidden="true"></video><div class="ibtns"><button id="snd" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span data-t="snd">تشغيل الصوت</span></button><button id="skip" type="button" data-t="skip">تخطي</button></div></div>
 <div class="ownerbar">وضع الصيانة مفعّل — الزوار يشاهدون صفحة الصيانة، وأنت ترى الموقع لأنك من فريق المحل.</div>
 
 <section class="mt" aria-live="polite">
@@ -549,7 +554,7 @@ const DEF_EN={
   hours:"Contact us for opening hours"
 };
 const T={
- ar:{skip:"تخطي",mtH:"نرجع لكم قريبًا",mtWa:"راسلنا على واتساب",n1:"صمّم ثوبك",n2:"العروض",n3:"قصتنا",n4:"الأقمشة",n5:"رحلة الطلب",n6:"أسئلة",n7:"تواصل",hdrC:"تواصل معنا",hb1:"اكتشف مجموعتنا",hb2:"صمّم ثوبك",
+ ar:{skip:"تخطي",snd:"تشغيل الصوت",mtH:"نرجع لكم قريبًا",mtWa:"راسلنا على واتساب",n1:"صمّم ثوبك",n2:"العروض",n3:"قصتنا",n4:"الأقمشة",n5:"رحلة الطلب",n6:"أسئلة",n7:"تواصل",hdrC:"تواصل معنا",hb1:"اكتشف مجموعتنا",hb2:"صمّم ثوبك",
   ofK:"العروض والإعلانات",ofH:"عروض بوقت محدود",oeH:"عرضنا الجاي… قريب",oeP:"تابعنا على إنستقرام وأول من يعرف بالعروض والإصدارات المحدودة.",oeB:"تابعنا",
   mkK:"صمّم ثوبك بنفسك",mkH:"اختر تفاصيلك… وشوفها قدامك",mkL:"بعد ما ناخذ مقاسك، اختر اللون والتفاصيل اللي تعجبك، وأرسل لنا بطاقة طلبك بضغطة.",orH:"بطاقة طلبك",mrefL:"رقم القياس أو الاسم (إن وجد)",send:"أرسل اختياراتي واتساب",save:"احفظ في خزانتي",saved:"تم الحفظ ✓",mkN:"التطريز والقماش النهائي نثبّتها معك في المحل. «خزانتي» تنحفظ على جهازك وترجع لها متى ما بغيت.",
   exK:"حصريًا في المحل",exH:"تصاميم خاصة… ما تنعرض أونلاين",exP:"عندنا موديلات وتصاميم خاصة نحتفظ فيها لزبايننا. مرّ علينا وشوفها بنفسك، وخلّ ثوبك ما يشبه أحد.",exB:"زورونا في المحل",
@@ -562,7 +567,7 @@ const T={
   shade:"درجة اللون",texture:"الملمس",season:"الموسم",features:"المميزات",care:"العناية",fabric:"القماش",compare:"قارن",cmpH:"مقارنة بين قماشين",cmpPick:"اختر قماش ثاني للمقارنة.",noFab:"لا توجد أقمشة في هذا الموسم بعد.",
   days:"يوم",hrs:"ساعة",mins:"دقيقة",secs:"ثانية",wa:"واتساب",ig:"إنستقرام",map:"موقعنا على قوقل",mapSub:"افتح الخريطة",sc:"سناب شات",tt:"تيك توك",go:"اضغط هنا",soon:"قريبًا",
   hi:"السلام عليكم، ",mine:"هذي اختياراتي لثوب من إليغانزا",againMsg:"أبغى أعيد تفصيل نفس الثوب بهذي التفاصيل",ref:"رقم القياس/الاسم: ",book:"السلام عليكم، أبغى أحجز موعد قياس في إليغانزا",fabMsg:"السلام عليكم، أبغى أفصّل ثوب من قماش: ",langBtn:"English",seasons:["صيفي","شتوي"]},
- en:{skip:"Skip",mtH:"We'll be back soon",mtWa:"Message us on WhatsApp",n1:"Design",n2:"Offers",n3:"Our story",n4:"Fabrics",n5:"Order journey",n6:"FAQ",n7:"Contact",hdrC:"Contact us",hb1:"Explore our collection",hb2:"Design your thobe",
+ en:{skip:"Skip",snd:"Sound on",mtH:"We'll be back soon",mtWa:"Message us on WhatsApp",n1:"Design",n2:"Offers",n3:"Our story",n4:"Fabrics",n5:"Order journey",n6:"FAQ",n7:"Contact",hdrC:"Contact us",hb1:"Explore our collection",hb2:"Design your thobe",
   ofK:"Offers & announcements",ofH:"Limited-time offers",oeH:"Our next offer… is coming",oeP:"Follow us on Instagram to be the first to hear about offers and limited editions.",oeB:"Follow us",
   mkK:"Design your own thobe",mkH:"Choose your details… and see them live",mkL:"Once we have your measurements, pick the colour and details you like, then send us your order card in one tap.",orH:"Your order card",mrefL:"Measurement number or name (if any)",send:"Send my choices on WhatsApp",save:"Save to my wardrobe",saved:"Saved ✓",mkN:"Embroidery and the final fabric are confirmed with you in the shop. “My wardrobe” is saved on your device so you can come back anytime.",
   exK:"Exclusively in store",exH:"Private designs… never shown online",exP:"We keep special models and designs for our customers. Visit us to see them in person — and make sure your thobe looks like no one else's.",exB:"Visit our shop",
@@ -591,12 +596,20 @@ const num=n=>lang==="ar"?String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]):S
 const wa=(m)=>{const n=String(C.whatsapp||"").replace(/\D/g,"");return n?"https://wa.me/"+n+(m?"?text="+encodeURIComponent(m):""):""};
 const setLink=(id,u)=>{const e=$(id);if(!e)return;e.href=u||"#";e.style.display=u?"":"none";if(u){e.target="_blank";e.rel="noopener"}};
 
-/* افتتاحية */
-const intro=$("intro");let seen=false;try{seen=sessionStorage.getItem("elg_intro")==="1"}catch(e){}
-const endIntro=()=>{intro.classList.add("out");try{sessionStorage.setItem("elg_intro","1")}catch(e){}};
+/* افتتاحية: فيديو الشعار */
+const intro=$("intro"),iv=$("iv");let seen=false;try{seen=sessionStorage.getItem("elg_intro")==="1"}catch(e){}
+let ended=false;
+const endIntro=()=>{if(ended)return;ended=true;intro.classList.add("out");try{sessionStorage.setItem("elg_intro","1")}catch(e){}setTimeout(()=>{try{iv.pause()}catch(e){}intro.remove()},1000)};
 if(seen||matchMedia("(prefers-reduced-motion: reduce)").matches){intro.remove()}else{
-  const im=intro.querySelector("img");const go=()=>{requestAnimationFrame(()=>intro.classList.add("on"));setTimeout(endIntro,3600)};
-  im.complete?go():(im.onload=go,im.onerror=endIntro);setTimeout(endIntro,6000);$("skip").addEventListener("click",endIntro);
+  let guard=setTimeout(endIntro,8000);
+  iv.addEventListener("playing",()=>{intro.classList.add("on")},{once:true});
+  iv.addEventListener("ended",()=>setTimeout(endIntro,700));
+  iv.addEventListener("error",endIntro);
+  iv.src="img/intro.mp4";iv.preload="auto";
+  iv.muted=false;
+  iv.play().catch(()=>{iv.muted=true;$("snd").hidden=false;iv.play().catch(endIntro)});
+  $("snd").addEventListener("click",()=>{iv.muted=false;iv.currentTime=0;iv.play().catch(()=>{});$("snd").hidden=true;clearTimeout(guard);guard=setTimeout(endIntro,8000)});
+  $("skip").addEventListener("click",endIntro);
 }
 
 /* غبار ذهبي */
