@@ -125,6 +125,8 @@ nav a:hover{color:var(--g)}
 @keyframes flick2{0%,100%{opacity:.45}22%{opacity:.25}47%{opacity:.6}63%{opacity:.3}81%{opacity:.55}}
 @keyframes kb{to{transform:scale(1.02) translate(-1.5%,1%)}}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to left,#000000f2 0%,#000000c9 38%,#00000059 70%,#0000001a 100%),linear-gradient(to top,#0a0a0a 0%,transparent 30%)}
+html[dir=ltr] .hero::after{background:linear-gradient(to right,#000000f2 0%,#000000c9 38%,#00000059 70%,#0000001a 100%),linear-gradient(to top,#0a0a0a 0%,transparent 30%)}
+html[dir=ltr] .hero .bg{transform:scaleX(-1)}
 #dust{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 .hero .hin{width:100%;max-width:1240px;margin:0 auto;padding:72px max(5vw,16px) 72px}
 .hero .txt{max-width:640px}
