@@ -342,6 +342,50 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 .oempty,.dl{grid-template-columns:minmax(0,1fr)}.oempty .ph{min-height:0;height:min(100vw,400px)}.oempty .ph img{object-position:50% 25%}.oempty .ph::after,html[dir=ltr] .oempty .ph::after{background:linear-gradient(to top,#0c0b09 0%,transparent 35%)}
 .hero{align-items:flex-end}.hero::after{background:linear-gradient(to top,#000 0%,#000000d9 45%,#00000040 80%)}.hero .hin{padding-bottom:70px}.scrollcue{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero .bg img.glow{opacity:.85}.hero .bg img.halo{opacity:.4}.rv{opacity:1;transform:none}#intro{display:none}}
+
+/* بطاقة الولاء */
+.loy{background:radial-gradient(ellipse at 70% 40%,#2a2418 0%,var(--bk) 62%);overflow:hidden}
+.loy .lg{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:center}
+.loy .steps{list-style:none;padding:0;margin:26px 0 30px;display:flex;flex-direction:column;gap:14px}
+.loy .steps li{display:flex;gap:14px;align-items:center;font-size:17px;color:var(--ivt)}
+.loy .steps b{flex:0 0 40px;height:40px;border-radius:50%;border:1.5px solid var(--g);color:var(--g);display:grid;place-items:center;font-size:15px}
+.loy .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.lstage{position:relative;display:block;text-decoration:none;color:inherit;perspective:1200px;cursor:pointer;border-radius:26px;outline-offset:8px}
+.lcard{position:relative;aspect-ratio:85/55;border-radius:22px;background:linear-gradient(135deg,#1b1a17,#0c0c0b 60%,#1d1912);border:1px solid #3a3326;box-shadow:0 30px 80px #000a,inset 0 1px 0 #ffffff10;padding:clamp(16px,3.2vw,28px);display:flex;flex-direction:column;justify-content:space-between;transform:rotateX(6deg) rotateY(-8deg);transition:transform .6s,box-shadow .6s;overflow:hidden}
+.lstage:hover .lcard{transform:rotateX(0) rotateY(0) translateY(-4px)}
+.lcard:before{content:"";position:absolute;inset:9px;border:1px solid #b69a6666;border-radius:15px;pointer-events:none}
+.lcard:after{content:"";position:absolute;top:-60%;left:-60%;width:40%;height:220%;background:linear-gradient(90deg,transparent,#ffffff14,transparent);transform:rotate(20deg);animation:lshine 5s ease-in-out infinite}
+@keyframes lshine{0%,60%{left:-60%}100%{left:130%}}
+.ltop{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.lword{direction:ltr;font:700 clamp(22px,3.4vw,34px) "Cormorant Garamond",Georgia,serif;letter-spacing:2px;color:var(--iv)}
+.lword span{color:#f2c200}
+.lcnt{font-weight:700;font-size:clamp(16px,2.4vw,22px);color:#f2c200;min-width:70px;text-align:end}
+.lslots{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(8px,1.6vw,14px);position:relative;z-index:1}
+.lslot{aspect-ratio:1;border-radius:50%;border:1.5px dashed #b69a6699;display:grid;place-items:center;color:#8c7444;font-size:clamp(11px,1.6vw,14px);font-weight:700;position:relative}
+.lslot.sp{border:1.5px solid #b69a66;color:var(--g2)}
+.lslot .ink{position:absolute;inset:-2px;border-radius:50%;background:#111;border:2px solid #f2c200;display:grid;place-items:center;opacity:0;transform:scale(2.4) rotate(-30deg)}
+.lslot .ink svg{width:56%;height:auto}
+.lslot.on .ink{animation:lstamp .5s cubic-bezier(.2,1.4,.4,1) forwards}
+.lslot.on:after{content:"";position:absolute;inset:-10px;border-radius:50%;border:2px solid #f2c20088;animation:lring .6s ease-out forwards}
+@keyframes lstamp{0%{opacity:0;transform:scale(2.4) rotate(-30deg)}60%{opacity:1;transform:scale(.9) rotate(4deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes lring{from{opacity:1;transform:scale(.6)}to{opacity:0;transform:scale(1.5)}}
+.lbot{display:flex;justify-content:space-between;align-items:center;font-size:clamp(11px,1.5vw,13px);color:var(--mut);position:relative;z-index:1}
+.lbadge{position:absolute;z-index:3;top:-14px;inset-inline-start:-10px;background:var(--g);color:#111;font-weight:700;font-size:15px;padding:8px 16px;border-radius:999px;box-shadow:0 10px 30px #0008;opacity:0;transform:translateY(10px) scale(.8);transition:.5s cubic-bezier(.2,1.4,.4,1)}
+.lbadge.show{opacity:1;transform:none}
+.lwin{position:absolute;inset:0;z-index:4;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(circle,#2a2208f5 0%,#0b0a08f7 75%);opacity:0;pointer-events:none;transition:opacity .5s}
+.lwin.show{opacity:1}
+.lwin svg{width:clamp(70px,12vw,110px);filter:drop-shadow(0 0 24px #f2c200aa);transform:translateY(20px) scale(.6);transition:transform .7s cubic-bezier(.2,1.5,.4,1)}
+.lwin.show svg{transform:none;animation:lfloat 2s ease-in-out .7s infinite}
+@keyframes lfloat{50%{transform:translateY(-6px)}}
+.lwin strong{font-size:clamp(20px,3.2vw,30px);color:#f2c200;text-align:center}
+.lwin span{color:var(--iv);font-size:clamp(14px,2vw,17px);text-align:center;padding:0 12px}
+.lconf{position:absolute;inset:-40px;z-index:5;pointer-events:none;width:calc(100% + 80px);height:calc(100% + 80px)}
+.lhint{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:22px;color:var(--g2);font-weight:700;font-size:16px}
+.lhint i{width:34px;height:34px;border-radius:50%;background:var(--g);display:grid;place-items:center;animation:ltap 1.6s ease-in-out infinite}
+.lhint i svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:2.2}
+@keyframes ltap{0%,100%{transform:scale(1);box-shadow:0 0 0 0 #b69a6688}50%{transform:scale(1.08);box-shadow:0 0 0 12px #b69a6600}}
+@media(max-width:860px){.loy .lg{grid-template-columns:1fr}.loy .lvis{order:-1}.lcard{transform:none}}
+@media(prefers-reduced-motion:reduce){.lslot .ink{opacity:1;transform:none}.lcard:after{display:none}}
 </style>
 </head>
 <body>
@@ -358,7 +402,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 <header>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="إليغانزا للخياطة"><img src="img/logo.png" alt="إليغانزا"></a>
-    <nav aria-label="أقسام الموقع"><a href="#make" data-t="n1">صمّم ثوبك</a><a href="#offers" data-t="n2">العروض</a><a href="#story" data-t="n3">قصتنا</a><a href="#fabrics" data-t="n4">الأقمشة</a><a href="#journey" data-t="n5">رحلة الطلب</a><a href="#faq" data-t="n6">أسئلة</a><a href="#contact" data-t="n7">تواصل</a></nav>
+    <nav aria-label="أقسام الموقع"><a href="#make" data-t="n1">صمّم ثوبك</a><a href="#offers" data-t="n2">العروض</a><a href="#loyalty" data-t="n8">بطاقة الولاء</a><a href="#story" data-t="n3">قصتنا</a><a href="#fabrics" data-t="n4">الأقمشة</a><a href="#journey" data-t="n5">رحلة الطلب</a><a href="#faq" data-t="n6">أسئلة</a><a href="#contact" data-t="n7">تواصل</a></nav>
     <div class="hsoc" id="hsoc"></div>
     <div class="hact"><button class="socT" id="socT" type="button" aria-expanded="false" aria-controls="hsoc" aria-label="التواصل الاجتماعي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><button class="lang" id="langBtn" type="button" aria-label="Change language"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9zM4.6 7.5h14.8M4.6 16.5h14.8"/></svg><span id="langLbl">English</span></button>
     <a class="btn p" id="hdrC" href="#contact" data-t="hdrC" style="min-height:42px;padding:0 18px;font-size:15px">تواصل معنا</a></div>
@@ -387,6 +431,35 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
     <div class="oempty rv" id="oempty">
       <div class="ph"><img src="img/tailor.webp" alt="خيّاط إليغانزا يبتسم ويشير بإصبعه" loading="lazy"></div>
       <div><h3 data-t="oeH">عرضنا الجاي… قريب</h3><p data-t="oeP">تابعنا على إنستقرام وأول من يعرف بالعروض والإصدارات المحدودة.</p><a class="btn s" id="offIg" href="#" data-t="oeB">تابعنا</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="band loy" id="loyalty">
+  <div class="wrap lg">
+    <div>
+      <div class="kick rv" data-t="lyK">بطاقة الولاء</div>
+      <h2 class="rv" data-t="lyH">كل ثوب… ختم. وعاشر ختم هديتك.</h2>
+      <p class="lead rv" data-t="lyL">بطاقة إلكترونية تنحفظ في جوالك، تجمع فيها أختامك مع كل ثوب تفصّله عندنا.</p>
+      <ol class="steps rv">
+        <li><b>١</b><span data-t="ly1">سجّل بطاقتك باسمك أو كمجهول، وبرمز سري لك</span></li>
+        <li><b>٥</b><span data-t="ly2">الختم الخامس: خصم ٥٠٪ على ثوبك السادس</span></li>
+        <li><b>١٠</b><span data-t="ly3">الختم العاشر: ثوبك الحادي عشر مجاناً</span></li>
+      </ol>
+      <div class="ctas rv"><a class="btn p" href="card/" data-t="lyB">احصل على بطاقتك الآن</a><a class="btn s" href="card/" data-t="lyB2">افتح بطاقتي</a></div>
+    </div>
+    <div class="lvis rv">
+      <a class="lstage" href="card/" id="lstage" aria-label="افتح بطاقة الولاء">
+        <span class="lbadge" id="lbadge" data-t="lyDisc">خصم ٥٠٪</span>
+        <div class="lcard" id="lcard">
+          <div class="ltop"><div class="lword"><span>El</span>eganza</div><div class="lcnt" id="lcnt">٠ / ١٠</div></div>
+          <div class="lslots" id="lslots" aria-hidden="true"></div>
+          <div class="lbot"><span data-t="lyCard">بطاقة الولاء · للخياطة</span><svg width="26" height="18" viewBox="0 0 34 24" aria-hidden="true"><path d="M3 20 L1 6 L10 13 L17 2 L24 13 L33 6 L31 20 Z" fill="#b69a66"/></svg></div>
+          <div class="lwin" id="lwin"><svg viewBox="0 0 34 24" aria-hidden="true"><path d="M3 20 L1 6 L10 13 L17 2 L24 13 L33 6 L31 20 Z" fill="#F2C200"/><rect x="3" y="21" width="28" height="2.5" rx="1" fill="#F2C200"/></svg><strong data-t="lyWin">مبروك! فزت</strong><span data-t="lyWin2">ثوبك القادم مجاناً هدية من إليغانزا</span></div>
+        </div>
+        <canvas class="lconf" id="lconf" aria-hidden="true"></canvas>
+      </a>
+      <div class="lhint"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5a2 2 0 0 1 4 0v6M13 10a2 2 0 0 1 4 0v2M17 11a2 2 0 0 1 4 0v4a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3l-3-5a2 2 0 0 1 3.4-2L9 14"/></svg></i><span data-t="lyTap">اضغط على البطاقة وابدأ تجمع أختامك</span></div>
     </div>
   </div>
 </section>
@@ -604,7 +677,7 @@ const DEF_EN={
   hours:"Contact us for opening hours"
 };
 const T={
- ar:{skip:"تخطي",snd:"تشغيل الصوت",mtH:"نرجع لكم قريبًا",mtWa:"راسلنا على واتساب",n1:"صمّم ثوبك",n2:"العروض",n3:"قصتنا",n4:"الأقمشة",n5:"رحلة الطلب",n6:"أسئلة",n7:"تواصل",hdrC:"تواصل معنا",hb1:"اكتشف مجموعتنا",hb2:"صمّم ثوبك",
+ ar:{n8:"بطاقة الولاء",lyK:"بطاقة الولاء",lyH:"كل ثوب… ختم. وعاشر ختم هديتك.",lyL:"بطاقة إلكترونية تنحفظ في جوالك، تجمع فيها أختامك مع كل ثوب تفصّله عندنا.",ly1:"سجّل بطاقتك باسمك أو كمجهول، وبرمز سري لك",ly2:"الختم الخامس: خصم ٥٠٪ على ثوبك السادس",ly3:"الختم العاشر: ثوبك الحادي عشر مجاناً",lyB:"احصل على بطاقتك الآن",lyB2:"افتح بطاقتي",lyDisc:"خصم ٥٠٪",lyCard:"بطاقة الولاء · للخياطة",lyWin:"مبروك! فزت",lyWin2:"ثوبك القادم مجاناً هدية من إليغانزا",lyTap:"اضغط على البطاقة وابدأ تجمع أختامك",skip:"تخطي",snd:"تشغيل الصوت",mtH:"نرجع لكم قريبًا",mtWa:"راسلنا على واتساب",n1:"صمّم ثوبك",n2:"العروض",n3:"قصتنا",n4:"الأقمشة",n5:"رحلة الطلب",n6:"أسئلة",n7:"تواصل",hdrC:"تواصل معنا",hb1:"اكتشف مجموعتنا",hb2:"صمّم ثوبك",
   ofK:"العروض والإعلانات",ofH:"عروض بوقت محدود",oeH:"عرضنا الجاي… قريب",oeP:"تابعنا على إنستقرام وأول من يعرف بالعروض والإصدارات المحدودة.",oeB:"تابعنا",
   mkK:"صمّم ثوبك بنفسك",mkH:"اختر تفاصيلك… وشوفها قدامك",mkL:"بعد ما ناخذ مقاسك، اختر اللون والتفاصيل اللي تعجبك، وأرسل لنا بطاقة طلبك بضغطة.",orH:"بطاقة طلبك",mrefL:"رقم القياس أو الاسم (إن وجد)",send:"أرسل اختياراتي واتساب",save:"احفظ في خزانتي",saved:"تم الحفظ ✓",mkN:"التطريز والقماش النهائي نثبّتها معك في المحل. «خزانتي» تنحفظ على جهازك وترجع لها متى ما بغيت.",
   exK:"حصريًا في المحل",exH:"تصاميم خاصة… ما تنعرض أونلاين",exP:"عندنا موديلات وتصاميم خاصة نحتفظ فيها لزبايننا. مرّ علينا وشوفها بنفسك، وخلّ ثوبك ما يشبه أحد.",exB:"زورونا في المحل",
@@ -617,7 +690,7 @@ const T={
   shade:"درجة اللون",texture:"الملمس",season:"الموسم",features:"المميزات",care:"العناية",fabric:"القماش",compare:"قارن",cmpH:"مقارنة بين قماشين",cmpPick:"اختر قماش ثاني للمقارنة.",noFab:"لا توجد أقمشة في هذا الموسم بعد.",
   days:"يوم",hrs:"ساعة",mins:"دقيقة",secs:"ثانية",wa:"واتساب",ig:"إنستقرام",map:"موقعنا على قوقل",mapSub:"افتح الخريطة",sc:"سناب شات",tt:"تيك توك",go:"اضغط هنا",soon:"قريبًا",
   hi:"السلام عليكم، ",mine:"هذي اختياراتي لثوب من إليغانزا",againMsg:"أبغى أعيد تفصيل نفس الثوب بهذي التفاصيل",ref:"رقم القياس/الاسم: ",book:"السلام عليكم، أبغى أحجز موعد قياس في إليغانزا",fabMsg:"السلام عليكم، أبغى أفصّل ثوب من قماش: ",langBtn:"English",seasons:["صيفي","شتوي"]},
- en:{skip:"Skip",snd:"Sound on",mtH:"We'll be back soon",mtWa:"Message us on WhatsApp",n1:"Design",n2:"Offers",n3:"Our story",n4:"Fabrics",n5:"Order journey",n6:"FAQ",n7:"Contact",hdrC:"Contact us",hb1:"Explore our collection",hb2:"Design your thobe",
+ en:{n8:"Loyalty card",lyK:"Loyalty card",lyH:"Every thobe is a stamp. The tenth is on us.",lyL:"A digital card saved on your phone that collects a stamp for every thobe we tailor for you.",ly1:"Register with your name or anonymously, with your own secret code",ly2:"5th stamp: 50% off your sixth thobe",ly3:"10th stamp: your eleventh thobe is free",lyB:"Get your card now",lyB2:"Open my card",lyDisc:"50% off",lyCard:"Loyalty card · Tailoring",lyWin:"Congratulations! You won",lyWin2:"Your next thobe is free, a gift from Eleganza",lyTap:"Tap the card and start collecting stamps",skip:"Skip",snd:"Sound on",mtH:"We'll be back soon",mtWa:"Message us on WhatsApp",n1:"Design",n2:"Offers",n3:"Our story",n4:"Fabrics",n5:"Order journey",n6:"FAQ",n7:"Contact",hdrC:"Contact us",hb1:"Explore our collection",hb2:"Design your thobe",
   ofK:"Offers & announcements",ofH:"Limited-time offers",oeH:"Our next offer… is coming",oeP:"Follow us on Instagram to be the first to hear about offers and limited editions.",oeB:"Follow us",
   mkK:"Design your own thobe",mkH:"Choose your details… and see them live",mkL:"Once we have your measurements, pick the colour and details you like, then send us your order card in one tap.",orH:"Your order card",mrefL:"Measurement number or name (if any)",send:"Send my choices on WhatsApp",save:"Save to my wardrobe",saved:"Saved ✓",mkN:"Embroidery and the final fabric are confirmed with you in the shop. “My wardrobe” is saved on your device so you can come back anytime.",
   exK:"Exclusively in store",exH:"Private designs… never shown online",exP:"We keep special models and designs for our customers. Visit us to see them in person — and make sure your thobe looks like no one else's.",exB:"Visit our shop",
@@ -952,6 +1025,44 @@ $("reset").addEventListener("click",()=>{CD={...DEF};fillForm();$("msg").textCon
   }catch(e){}
 })();
 }
+</script>
+
+<script>
+/* بطاقة الولاء المتحركة */
+(()=>{
+  const box=document.getElementById("lslots");if(!box)return;
+  const cnt=document.getElementById("lcnt"),badge=document.getElementById("lbadge"),win=document.getElementById("lwin"),cv=document.getElementById("lconf"),ctx=cv.getContext("2d");
+  const crown='<svg viewBox="0 0 34 24"><path d="M3 20 L1 6 L10 13 L17 2 L24 13 L33 6 L31 20 Z" fill="#F2C200"/></svg>';
+  const num=n=>document.documentElement.lang==="en"?String(n):String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+  const slots=[];
+  for(let i=0;i<10;i++){const d=document.createElement("div");d.className="lslot"+(i===4||i===9?" sp":"");d.innerHTML='<b class="lab"></b><span class="ink">'+crown+'</span>';box.appendChild(d);slots.push(d)}
+  function labels(){slots.forEach((d,i)=>{d.querySelector(".lab").textContent=i===4?"٥٠٪":i===9?(document.documentElement.lang==="en"?"FREE":"مجاناً"):num(i+1)})}
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let n=0,timer=null,running=false,parts=[],raf=null;
+  function set(k){n=k;cnt.textContent=num(k)+" / "+num(10);slots.forEach((d,i)=>d.classList.toggle("on",i<k))}
+  function confetti(){
+    const r=cv.getBoundingClientRect();cv.width=r.width*devicePixelRatio;cv.height=r.height*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    const cols=["#F2C200","#B69A66","#d6bf8e","#ffffff","#f3f0e9"];parts=[];
+    for(let i=0;i<140;i++){const a=Math.random()*Math.PI*2,v=3+Math.random()*7;parts.push({x:r.width/2,y:r.height/2,vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,s:4+Math.random()*6,c:cols[i%5],r:Math.random()*6,vr:(Math.random()-.5)*.3,l:90+Math.random()*60})}
+    cancelAnimationFrame(raf);
+    (function step(){ctx.clearRect(0,0,r.width,r.height);let alive=0;
+      parts.forEach(p=>{if(p.l<=0)return;alive++;p.l--;p.vy+=.18;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;ctx.save();ctx.globalAlpha=Math.min(1,p.l/40);ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore()});
+      if(alive)raf=requestAnimationFrame(step)})();
+  }
+  function tick(){
+    if(!running)return;
+    if(n<10){set(n+1);
+      if(n===5){badge.classList.add("show")}
+      if(n===10){setTimeout(()=>{win.classList.add("show");confetti()},450);timer=setTimeout(reset,5200);return}
+      timer=setTimeout(tick,n===5?1300:650);
+    }
+  }
+  function reset(){win.classList.remove("show");badge.classList.remove("show");set(0);timer=setTimeout(tick,900)}
+  labels();set(0);
+  if(reduce){set(10);win.classList.add("show");return}
+  new IntersectionObserver(e=>{const v=e[0].isIntersecting;if(v&&!running){running=true;timer=setTimeout(tick,600)}else if(!v&&running){running=false;clearTimeout(timer)}},{threshold:.35}).observe(document.getElementById("lstage"));
+  document.getElementById("langBtn")?.addEventListener("click",()=>setTimeout(()=>{labels();set(n)},0));
+})();
 </script>
 </body>
 </html>
