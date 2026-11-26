@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>عروض إليغانزا</title>
+<meta name="description" content="عروض إليغانزا للخياطة الحالية بوقت محدود">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bk:#111;--g:#b69a66;--g2:#d6bf8e;--iv:#f3f0e9;--mut:#a8a296;--y:#f2c200}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bk);color:var(--iv);font:400 17px/1.7 "IBM Plex Sans Arabic",sans-serif}
+html[lang=en] body{font-family:"IBM Plex Sans Arabic",system-ui,sans-serif}
+a{color:inherit}
+header{position:sticky;top:0;z-index:5;background:#111111e6;backdrop-filter:blur(10px);border-bottom:1px solid #2e2b26}
+.bar{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(5vw,16px)}
+.bar img{height:44px;width:auto}
+.acts{display:flex;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:999px;border:1.5px solid var(--g);color:var(--g);background:transparent;font:700 15px "IBM Plex Sans Arabic",sans-serif;text-decoration:none;cursor:pointer}
+.pill svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+html[dir=ltr] .flip{transform:scaleX(-1)}
+.hero{position:relative;overflow:hidden;padding:clamp(56px,9vw,110px) max(5vw,16px) 40px;text-align:center;background:radial-gradient(ellipse at 50% 0%,#3a2c12 0%,var(--bk) 65%)}
+.hero h1{font:700 clamp(34px,6vw,60px)/1.2 "Reem Kufi",sans-serif;margin:0 0 12px}
+html[lang=en] .hero h1{font-family:"Cormorant Garamond",Georgia,serif}
+.hero h1 em{font-style:normal;color:var(--y)}
+.hero p{color:var(--mut);margin:0 auto;max-width:560px}
+.kick{color:var(--g);font-weight:700;letter-spacing:.5px;margin-bottom:10px}
+#sp{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+main{max-width:1100px;margin:0 auto;padding:10px max(5vw,16px) 80px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px}
+.of{position:relative;border-radius:24px;padding:28px;background:linear-gradient(150deg,#241d0d,#141414 62%);border:1px solid #b69a6640;overflow:hidden;display:flex;flex-direction:column;gap:14px;opacity:0;transform:translateY(24px);animation:up .8s cubic-bezier(.2,.7,.2,1) forwards}
+.of::before{content:"";position:absolute;inset:-40% -50% auto auto;width:240px;height:240px;background:radial-gradient(#f2c20026,transparent 70%)}
+@keyframes up{to{opacity:1;transform:none}}
+.badge{align-self:flex-start;background:var(--y);color:#111;font-weight:700;font-size:14px;padding:4px 14px;border-radius:999px}
+.badge.perm{background:transparent;color:var(--g2);border:1px solid var(--g)}
+.of h2{margin:0;font:700 26px/1.35 "Reem Kufi",sans-serif;color:var(--g2)}
+html[lang=en] .of h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:28px}
+.of p{margin:0;color:#ddd5c4}
+.cd{display:flex;gap:8px;direction:rtl}
+.cd div{flex:1;background:#00000066;border:1px solid #b69a6633;border-radius:12px;padding:8px 4px;text-align:center}
+.cd b{display:block;font:700 24px "Reem Kufi",sans-serif;color:var(--iv)}
+.cd span{font-size:12px;color:var(--mut)}
+.cd.urgent b{color:#ff9f5a}
+.btn{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;border-radius:999px;background:var(--g);color:#111;font:700 16px "IBM Plex Sans Arabic",sans-serif;text-decoration:none;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px #b69a6655}
+.btn svg{width:20px;height:20px}
+.empty{text-align:center;color:var(--mut);padding:40px 0}
+.note{text-align:center;color:var(--mut);font-size:14px;margin-top:34px}
+@media(prefers-reduced-motion:reduce){.of{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <a href="../" aria-label="إليغانزا"><img src="../img/logo.png" alt="إليغانزا"></a>
+  <div class="acts">
+    <button class="pill" id="langBtn" type="button">English</button>
+    <a class="pill" href="../" id="home"><svg class="flip" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-t="home">الرئيسية</span></a>
+  </div>
+</div></header>
+
+<section class="hero">
+  <canvas id="sp" aria-hidden="true"></canvas>
+  <div class="kick" data-t="kick">العروض والإعلانات</div>
+  <h1 id="h1"></h1>
+  <p data-t="sub">عروض لفترة محدودة… الوقت يمشي، لا يفوتك عرضك.</p>
+</section>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <p class="note" data-t="note">العروض تنتهي تلقائياً بانتهاء وقتها. للاستفسار تواصل معنا على واتساب.</p>
+</main>
+
+<script>
+const T={
+  ar:{title:"عروض إليغانزا",h1:"عروض <em>بوقت محدود</em>",kick:"العروض والإعلانات",sub:"عروض لفترة محدودة… الوقت يمشي، لا يفوتك عرضك.",home:"الرئيسية",lang:"English",
+      note:"العروض تنتهي تلقائياً بانتهاء وقتها. للاستفسار تواصل معنا على واتساب.",days:"يوم",hrs:"ساعة",mins:"دقيقة",secs:"ثانية",
+      book:"احجز العرض على واتساب",perm:"عرض دائم",ends:"ينتهي قريباً",limited:"لفترة محدودة",card:"احصل على بطاقتك",empty:"ما فيه عروض حالياً… تابعنا وكن أول من يعرف.",wa:t=>"السلام عليكم، أبي أستفيد من عرض: "+t},
+  en:{title:"Eleganza Offers",h1:"Offers for a <em>limited time</em>",kick:"Offers & announcements",sub:"Limited-time offers… the clock is ticking, don’t miss yours.",home:"Home",lang:"العربية",
+      note:"Offers end automatically when their time runs out. Message us on WhatsApp for any questions.",days:"days",hrs:"hrs",mins:"min",secs:"sec",
+      book:"Book this offer on WhatsApp",perm:"Ongoing offer",ends:"Ending soon",limited:"Limited time",card:"Get your card",empty:"No offers right now… follow us to be the first to know.",wa:t=>"Hello, I’d like to use the offer: "+t}
+};
+// عروض مؤقتة — تُستخدم فقط إذا كانت خانة «العروض» في لوحة التحكم فارغة
+const SAMPLE={
+  ar:[{t:"بطاقة الولاء",d:"مع كل ثوب ختم. الختم الخامس خصم ٥٠٪ على السادس، والعاشر ثوبك الحادي عشر مجاناً.",card:true},
+      {t:"خصم ١٥٪ على أول ثوب",d:"أول مرة تفصّل عندنا؟ خذ خصم ١٥٪ على ثوبك الأول.",e:"2026-12-31"},
+      {t:"عرض الشتاء: ٣ أثواب بسعر خاص",d:"اطلب ٣ أثواب من أقمشتنا الشتوية واحصل على سعر خاص.",e:"2027-01-31"}],
+  en:[{t:"Loyalty card",d:"A stamp for every thobe. 5th stamp: 50% off your sixth. 10th stamp: your eleventh thobe is free.",card:true},
+      {t:"15% off your first thobe",d:"First time tailoring with us? Get 15% off your first thobe.",e:"2026-12-31"},
+      {t:"Winter offer: 3 thobes at a special price",d:"Order 3 thobes in our winter fabrics and get a special price.",e:"2027-01-31"}]
+};
+let lang="ar";try{lang=localStorage.getItem("elg_lang")==="en"?"en":"ar"}catch(e){}
+let WA="966575300170",CUSTOM=null,OF=[];
+const t=(k,...a)=>{const v=T[lang][k];return typeof v==="function"?v(...a):v};
+const num=n=>lang==="en"?String(n):String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const WAIC='<svg viewBox="0 0 32 32" fill="#111" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6z"/></svg>';
+
+function parse(txt){return String(txt||"").split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(([tt,d,e])=>({t:tt,d,e}))}
+function build(){
+  const list=(CUSTOM&&CUSTOM.length?CUSTOM:SAMPLE[lang]);const now=Date.now();
+  OF=list.map(o=>({...o,end:o.e?Date.parse(o.e+"T23:59:59+03:00"):NaN})).filter(o=>isNaN(o.end)||o.end>now);
+  const g=document.getElementById("grid");
+  if(!OF.length){g.innerHTML='<div class="empty">'+t("empty")+'</div>';return}
+  g.innerHTML=OF.map((o,i)=>{
+    const timed=!isNaN(o.end),soon=timed&&o.end-now<3*86400000;
+    const badge=o.card?'<span class="badge perm">'+t("perm")+'</span>':'<span class="badge">'+(soon?t("ends"):t("limited"))+'</span>';
+    const cta=o.card?'<a class="btn" href="../card/">'+t("card")+'</a>'
+      :'<a class="btn" target="_blank" rel="noopener" href="https://wa.me/'+WA+'?text='+encodeURIComponent(t("wa",o.t))+'">'+WAIC+t("book")+'</a>';
+    return '<article class="of" style="animation-delay:'+(i*.12)+'s">'+badge+'<h2>'+esc(o.t)+'</h2>'+(o.d?'<p>'+esc(o.d)+'</p>':'')+(timed?'<div class="cd'+(soon?' urgent':'')+'" data-i="'+i+'"></div>':'')+cta+'</article>'}).join("");
+  tick();
+}
+function tick(){const now=Date.now();let gone=false;
+  document.querySelectorAll(".cd").forEach(el=>{const o=OF[+el.dataset.i];if(!o)return;let s=Math.floor((o.end-now)/1000);if(s<=0){gone=true;return}
+    const D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60),S=s%60;
+    el.innerHTML=[[D,t("days")],[H,t("hrs")],[M,t("mins")],[S,t("secs")]].map(([n,l])=>'<div><b>'+num(String(n).padStart(2,"0"))+'</b><span>'+l+'</span></div>').join("")});
+  if(gone)build()}
+setInterval(tick,1000);
+
+function apply(){
+  const h=document.documentElement;h.lang=lang;h.dir=lang==="ar"?"rtl":"ltr";document.title=t("title");
+  document.getElementById("h1").innerHTML=t("h1");
+  document.querySelectorAll("[data-t]").forEach(e=>e.textContent=t(e.dataset.t));
+  const b=document.getElementById("langBtn");b.textContent=t("lang");b.setAttribute("aria-label",lang==="ar"?"Switch to English":"التبديل إلى العربية");
+  build();
+}
+document.getElementById("langBtn").onclick=()=>{lang=lang==="ar"?"en":"ar";try{localStorage.setItem("elg_lang",lang)}catch(e){}apply()};
+
+// شرار ذهبي في الأعلى
+(()=>{const c=document.getElementById("sp"),x=c.getContext("2d");if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;let P=[];
+  function sz(){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);c.width=r.width*d;c.height=r.height*d;x.setTransform(d,0,0,d,0,0);P=Array.from({length:Math.round(Math.min(60,r.width/14))},()=>mk(r,true))}
+  function mk(r,init){return{x:Math.random()*r.width,y:init?Math.random()*r.height:r.height+5,v:Math.random()*.9+.3,s:Math.random()*1.8+.5,w:Math.random()*6.3}}
+  function f(){const r={width:c.clientWidth,height:c.clientHeight};x.clearRect(0,0,r.width,r.height);x.shadowColor="#ffb21e";x.shadowBlur=10;
+    P.forEach((p,i)=>{p.y-=p.v;p.w+=.04;p.x+=Math.sin(p.w)*.4;if(p.y<-5)P[i]=mk(r,false);const a=.35+.5*Math.abs(Math.sin(p.w*2));x.beginPath();x.arc(p.x,p.y,p.s,0,7);x.fillStyle="rgba(255,205,110,"+a.toFixed(2)+")";x.fill()});requestAnimationFrame(f)}
+  new ResizeObserver(sz).observe(c);requestAnimationFrame(f)})();
+
+apply();
+// محتوى لوحة التحكم (العروض ورقم الواتساب)
+fetch("../content.json?v="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(d=>{
+  if(d&&typeof d.whatsapp==="string"&&/^\d{8,15}$/.test(d.whatsapp))WA=d.whatsapp;
+  if(d&&typeof d.offers==="string"&&d.offers.trim()&&lang==="ar"){CUSTOM=parse(d.offers)}
+  else if(d&&typeof d.offers==="string"&&d.offers.trim()){CUSTOM=parse(d.offers)}
+  build();
+}).catch(()=>{});
+</script>
+</body>
+</html>
