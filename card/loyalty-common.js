@@ -100,7 +100,7 @@ const AR = n => LANG === 'en' ? String(n) : String(n).replace(/\d/g, d => '٠١�
 const digits = s => String(s || '').replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^\d]/g, '');
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmtDate = t => new Date(t).toLocaleDateString(LANG === 'en' ? 'en-GB' : 'ar-SA-u-ca-gregory', { year: 'numeric', month: 'short', day: 'numeric' });
-const CROWN = '<svg width="28" height="20" viewBox="0 0 34 24" aria-hidden="true"><path d="M3 20 L1 6 L10 13 L17 2 L24 13 L33 6 L31 20 Z" fill="#F2C200"/></svg>';
+const CROWN = i => '<span class="gw"><img src="/img/crown-gem.png" alt=""><i class="gem" style="left:51.4%;top:14.4%;--gs:40%;--d:' + (i * .37 % 3.4).toFixed(2) + 's"></i></span>';
 
 // تطبيق الترجمة على العناصر: data-i (نص)، data-ih (HTML)، data-ip (placeholder)، data-ia (aria-label)
 function applyLang(titleKey) {
@@ -135,7 +135,7 @@ function renderStamps(grid, c, popLast) {
     const d = document.createElement('div');
     const done = i < c.stamps, special = i === c.discountAt - 1 || i === c.total - 1;
     d.className = 'slot' + (done ? ' done' : special ? ' special' : '') + (popLast && i === c.stamps - 1 ? ' pop' : '');
-    d.innerHTML = done ? CROWN : (i === c.discountAt - 1 ? tr('slotDisc') : i === c.total - 1 ? tr('slotFree') : AR(i + 1));
+    d.innerHTML = done ? CROWN(i) : (i === c.discountAt - 1 ? tr('slotDisc') : i === c.total - 1 ? tr('slotFree') : AR(i + 1));
     d.setAttribute('aria-label', tr('slot', AR(i + 1), done));
     grid.appendChild(d);
   }

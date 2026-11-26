@@ -50,11 +50,19 @@ html[lang=en] .of h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:28
 .empty{text-align:center;color:var(--mut);padding:40px 0}
 .note{text-align:center;color:var(--mut);font-size:14px;margin-top:34px}
 @media(prefers-reduced-motion:reduce){.of{animation:none;opacity:1;transform:none}}
+.gw{position:relative;display:inline-block;line-height:0;vertical-align:middle}
+.gw>img{display:block}
+.gem{position:absolute;width:var(--gs,16%);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:screen;z-index:1}
+.gem::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff 0%,#fff6d0 22%,#ffd86a66 50%,transparent 72%);opacity:.35;animation:gemGlow 3.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+.gem::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#fff 30%,#fff3c4 60%,transparent 75%);clip-path:polygon(50% 0,55% 45%,100% 50%,55% 55%,50% 100%,45% 55%,0 50%,45% 45%);opacity:0;transform:scale(.2);animation:gemStar 3.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes gemStar{0%,58%,100%{opacity:0;transform:scale(.2) rotate(0)}70%{opacity:1;transform:scale(1) rotate(45deg)}84%{opacity:0;transform:scale(.3) rotate(90deg)}}
+@keyframes gemGlow{0%,56%,100%{opacity:.3}70%{opacity:1}86%{opacity:.4}}
+@media(prefers-reduced-motion:reduce){.gem::before{animation:none;opacity:.6}.gem::after{animation:none;opacity:0}}
 </style>
 </head>
 <body>
 <header><div class="bar">
-  <a href="../" aria-label="إليغانزا"><img src="../img/logo.png" alt="إليغانزا"></a>
+  <a href="../" aria-label="إليغانزا"><span class="gw"><img src="../img/logo.png" alt="إليغانزا"><i class="gem" style="left:78.9%;top:23.3%;--gs:15%;--d:0s"></i></span></a>
   <div class="acts">
     <button class="pill" id="langBtn" type="button">English</button>
     <a class="pill" href="../" id="home"><svg class="flip" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-t="home">الرئيسية</span></a>

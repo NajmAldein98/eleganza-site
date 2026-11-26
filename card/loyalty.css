@@ -51,3 +51,12 @@ video{width:100%;border-radius:16px;background:#000;aspect-ratio:1/1;object-fit:
 .langb{position:relative;z-index:2;align-self:flex-start;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--gold);background:transparent;color:var(--ivory);font-family:inherit;font-size:14px;cursor:pointer}
 .brand .right{display:flex;align-items:center;gap:12px}
 html[dir=ltr] .item{text-align:left}
+.gw{position:relative;display:inline-block;line-height:0;vertical-align:middle}
+.gw>img{display:block}
+.gem{position:absolute;width:var(--gs,16%);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:screen;z-index:1}
+.gem::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff 0%,#fff6d0 22%,#ffd86a66 50%,transparent 72%);opacity:.35;animation:gemGlow 3.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+.gem::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#fff 30%,#fff3c4 60%,transparent 75%);clip-path:polygon(50% 0,55% 45%,100% 50%,55% 55%,50% 100%,45% 55%,0 50%,45% 45%);opacity:0;transform:scale(.2);animation:gemStar 3.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes gemStar{0%,58%,100%{opacity:0;transform:scale(.2) rotate(0)}70%{opacity:1;transform:scale(1) rotate(45deg)}84%{opacity:0;transform:scale(.3) rotate(90deg)}}
+@keyframes gemGlow{0%,56%,100%{opacity:.3}70%{opacity:1}86%{opacity:.4}}
+@media(prefers-reduced-motion:reduce){.gem::before{animation:none;opacity:.6}.gem::after{animation:none;opacity:0}}
+.slot.done .gw{width:66%}.slot.done .gw img{width:100%;height:auto}
