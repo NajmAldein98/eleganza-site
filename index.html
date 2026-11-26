@@ -592,6 +592,9 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
   <div class="sheet">
     <div class="sh"><h2 id="pT">لوحة التحكم</h2><button class="x" id="close" type="button" aria-label="إغلاق">×</button></div>
     <form class="fm" id="fm">
+      <fieldset><legend>مفتاح الحفظ</legend>
+        <label>مفتاح GitHub<input type="password" id="gh_tok" class="ltr" autocomplete="off" placeholder="github_pat_..."><span class="hint" id="ghHint">يُحفظ في هذا الجهاز فقط، ويُطلب مرة وحدة.</span></label>
+      </fieldset>
       <fieldset><legend>الصيانة</legend>
         <label class="tg"><input type="checkbox" id="i_maintenance"> تفعيل وضع الصيانة (يخفي الموقع عن الزوار)</label>
         <label>رسالة الصيانة<textarea id="i_maintenanceMsg"></textarea></label>
@@ -628,7 +631,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
         <label>أوقات العمل<textarea id="i_hours"></textarea></label>
       </fieldset>
     </form>
-    <div class="sf"><button class="btn p" id="save" type="button">حفظ ونشر</button><button class="btn s" id="reset" type="button">استرجاع الأصل</button><div class="msg" id="msg" role="status"></div></div>
+    <div class="sf"><button class="btn p" id="save" type="button">حفظ ونشر</button><button class="btn s" id="reset" type="button">استرجاع الأصل</button><button class="btn s" id="exitAdmin" type="button">خروج من وضع الإدارة</button><div class="msg" id="msg" role="status"></div></div>
   </div>
 </div>
 
@@ -1011,28 +1014,44 @@ const keys=Object.keys(DEF);
 function fillForm(){for(const k of keys){const el=$("i_"+k);if(!el)continue;if(el.type==="checkbox")el.checked=!!CD[k];else el.value=CD[k]??""}}
 function readForm(){const o={};for(const k of keys){const el=$("i_"+k);if(!el){o[k]=CD[k];continue}o[k]=el.type==="checkbox"?el.checked:el.value.trim()}return o}
 const panel=$("panel");
-$("fabbtn").addEventListener("click",()=>{fillForm();$("msg").textContent="";panel.classList.add("on");$("close").focus()});
+$("fabbtn").addEventListener("click",()=>{fillForm();$("msg").textContent="";$("ghHint").textContent=ghTok()?"المفتاح محفوظ في هذا الجهاز ✓ (اتركه فارغ)":"يُحفظ في هذا الجهاز فقط، ويُطلب مرة وحدة.";panel.classList.add("on");$("close").focus()});
 $("close").addEventListener("click",()=>panel.classList.remove("on"));
 panel.addEventListener("click",e=>{if(e.target===panel)panel.classList.remove("on")});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){panel.classList.remove("on");$("zoom").classList.remove("on")}});
 let saving=false;
+const GH_API="https://api.github.com/repos/NajmAldein98/eleganza-site/contents/content.json";
+const ghTok=()=>{try{return localStorage.getItem("elg_gh_token")||""}catch(e){return""}};
+const b64=str=>{const u=new TextEncoder().encode(str);let b="";for(let i=0;i<u.length;i+=8192)b+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(b)};
+async function ghSave(obj){
+  const tok=ghTok(),h={Authorization:"Bearer "+tok,Accept:"application/vnd.github+json"};
+  const g=await fetch(GH_API+"?ref=main",{headers:h,cache:"no-store"});
+  if(g.status===401||g.status===403)throw"auth";
+  const sha=g.ok?(await g.json()).sha:undefined;
+  const r=await fetch(GH_API,{method:"PUT",headers:{...h,"Content-Type":"application/json"},body:JSON.stringify({message:"تحديث محتوى الموقع من لوحة التحكم",branch:"main",sha,content:b64(JSON.stringify(obj,null,2))})});
+  if(r.status===401||r.status===403||r.status===404)throw"auth";
+  if(!r.ok)throw"fail";
+}
 $("save").addEventListener("click",async()=>{
-  if(saving)return;if(!docRef){$("msg").textContent="الحفظ غير متاح في هذه النسخة من الصفحة.";return}
+  if(saving)return;
+  const t=$("gh_tok").value.trim();if(t){try{localStorage.setItem("elg_gh_token",t)}catch(e){}$("gh_tok").value=""}
+  if(!ghTok()){$("msg").textContent="اكتب مفتاح GitHub أول مرة عشان يتم الحفظ.";$("gh_tok").focus();return}
   saving=true;$("msg").textContent="جارٍ الحفظ…";
-  try{await docRef.set({...readForm(),updatedAt:new Date().toISOString()});$("msg").textContent="تم الحفظ ✓ — التعديلات ظاهرة الآن."}
-  catch(e){$("msg").textContent=e&&e.code==="invalid_argument"?"ما عندك صلاحية الحفظ.":"تعذّر الحفظ، حاول مرة ثانية."}
+  const data={...readForm(),updatedAt:new Date().toISOString()};
+  try{await ghSave(data);CD={...DEF,...readForm()};compose();render();$("ghHint").textContent="المفتاح محفوظ في هذا الجهاز ✓";$("msg").textContent="تم الحفظ ✓ — يظهر للزوار خلال دقيقة تقريبًا."}
+  catch(e){if(e==="auth"){try{localStorage.removeItem("elg_gh_token")}catch(x){}$("msg").textContent="المفتاح غير صحيح أو ما عنده صلاحية، اكتبه من جديد."}else $("msg").textContent="تعذّر الحفظ، تأكد من الإنترنت وحاول مرة ثانية."}
   saving=false});
+$("exitAdmin").addEventListener("click",()=>{try{localStorage.removeItem("elg_admin")}catch(e){}staff=false;document.body.classList.remove("staff");panel.classList.remove("on");render()});
 $("reset").addEventListener("click",()=>{CD={...DEF};fillForm();$("msg").textContent="رجعت النصوص الأصلية في النموذج — اضغط «حفظ ونشر» لتثبيتها."});
 
 (async()=>{
   try{
-    const user=await window.claude?.use?.("user");
-    staff=((await user?.isOwner?.())??false)||((await user?.canEdit?.())??false);
+    if(location.hash==="#admin"){try{localStorage.setItem("elg_admin","1")}catch(e){}history.replaceState(null,"",location.pathname)}
+    try{staff=localStorage.getItem("elg_admin")==="1"}catch(e){}
     if(staff){document.body.classList.add("staff");render()}
-    const db=await window.claude?.use?.("db");
-    if(!db)return;
-    docRef=db.doc("site/content");
-    docRef.onSnapshot(s=>{if(s.exists){const d=s.data()||{};CD={...DEF};for(const k of keys)if(k in d&&typeof d[k]===typeof DEF[k])CD[k]=d[k]}compose();render()},()=>{});
+    const r=await fetch("content.json?v="+Date.now(),{cache:"no-store"});
+    if(!r.ok)return;
+    const d=await r.json()||{};CD={...DEF};for(const k of keys)if(k in d&&typeof d[k]===typeof DEF[k])CD[k]=d[k];
+    compose();render();
   }catch(e){}
 })();
 }
