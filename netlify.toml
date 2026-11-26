@@ -1,6 +1,9 @@
 [build]
   command = "rm -rf dist && mkdir dist && cp -r index.html img card .nojekyll dist/"
   publish = "dist"
+  # Netlify يُستخدم لخادم بطاقة الولاء فقط (الموقع نفسه على GitHub Pages).
+  # تخطَّ النشر إذا ما تغيّر الخادم، عشان ما تنصرف نقاط Netlify على كل تعديل في الموقع.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- netlify/functions/ package.json"
 
 [functions]
   directory = "netlify/functions"
