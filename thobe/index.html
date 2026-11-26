@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>شهادة ميلاد الثوب — إليغانزا</title>
+<meta name="theme-color" content="#111111">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bk:#111;--g:#b69a66;--g2:#d6bf8e;--iv:#f3f0e9;--mut:#a8a296;--line:#2e2b26}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;min-height:100vh;background:radial-gradient(90% 60% at 50% 0,#2a2210,transparent 70%),var(--bk);color:var(--iv);font:16px/1.7 "IBM Plex Sans Arabic",Tahoma,sans-serif;display:grid;place-items:center;padding:24px 16px}
+h1,h2{font-family:"Reem Kufi",sans-serif;margin:0;line-height:1.2}
+.gw{position:relative;display:inline-block;line-height:0}
+.gem{position:absolute;width:var(--gs,16%);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:screen}
+.gem::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff 0%,#fff6d0 22%,#ffd86a66 50%,transparent 72%);opacity:.35;animation:gemGlow 3.4s ease-in-out infinite}
+.gem::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#fff 30%,#fff3c4 60%,transparent 75%);clip-path:polygon(50% 0,55% 45%,100% 50%,55% 55%,50% 100%,45% 55%,0 50%,45% 45%);opacity:0;transform:scale(.2);animation:gemStar 3.4s ease-in-out infinite}
+@keyframes gemStar{0%,58%,100%{opacity:0;transform:scale(.2) rotate(0)}70%{opacity:1;transform:scale(1) rotate(45deg)}84%{opacity:0;transform:scale(.3) rotate(90deg)}}
+@keyframes gemGlow{0%,56%,100%{opacity:.3}70%{opacity:1}86%{opacity:.4}}
+@media(prefers-reduced-motion:reduce){.gem::before,.gem::after{animation:none}}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border-radius:999px;font:700 16px "IBM Plex Sans Arabic",sans-serif;text-decoration:none;border:1.5px solid var(--g);cursor:pointer;background:var(--g);color:#111}
+.btn.s{background:transparent;color:var(--g)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+:focus-visible{outline:2px solid var(--g2);outline-offset:3px}
+.mut{color:var(--mut)}
+.cert{width:min(560px,100%);border-radius:28px;padding:clamp(24px,5vw,44px);background:linear-gradient(160deg,#1c180f,#121212 60%);border:1px solid #b69a6655;box-shadow:0 40px 90px #000c;text-align:center;position:relative;overflow:hidden}
+.cert::before{content:"";position:absolute;inset:12px;border:1px solid #b69a6630;border-radius:20px;pointer-events:none}
+.cert .gw img{height:64px;width:auto;margin:0 auto}
+.k{color:var(--g);font-weight:500;margin:22px 0 4px;font-size:15px}
+h1{font-size:clamp(28px,6vw,40px)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:12px 18px;text-align:start;margin:28px 0;padding:20px;border-radius:18px;background:#ffffff08}
+dt{color:var(--mut)}dd{margin:0;font-weight:500}
+.seal{font:700 13px "IBM Plex Sans Arabic";color:var(--g2);letter-spacing:.5px;margin-top:18px}
+</style>
+</head>
+<body>
+<main class="cert" id="c" aria-live="polite">
+  <span class="gw"><img src="/img/logo-crown.png" alt="إليغانزا للخياطة"><i class="gem" style="left:78.9%;top:23.3%;--gs:15%"></i></span>
+  <div class="k">شهادة ميلاد الثوب</div>
+  <h1 id="t">لحظة…</h1>
+  <div id="body"></div>
+</main>
+<script>
+{
+const API=/netlify\.app$|^localhost|^127\./.test(location.hostname)?"/api/elg/":"https://eleganza-tailor.netlify.app/api/elg/";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+let WA="966575300170";
+const c=new URLSearchParams(location.search).get("c")||"";
+(async()=>{
+  try{const j=await (await fetch("/content.json",{cache:"no-store"})).json();if(j&&j.whatsapp)WA=String(j.whatsapp).replace(/\D/g,"")}catch(e){}
+  try{
+    const r=await fetch(API+"cert",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({c})});
+    const d=await r.json();if(!r.ok)throw new Error(d.error||"تعذّر الاتصال");
+    $("t").textContent=d.item;
+    const date=new Date(d.date).toLocaleDateString("ar-SA-u-ca-islamic",{day:"numeric",month:"long",year:"numeric"});
+    const rows=[["القماش",d.fabric],["خاطه",d.tailor],["تاريخ الميلاد",date],["رقم الطلب",num(d.id)],["العناية","اغسله بماء بارد، وكوِه على حرارة متوسطة من الداخل"]].filter(r=>r[1]);
+    const msg="السلام عليكم، أبغى أفصّل ثوب مثل ثوبي رقم "+d.id+" ("+d.item+(d.fabric?"، "+d.fabric:"")+")";
+    $("body").innerHTML='<dl>'+rows.map(([a,b])=>'<dt>'+a+'</dt><dd>'+esc(b)+'</dd>').join("")+'</dl><div class="btns"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/'+WA+'?text='+encodeURIComponent(msg)+'">فصّل لي مثله</a><a class="btn s" href="/#stories">قصص إليجانزا</a></div><div class="seal">صُنع بعناية في إليغانزا — جدة</div>';
+  }catch(e){$("t").textContent="ما لقينا هذا الثوب";$("body").innerHTML='<p class="mut">تأكد من الرمز، أو تواصل معنا.</p><div class="btns"><a class="btn s" href="/">الموقع</a></div>'}
+})();
+}
+</script>
+</body>
+</html>

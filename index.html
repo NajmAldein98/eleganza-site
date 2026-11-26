@@ -395,6 +395,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 @keyframes gemGlow{0%,56%,100%{opacity:.3}70%{opacity:1}86%{opacity:.4}}
 @media(prefers-reduced-motion:reduce){.gem::before{animation:none;opacity:.6}.gem::after{animation:none;opacity:0}}
 </style>
+<link rel="stylesheet" href="extras.css">
 </head>
 <body>
 <div id="intro"><video id="iv" playsinline muted preload="none" aria-hidden="true"></video><div class="ibtns"><button id="snd" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span data-t="snd">تشغيل الصوت</span></button><button id="skip" type="button" data-t="skip">تخطي</button></div></div>
@@ -410,7 +411,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 <header>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="إليغانزا للخياطة"><span class="gw"><img src="img/logo-crown.png" alt="إليغانزا"><i class="gem" style="left:78.9%;top:23.3%;--gs:15%;--d:0s"></i></span></a>
-    <nav aria-label="أقسام الموقع"><a href="#make" data-t="n1">صمّم ثوبك</a><a href="#loyalty" data-t="n8">بطاقة الولاء</a><a href="#offers" data-t="n2">العروض</a><a href="#story" data-t="n3">قصتنا</a><a href="#fabrics" data-t="n4">الأقمشة</a><a href="#journey" data-t="n5">رحلة الطلب</a><a href="#faq" data-t="n6">أسئلة</a><a href="#contact" data-t="n7">تواصل</a></nav>
+    <nav aria-label="أقسام الموقع"><a href="#make" data-t="n1">صمّم ثوبك</a><a href="#loyalty" data-t="n8">بطاقة الولاء</a><a href="#offers" data-t="n2">العروض</a><a href="#stories" data-t="n9">قصص إليغانزا</a><a href="#story" data-t="n3">قصتنا</a><a href="#fabrics" data-t="n4">الأقمشة</a><a href="#track" data-t="n10">تتبّع ثوبك</a><a href="#gift" data-t="n11">ثوب هدية</a><a href="#faq" data-t="n6">أسئلة</a><a href="#contact" data-t="n7">تواصل</a></nav>
     <div class="hsoc" id="hsoc"></div>
     <div class="hact"><button class="socT" id="socT" type="button" aria-expanded="false" aria-controls="hsoc" aria-label="التواصل الاجتماعي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><button class="lang" id="langBtn" type="button" aria-label="Change language"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9zM4.6 7.5h14.8M4.6 16.5h14.8"/></svg><span id="langLbl">English</span></button>
     <a class="btn p" id="hdrC" href="#contact" data-t="hdrC" style="min-height:42px;padding:0 18px;font-size:15px">تواصل معنا</a></div>
@@ -473,6 +474,25 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 </section>
 
 
+<section class="band eid" id="eid" hidden>
+  <div class="wrap">
+    <div class="kick rv" data-x="eiK">مقاعد الموسم</div>
+    <h2 class="rv" id="eiTitle"></h2>
+    <div class="eidg">
+      <div class="ring rv"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="none" stroke="#ffffff14" stroke-width="10"/><circle id="eiArc" cx="60" cy="60" r="52" fill="none" stroke="#b69a66" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" style="transition:stroke-dashoffset 1.2s"/></svg><div class="c"><b id="eiLeft">٠</b><span data-x="eiSeats">ثوب باقي</span></div></div>
+      <div>
+        <p class="lead rv" id="eiLead" style="margin-top:0"></p>
+        <form class="xform rv" id="eiForm" style="margin-top:20px">
+          <div class="xrow"><label><span data-x="fName">اسمك</span><input class="xin" id="eiName" autocomplete="name" required></label><label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="eiPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx" autocomplete="tel" required></label></div>
+          <label><span data-x="eiPcs">كم ثوب تبغى؟</span><input class="xin" id="eiPcs" type="number" min="1" max="20" value="1" dir="ltr" style="max-width:140px"></label>
+          <div class="btns"><button class="btn p" type="submit" data-x="eiBtn">احجز مقعدي</button></div>
+          <div class="xmsg" id="eiMsg" role="status"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="band ivs" id="make">
   <div class="wrap">
     <div class="kick rv" data-t="mkK">صمّم ثوبك بنفسك</div>
@@ -507,6 +527,16 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
   </div>
 </section>
 
+<section class="band stories" id="stories">
+  <div class="wrap">
+    <div class="kick rv" data-x="soK">قصص إليغانزا</div>
+    <h2 class="rv" data-x="soH">قصص قصيرة… وكل حلقة لها نهاية ما تتوقعها</h2>
+    <p class="lead rv" data-x="soL">سلسلة حكايات مصوّرة من عالم إليغانزا. تابع الحلقات بالترتيب، والجديد ينزل أول بأول.</p>
+    <div class="eps" id="eps" tabindex="0" aria-label="الحلقات"></div>
+    <div class="epnav"><button type="button" id="epPrev" aria-label="السابق">›</button><button type="button" id="epNext" aria-label="التالي">‹</button></div>
+  </div>
+</section>
+
 <section class="band" id="story" style="background:var(--bk2)">
   <div class="wrap story-grid">
     <div>
@@ -533,12 +563,41 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
   </div>
 </section>
 
+<section class="band ivs t2" id="quiz">
+  <div class="wrap">
+    <div class="kick rv" data-x="qzK">مستشار القماش</div>
+    <h2 class="rv" data-x="qzH">وش القماش اللي يناسبك؟</h2>
+    <p class="lead rv" data-x="qzL">أربعة أسئلة سريعة، ونرشّح لك القماش الأنسب من مكتبتنا.</p>
+    <div class="quiz">
+      <div id="qzQs"></div>
+      <div class="qres" id="qzRes" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
 <section class="band" id="journey">
   <div class="wrap">
     <div class="kick rv" data-t="jrK">رحلة ثوبك في إليغانزا</div>
     <h2 class="rv" data-t="jrH">من القماش… إلى باب بيتك</h2>
     <p class="lead rv" data-t="jrL">كل ثوب يمر بست مراحل قبل ما يوصلك، وتقدر تسألنا واتساب وين وصل ثوبك في أي وقت.</p>
     <ol class="jr" id="jr"></ol>
+  </div>
+</section>
+
+<section class="band" id="track">
+  <div class="wrap">
+    <div class="kick rv" data-x="tkK">تتبّع ثوبك</div>
+    <h2 class="rv" data-x="tkH">وين وصل ثوبك؟</h2>
+    <p class="lead rv" data-x="tkL">اكتب رقم طلبك وآخر ٤ أرقام من جوالك، وشوف المرحلة اللي وصلها ثوبك الحين.</p>
+    <div class="track">
+      <form class="xform rv" id="tkForm">
+        <label><span data-x="tkId">رقم الطلب</span><input class="xin" id="tkId" inputmode="numeric" dir="ltr" placeholder="1001" required></label>
+        <label><span data-x="tk4">آخر ٤ أرقام من جوالك</span><input class="xin" id="tk4" inputmode="numeric" maxlength="4" dir="ltr" placeholder="0170" required></label>
+        <div class="btns"><button class="btn p" type="submit" data-x="tkBtn">تتبّع</button></div>
+        <div class="xmsg" id="tkMsg" role="status"></div>
+      </form>
+      <div id="tkOut"><div class="tph" data-x="tkPh">رقم الطلب تلقاه في رسالة الواتساب اللي توصلك بعد المقاس.</div></div>
+    </div>
   </div>
 </section>
 
@@ -555,11 +614,54 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
   </div>
 </section>
 
+<section class="band ivs" id="gift">
+  <div class="wrap">
+    <div class="kick rv" data-x="gfK">ثوب هدية</div>
+    <h2 class="rv" data-x="gfH">أهدِ ثوبًا… والمقاس علينا</h2>
+    <p class="lead rv" data-x="gfL">لأبوك، لأخوك، أو لعريس. أنت تختار الهدية، وصاحبها يجينا بس للمقاس واختيار القماش.</p>
+    <div class="gift">
+      <form class="xform rv" id="gfForm">
+        <div class="xrow"><label><span data-x="gfFrom">اسمك</span><input class="xin" id="gfFrom" autocomplete="name" required></label><label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="gfPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx" autocomplete="tel" required></label></div>
+        <label><span data-x="gfTo">اسم المُهدى إليه</span><input class="xin" id="gfTo" required></label>
+        <div><span data-x="gfOcc" style="font-weight:500;font-size:15px">المناسبة</span><div class="xchips" id="gfOcc" style="margin-top:8px"></div></div>
+        <label><span data-x="gfCount">عدد الثياب</span><input class="xin" id="gfCount" type="number" min="1" max="10" value="1" dir="ltr" style="max-width:140px"></label>
+        <label><span data-x="gfMsg">رسالتك على البطاقة</span><textarea class="xin" id="gfMsgT" maxlength="240"></textarea></label>
+        <div class="btns"><button class="btn p" type="submit" data-x="gfBtn">جهّز بطاقة الهدية</button></div>
+        <div class="xmsg" id="gfMsg" role="status"></div>
+      </form>
+      <div class="rv" style="display:grid;gap:16px">
+        <div class="gcard" id="gfCard"><div class="gt"><span class="gw"><img src="img/logo-crown.png" alt="إليغانزا"><i class="gem" style="left:78.9%;top:23.3%;--gs:15%;--d:.8s"></i></span><span class="fr" id="gcOcc"></span></div><div><div class="fr" data-x="gcFor">هدية إلى</div><div class="to" id="gcTo">…</div><p class="msg" id="gcMsg"></p></div><div class="fr" id="gcFrom"></div></div>
+        <div id="gfDone"></div>
+        <p class="note" data-x="gfNote" style="margin:0">قيمة الهدية تُدفع في المحل أو بالتحويل، ونتواصل معك لتأكيدها.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="band ivs t2" id="faq">
   <div class="wrap">
     <div class="kick rv" data-t="fqK">أسئلة شائعة</div>
     <h2 class="rv" data-t="fqH">كل اللي تبغى تعرفه</h2>
     <div class="faq" id="faqs"></div>
+  </div>
+</section>
+
+<section class="band prefs" id="prefs">
+  <div class="wrap">
+    <div class="kick rv" data-x="pfK">علّمنا وش تحب</div>
+    <h2 class="rv" data-x="pfH">قل لنا ذوقك… ونرسل لك اللي يناسبك بس</h2>
+    <p class="lead rv" data-x="pfL">ست أسئلة خفيفة، وبعدها توصلك أخبار الأقمشة والتشكيلات والعروض اللي على ذوقك، بدون إزعاج.</p>
+    <div class="pgrid">
+      <div id="pfQs"></div>
+      <form class="pside xform rv" id="pfForm">
+        <div class="pnum" id="pfCount"></div>
+        <label><span data-x="pfName">اسمك (اختياري)</span><input class="xin" id="pfName" autocomplete="name"></label>
+        <label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="pfPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx" autocomplete="tel" required></label>
+        <label class="xchk"><input type="checkbox" id="pfOk" required><span data-x="pfOk">أوافق توصلني أخبار إليغانزا على واتساب، وأقدر أوقفها متى ما بغيت.</span></label>
+        <button class="btn p" type="submit" data-x="pfBtn">احفظ ذوقي</button>
+        <div class="xmsg" id="pfMsg" role="status"></div>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -629,6 +731,10 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
         <label>سياسة التعديل والاستبدال<textarea id="i_policy" style="min-height:150px"></textarea><span class="hint">كل بند في سطر: العنوان | النص</span></label>
         <label>الأسئلة الشائعة<textarea id="i_faq" style="min-height:130px"></textarea><span class="hint">كل سؤال في سطر: السؤال | الجواب</span></label>
       </fieldset>
+      <fieldset><legend>قصص إليغانزا</legend>
+        <label>الحلقات<textarea id="i_stories" style="min-height:130px"></textarea><span class="hint">كل حلقة في سطر: العنوان | وصف قصير | رابط الحلقة (إنستقرام أو تيك توك). بدون رابط = تظهر «قريبًا».</span></label>
+        <p class="hint">مقاعد العيد، الطلبات، الهدايا وتفضيلات العملاء تديرها من صفحة الفريق: eleganza-tailor.com/staff</p>
+      </fieldset>
       <fieldset><legend>التواصل</legend>
         <label>رقم واتساب (دولي بدون +)<input type="text" id="i_whatsapp" class="ltr" inputmode="numeric"></label>
         <label>رابط إنستقرام<input type="text" id="i_instagram" class="ltr"></label>
@@ -668,7 +774,8 @@ const DEF={
   whatsapp:"966575300170",
   instagram:"https://www.instagram.com/eleganza_tailor",
   snapchat:"",
-  tiktok:""
+  tiktok:"",
+  stories:"سبع دقايق | سباق مع الوقت… ونهاية ما توقعها أحد. | \nلا تسحب الخيط | صندوق قديم، وخيط واحد لو انسحب تغيّر كل شي. | \nالدفتر | العم صالح يفتح دفتره القديم ويحكي. | \nالورقة في الجيب | ورقة صغيرة في جيب ثوب… ومفاجأة ما كانت على البال. | "
 };
 /* المحتوى بالإنجليزي */
 const DEF_EN={
@@ -689,7 +796,7 @@ const DEF_EN={
   hours:"Contact us for opening hours"
 };
 const T={
- ar:{n8:"بطاقة الولاء",lyK:"بطاقة الولاء",lyH:"كل ثوب… ختم. وعاشر ختم هديتك.",lyL:"بطاقة إلكترونية تنحفظ في جوالك، تجمع فيها أختامك مع كل ثوب تفصّله عندنا.",ly1:"سجّل بطاقتك باسمك أو كمجهول، وبرمز سري لك",ly2:"الختم الخامس: خصم ٥٠٪ على ثوبك السادس",ly3:"الختم العاشر: ثوبك الحادي عشر مجاناً",lyB:"احصل على بطاقتك الآن",lyB2:"افتح بطاقتي",lyDisc:"خصم ٥٠٪",lyCard:"بطاقة الولاء · للخياطة",lyWin:"مبروك! فزت",lyWin2:"ثوبك القادم مجاناً هدية من إليغانزا",lyTap:"اضغط على البطاقة وابدأ تجمع أختامك",skip:"تخطي",snd:"تشغيل الصوت",mtH:"نرجع لكم قريبًا",mtWa:"راسلنا على واتساب",n1:"صمّم ثوبك",n2:"العروض",n3:"قصتنا",n4:"الأقمشة",n5:"رحلة الطلب",n6:"أسئلة",n7:"تواصل",hdrC:"تواصل معنا",hb1:"اكتشف مجموعتنا",hb2:"صمّم ثوبك",
+ ar:{n9:"قصص إليغانزا",n10:"تتبّع ثوبك",n11:"ثوب هدية",n8:"بطاقة الولاء",lyK:"بطاقة الولاء",lyH:"كل ثوب… ختم. وعاشر ختم هديتك.",lyL:"بطاقة إلكترونية تنحفظ في جوالك، تجمع فيها أختامك مع كل ثوب تفصّله عندنا.",ly1:"سجّل بطاقتك باسمك أو كمجهول، وبرمز سري لك",ly2:"الختم الخامس: خصم ٥٠٪ على ثوبك السادس",ly3:"الختم العاشر: ثوبك الحادي عشر مجاناً",lyB:"احصل على بطاقتك الآن",lyB2:"افتح بطاقتي",lyDisc:"خصم ٥٠٪",lyCard:"بطاقة الولاء · للخياطة",lyWin:"مبروك! فزت",lyWin2:"ثوبك القادم مجاناً هدية من إليغانزا",lyTap:"اضغط على البطاقة وابدأ تجمع أختامك",skip:"تخطي",snd:"تشغيل الصوت",mtH:"نرجع لكم قريبًا",mtWa:"راسلنا على واتساب",n1:"صمّم ثوبك",n2:"العروض",n3:"قصتنا",n4:"الأقمشة",n5:"رحلة الطلب",n6:"أسئلة",n7:"تواصل",hdrC:"تواصل معنا",hb1:"اكتشف مجموعتنا",hb2:"صمّم ثوبك",
   ofK:"العروض والإعلانات",ofH:"عروض بوقت محدود",oeH:"عروض حصرية… بوقت محدود",oeP:"خصومات وهدايا لفترة قصيرة بس. شوف العروض الحالية قبل ما يخلص وقتها.",oeB:"شوف العروض",
   mkK:"صمّم ثوبك بنفسك",mkH:"اختر تفاصيلك… وشوفها قدامك",mkL:"بعد ما ناخذ مقاسك، اختر اللون والتفاصيل اللي تعجبك، وأرسل لنا بطاقة طلبك بضغطة.",orH:"بطاقة طلبك",mrefL:"رقم القياس أو الاسم (إن وجد)",send:"أرسل اختياراتي واتساب",save:"احفظ في خزانتي",saved:"تم الحفظ ✓",mkN:"التطريز والقماش النهائي نثبّتها معك في المحل. «خزانتي» تنحفظ على جهازك وترجع لها متى ما بغيت.",
   exK:"حصريًا في المحل",exH:"تصاميم خاصة… ما تنعرض أونلاين",exP:"عندنا موديلات وتصاميم خاصة نحتفظ فيها لزبايننا. مرّ علينا وشوفها بنفسك، وخلّ ثوبك ما يشبه أحد.",exB:"زورونا في المحل",
@@ -702,7 +809,7 @@ const T={
   shade:"درجة اللون",texture:"الملمس",season:"الموسم",features:"المميزات",care:"العناية",fabric:"القماش",compare:"قارن",cmpH:"مقارنة بين قماشين",cmpPick:"اختر قماش ثاني للمقارنة.",noFab:"لا توجد أقمشة في هذا الموسم بعد.",
   days:"يوم",hrs:"ساعة",mins:"دقيقة",secs:"ثانية",wa:"واتساب",ig:"إنستقرام",map:"موقعنا على قوقل",mapSub:"افتح الخريطة",sc:"سناب شات",tt:"تيك توك",go:"اضغط هنا",soon:"قريبًا",
   hi:"السلام عليكم، ",mine:"هذي اختياراتي لثوب من إليغانزا",againMsg:"أبغى أعيد تفصيل نفس الثوب بهذي التفاصيل",ref:"رقم القياس/الاسم: ",book:"السلام عليكم، أبغى أحجز موعد قياس في إليغانزا",fabMsg:"السلام عليكم، أبغى أفصّل ثوب من قماش: ",langBtn:"English",seasons:["صيفي","شتوي"]},
- en:{n8:"Loyalty card",lyK:"Loyalty card",lyH:"Every thobe is a stamp. The tenth is on us.",lyL:"A digital card saved on your phone that collects a stamp for every thobe we tailor for you.",ly1:"Register with your name or anonymously, with your own secret code",ly2:"5th stamp: 50% off your sixth thobe",ly3:"10th stamp: your eleventh thobe is free",lyB:"Get your card now",lyB2:"Open my card",lyDisc:"50% off",lyCard:"Loyalty card · Tailoring",lyWin:"Congratulations! You won",lyWin2:"Your next thobe is free, a gift from Eleganza",lyTap:"Tap the card and start collecting stamps",skip:"Skip",snd:"Sound on",mtH:"We'll be back soon",mtWa:"Message us on WhatsApp",n1:"Design",n2:"Offers",n3:"Our story",n4:"Fabrics",n5:"Order journey",n6:"FAQ",n7:"Contact",hdrC:"Contact us",hb1:"Explore our collection",hb2:"Design your thobe",
+ en:{n9:"Eleganza stories",n10:"Track your thobe",n11:"Gift a thobe",n8:"Loyalty card",lyK:"Loyalty card",lyH:"Every thobe is a stamp. The tenth is on us.",lyL:"A digital card saved on your phone that collects a stamp for every thobe we tailor for you.",ly1:"Register with your name or anonymously, with your own secret code",ly2:"5th stamp: 50% off your sixth thobe",ly3:"10th stamp: your eleventh thobe is free",lyB:"Get your card now",lyB2:"Open my card",lyDisc:"50% off",lyCard:"Loyalty card · Tailoring",lyWin:"Congratulations! You won",lyWin2:"Your next thobe is free, a gift from Eleganza",lyTap:"Tap the card and start collecting stamps",skip:"Skip",snd:"Sound on",mtH:"We'll be back soon",mtWa:"Message us on WhatsApp",n1:"Design",n2:"Offers",n3:"Our story",n4:"Fabrics",n5:"Order journey",n6:"FAQ",n7:"Contact",hdrC:"Contact us",hb1:"Explore our collection",hb2:"Design your thobe",
   ofK:"Offers & announcements",ofH:"Limited-time offers",oeH:"Exclusive offers… for a limited time",oeP:"Discounts and gifts for a short time only. See the current offers before the clock runs out.",oeB:"View offers",
   mkK:"Design your own thobe",mkH:"Choose your details… and see them live",mkL:"Once we have your measurements, pick the colour and details you like, then send us your order card in one tap.",orH:"Your order card",mrefL:"Measurement number or name (if any)",send:"Send my choices on WhatsApp",save:"Save to my wardrobe",saved:"Saved ✓",mkN:"Embroidery and the final fabric are confirmed with you in the shop. “My wardrobe” is saved on your device so you can come back anytime.",
   exK:"Exclusively in store",exH:"Private designs… never shown online",exP:"We keep special models and designs for our customers. Visit us to see them in person — and make sure your thobe looks like no one else's.",exB:"Visit our shop",
@@ -1014,7 +1121,9 @@ function render(){
   ["waFloat","mtWa"].forEach(id=>setLink(id,book));
   setLink("exMap",safe(C.mapsUrl));
   offers();story();fabrics();journey();social();headerSoc();faq();summary();watch();thread();
+  window.dispatchEvent(new Event("elg:render"));
 }
+window.ELG={get C(){return C},wa,lines,esc,num,lum,get lang(){return lang},watch};
 compose();applyLang();opts();thobe();favs();render();
 
 /* لوحة التحكم (النصوص العربية) */
@@ -1102,5 +1211,6 @@ $("reset").addEventListener("click",()=>{CD={...DEF};fillForm();$("msg").textCon
   document.getElementById("langBtn")?.addEventListener("click",()=>setTimeout(()=>{labels();set(n)},0));
 })();
 </script>
+<script src="extras.js" defer></script>
 </body>
 </html>

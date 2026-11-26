@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بطاقة هدية — إليغانزا</title>
+<meta name="theme-color" content="#111111">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bk:#111;--g:#b69a66;--g2:#d6bf8e;--iv:#f3f0e9;--mut:#a8a296;--line:#2e2b26}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;min-height:100vh;background:radial-gradient(90% 60% at 50% 0,#2a2210,transparent 70%),var(--bk);color:var(--iv);font:16px/1.7 "IBM Plex Sans Arabic",Tahoma,sans-serif;display:grid;place-items:center;padding:24px 16px}
+h1,h2{font-family:"Reem Kufi",sans-serif;margin:0;line-height:1.2}
+.gw{position:relative;display:inline-block;line-height:0}
+.gem{position:absolute;width:var(--gs,16%);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:screen}
+.gem::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff 0%,#fff6d0 22%,#ffd86a66 50%,transparent 72%);opacity:.35;animation:gemGlow 3.4s ease-in-out infinite}
+.gem::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#fff 30%,#fff3c4 60%,transparent 75%);clip-path:polygon(50% 0,55% 45%,100% 50%,55% 55%,50% 100%,45% 55%,0 50%,45% 45%);opacity:0;transform:scale(.2);animation:gemStar 3.4s ease-in-out infinite}
+@keyframes gemStar{0%,58%,100%{opacity:0;transform:scale(.2) rotate(0)}70%{opacity:1;transform:scale(1) rotate(45deg)}84%{opacity:0;transform:scale(.3) rotate(90deg)}}
+@keyframes gemGlow{0%,56%,100%{opacity:.3}70%{opacity:1}86%{opacity:.4}}
+@media(prefers-reduced-motion:reduce){.gem::before,.gem::after{animation:none}}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border-radius:999px;font:700 16px "IBM Plex Sans Arabic",sans-serif;text-decoration:none;border:1.5px solid var(--g);cursor:pointer;background:var(--g);color:#111}
+.btn.s{background:transparent;color:var(--g)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+:focus-visible{outline:2px solid var(--g2);outline-offset:3px}
+.mut{color:var(--mut)}
+.wrap{width:min(620px,100%);display:grid;gap:22px;text-align:center}
+.gcard{aspect-ratio:1.6;border-radius:26px;background:linear-gradient(135deg,#151515,#2a2312 60%,#151515);padding:clamp(20px,4vw,34px);display:flex;flex-direction:column;justify-content:space-between;text-align:start;box-shadow:0 40px 90px #000c;border:1px solid #b69a6655;position:relative;overflow:hidden;transform:rotateX(14deg) scale(.96);opacity:0;animation:inn 1s .2s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes inn{to{transform:none;opacity:1}}
+.gcard::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#ffe7a826 50%,transparent 65%);animation:sh 5s 1.2s ease-in-out infinite;transform:translateX(-100%)}
+@keyframes sh{0%,55%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+@media(prefers-reduced-motion:reduce){.gcard,.gcard::after{animation:none;opacity:1;transform:none}}
+.gt{display:flex;justify-content:space-between;align-items:center}.gt img{height:clamp(30px,6vw,44px);width:auto}
+.f{font-size:14px;color:var(--mut)}.to{font:700 clamp(26px,6vw,40px) "Reem Kufi",sans-serif;color:var(--g)}
+.m{margin:6px 0 0;color:#ddd5c4}
+code{font:700 18px "IBM Plex Sans Arabic";letter-spacing:3px;color:var(--g2)}
+.st{display:inline-block;padding:4px 14px;border-radius:99px;border:1px solid #b69a6666;font-size:14px;color:var(--g2)}
+</style>
+</head>
+<body>
+<main class="wrap" aria-live="polite">
+  <div class="gcard" id="card"><div class="gt"><span class="gw"><img src="/img/logo-crown.png" alt="إليغانزا"><i class="gem" style="left:78.9%;top:23.3%;--gs:15%"></i></span><span class="f" id="occ"></span></div>
+  <div><div class="f">هدية إلى</div><div class="to" id="to">…</div><p class="m" id="m"></p></div><div class="f" id="fr"></div></div>
+  <div id="info"></div>
+</main>
+<script>
+{
+const API=/netlify\.app$|^localhost|^127\./.test(location.hostname)?"/api/elg/":"https://eleganza-tailor.netlify.app/api/elg/";
+const $=id=>document.getElementById(id);
+const num=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+let WA="966575300170";
+const c=(new URLSearchParams(location.search).get("c")||"").toUpperCase();
+const ST={new:"بانتظار التأكيد",paid:"هدية مؤكدة وجاهزة",used:"تم استخدامها",cancelled:"ملغاة"};
+(async()=>{
+  try{const j=await (await fetch("/content.json",{cache:"no-store"})).json();if(j&&j.whatsapp)WA=String(j.whatsapp).replace(/\D/g,"")}catch(e){}
+  try{
+    const r=await fetch(API+"gift-view",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({code:c})});
+    const g=await r.json();if(!r.ok)throw new Error(g.error);
+    $("to").textContent=g.to;$("m").textContent=g.msg||"";$("occ").textContent=g.occasion||"";$("fr").textContent="من "+g.from+" · "+num(g.count)+" ثوب";
+    const msg="السلام عليكم، عندي هدية ثوب من إليغانزا برمز "+g.code+" وأبغى أحجز موعد المقاس";
+    $("info").innerHTML='<div><span class="st"></span></div><p class="mut" style="margin:0">مبروك! هديتك ثوب مفصّل على مقاسك. مرّنا في المحل للمقاس واختيار القماش، وقل لنا رمز الهدية: <code></code></p><div class="btns"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/'+WA+'?text='+encodeURIComponent(msg)+'">احجز موعد المقاس</a><a class="btn s" href="/">تعرّف على إليغانزا</a></div>';
+    $("info").querySelector(".st").textContent=ST[g.status]||"";$("info").querySelector("code").textContent=g.code;
+  }catch(e){$("to").textContent="ما لقينا الهدية";$("info").innerHTML='<p class="mut">تأكد من الرابط أو تواصل معنا.</p>'}
+})();
+}
+</script>
+</body>
+</html>

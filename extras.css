@@ -1,0 +1,96 @@
+/* إضافات إليغانزا: القصص، مستشار القماش، تتبّع الثوب، مقاعد العيد، ثوب هدية، علّمنا وش تحب */
+.xform{display:grid;gap:14px}
+.xform label{display:grid;gap:6px;font-weight:500;font-size:15px}
+.xin{font:16px "IBM Plex Sans Arabic",sans-serif;min-height:50px;padding:0 16px;border-radius:14px;border:1px solid #b69a6655;background:#ffffff0d;color:inherit;width:100%}
+.ivs .xin{background:#fff;border-color:#d9d1c1;color:#111}
+textarea.xin{min-height:96px;padding:12px 16px;resize:vertical}
+.xin:focus{outline:2px solid var(--g);outline-offset:1px}
+.xrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.xmsg{min-height:1.5em;font-size:15px;color:var(--g2)}.ivs .xmsg{color:var(--gd)}
+.xmsg.bad{color:#e88b7d}.ivs .xmsg.bad{color:#b23a2e}
+.xchips{display:flex;flex-wrap:wrap;gap:8px}
+.xchip{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #b69a6655;background:transparent;color:inherit;font:500 15px "IBM Plex Sans Arabic",sans-serif;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.xchip[aria-pressed=true]{background:var(--g);color:#111;border-color:var(--g)}
+.ivs .xchip{border-color:#cfc6b4}
+.ivs .xchip[aria-pressed=true]{background:#111;color:var(--iv);border-color:#111}
+.xq{display:grid;gap:10px;padding:18px 0;border-bottom:1px solid #b69a6626}
+.xq h3{font-size:19px}
+.xq:last-of-type{border-bottom:0}
+
+/* قصص إليغانزا */
+.stories{background:radial-gradient(120% 80% at 80% 0,#2a2210,transparent 60%),var(--bk);overflow:hidden}
+.eps{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,260px);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 2px 18px;margin-top:34px;scrollbar-width:thin}
+.ep{scroll-snap-align:start;position:relative;aspect-ratio:9/16;border-radius:22px;overflow:hidden;text-decoration:none;color:var(--iv);border:1px solid #b69a6640;background:linear-gradient(170deg,#262016,#0d0d0c 70%);display:flex;flex-direction:column;justify-content:flex-end;padding:22px;transition:transform .35s,border-color .35s,box-shadow .35s}
+.ep:hover,.ep:focus-visible{transform:translateY(-6px);border-color:var(--g);box-shadow:0 24px 60px #000a,0 0 40px #b69a6633}
+.ep .no{position:absolute;top:18px;inset-inline-start:20px;font:700 15px "IBM Plex Sans Arabic";color:var(--g)}
+.ep .big{position:absolute;top:44px;inset-inline-start:12px;font:700 150px/1 "Cormorant Garamond",serif;color:#b69a661c}
+.ep svg.thr{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.ep .play{width:58px;height:58px;border-radius:50%;background:var(--g);display:grid;place-items:center;margin-bottom:16px;box-shadow:0 0 0 8px #b69a6626}
+.ep .play svg{width:22px;height:22px;fill:#111;margin-inline-start:3px}
+.ep h3{font-size:26px;margin-bottom:6px;position:relative}
+.ep p{margin:0;color:#cfc6b4;font-size:15px;position:relative}
+.ep .soon{font-size:13px;color:var(--g2);margin-top:10px;position:relative}
+.epnav{display:flex;gap:10px;margin-top:6px}
+.epnav button{width:46px;height:46px;border-radius:50%;border:1px solid #b69a6666;background:transparent;color:var(--g2);font-size:20px;cursor:pointer}
+
+/* مستشار القماش */
+.quiz{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);margin-top:34px;align-items:start}
+@media(max-width:860px){.quiz{grid-template-columns:1fr}}
+.qres{position:sticky;top:90px;border-radius:24px;background:#111;color:var(--iv);padding:26px;min-height:320px;display:grid;align-content:start;gap:14px}
+.qres .qsw{height:150px;border-radius:16px;border:1px solid #ffffff22}
+.qres h3{font-size:28px;color:var(--g)}
+.qres .why{color:#cfc6b4;margin:0}
+.qres .alt{font-size:14px;color:#a8a296}
+.qres .btn.p{background:var(--g);color:#111;border-color:var(--g)}.qres .btn.s{background:transparent;color:var(--g2);border-color:var(--g)}
+.qres .empty{color:#a8a296;align-self:center;text-align:center;padding:40px 0}
+.qbar{height:6px;border-radius:9px;background:#ffffff1a;overflow:hidden}.qbar i{display:block;height:100%;background:var(--g);transition:width .4s}
+
+/* تتبّع الثوب */
+.track{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,56px);margin-top:34px;align-items:start}
+@media(max-width:860px){.track{grid-template-columns:1fr}}
+.thead{margin-bottom:14px}.thead b{font:700 20px "Reem Kufi",sans-serif;display:block}.thead small{color:#a8a296}
+.tbox{padding:22px;border-radius:24px;border:1px solid #b69a6640;background:#ffffff06}
+.tline{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.tline li{display:grid;grid-template-columns:40px 1fr;gap:14px;padding:10px 0;position:relative;color:#8a857b}
+.tline li::before{content:"";position:absolute;inset-inline-start:19px;top:46px;bottom:-10px;width:2px;background:#b69a6630}
+.tline li:last-child::before{display:none}
+.tline .d{width:40px;height:40px;border-radius:50%;border:2px solid #b69a6655;display:grid;place-items:center;font-weight:700;background:var(--bk)}
+.tline li.ok{color:var(--iv)}.tline li.ok .d{background:var(--g);border-color:var(--g);color:#111}.tline li.ok::before{background:var(--g)}
+.tline li.now{color:var(--iv)}.tline li.now .d{border-color:var(--g);color:var(--g);animation:xp 1.8s infinite}
+@keyframes xp{0%{box-shadow:0 0 0 0 #b69a6688}100%{box-shadow:0 0 0 14px #b69a6600}}
+.tline b{display:block;font-size:17px}.tline small{color:#a8a296}
+.tph{padding:34px;border-radius:24px;border:1px dashed #b69a6655;color:#a8a296;text-align:center}
+
+/* مقاعد العيد */
+.eid{background:linear-gradient(160deg,#1d180b,#111 55%);border-block:1px solid #b69a6633}
+.eidg{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:center;margin-top:28px}
+@media(max-width:760px){.eidg{grid-template-columns:1fr}}
+.ring{width:clamp(200px,30vw,260px);aspect-ratio:1;position:relative;margin:0 auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .c{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .c b{font:700 clamp(54px,8vw,76px)/1 "Reem Kufi",sans-serif;color:var(--g)}
+.ring .c span{color:#cfc6b4}
+
+/* ثوب هدية */
+.gift{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);margin-top:34px;align-items:start}
+@media(max-width:860px){.gift{grid-template-columns:1fr}}
+.gcard{aspect-ratio:1.6;border-radius:22px;background:linear-gradient(135deg,#151515,#2a2312 60%,#151515);color:var(--iv);padding:clamp(18px,3vw,28px);display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 30px 60px #0004;position:relative;overflow:hidden}
+.gcard::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#ffe7a822 50%,transparent 65%);animation:gsh 5s ease-in-out infinite}
+@keyframes gsh{0%,60%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+@media(prefers-reduced-motion:reduce){.gcard::after,.tline li.now .d{animation:none}}
+.gcard .gt{display:flex;justify-content:space-between;align-items:center}
+.gcard .gw img{height:34px;width:auto}
+.gcard .to{font:700 clamp(22px,3vw,30px) "Reem Kufi",sans-serif;color:var(--g)}
+.gcard .msg{color:#ddd5c4;font-size:15px;margin:0}
+.gcard .fr{font-size:14px;color:#a8a296}
+.gdone{display:grid;gap:12px;padding:20px;border-radius:18px;background:#111;color:var(--iv)}
+.gdone code{font:700 24px "IBM Plex Sans Arabic";letter-spacing:3px;color:var(--g)}
+
+/* علّمنا وش تحب */
+.prefs{background:var(--bk2)}
+.pgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(24px,4vw,56px);margin-top:28px;align-items:start}
+@media(max-width:860px){.pgrid{grid-template-columns:1fr}}
+.pside{border-radius:24px;padding:26px;border:1px solid #b69a6640;background:#ffffff06;display:grid;gap:14px;position:sticky;top:90px}
+.pside .xchk{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:#cfc6b4}
+.pside .xchk input{width:20px;height:20px;margin-top:3px;accent-color:var(--g)}
+.pnum{font:700 15px "IBM Plex Sans Arabic";color:var(--g2)}
