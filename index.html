@@ -173,12 +173,16 @@ nav a:hover{color:var(--g)}
 .fav>*+*{border-inline-start:1px solid #3a372f}.fav a.again{display:inline-flex;align-items:center;min-height:40px;padding:0 12px;text-decoration:none;font-weight:700;color:var(--gd)}.fav button[data-del]{color:var(--mut)}
 .note{font-size:13px;color:var(--mut);margin-top:10px}
 /* تصاميم خاصة */
-.excl{position:relative;border-radius:28px;overflow:hidden;min-height:420px;display:flex;align-items:flex-end;isolation:isolate;border:1px solid #b69a6633}
-.excl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;object-position:50% 52%}
-.excl::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,#000 5%,#000000aa 45%,#00000022)}
-.excl div{padding:clamp(24px,5vw,56px);max-width:640px}
-.excl h2{margin-bottom:12px}
-.excl p{color:#ddd5c4;font-size:17px;margin:0 0 22px}
+.excl{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);border-radius:28px;overflow:hidden;border:1px solid #b69a6640;background:radial-gradient(120% 90% at 100% 50%,#2a1f0f 0%,#0c0b09 60%);min-height:520px}
+.excl .ph{position:relative;overflow:hidden;min-height:100%}
+.excl .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%;transform:scale(1.06);transition:transform 6s cubic-bezier(.2,.7,.2,1)}
+.excl.in .ph img{transform:scale(1)}
+.excl .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(to left,#0c0b09 0%,transparent 28%)}
+html[dir=ltr] .excl .ph::after{background:linear-gradient(to right,#0c0b09 0%,transparent 28%)}
+.excl .tx{padding:clamp(28px,5vw,64px);align-self:center;max-width:560px}
+.excl h2{margin-bottom:14px}
+.excl p{color:#ddd5c4;font-size:17px;margin:0 0 24px}
+@media(max-width:800px){.excl{grid-template-columns:minmax(0,1fr);min-height:0}.excl .ph{order:-1;height:min(108vw,440px)}.excl .ph::after,html[dir=ltr] .excl .ph::after{background:linear-gradient(to top,#0c0b09 0%,transparent 35%)}.excl .tx{padding-top:8px}}
 /* القصة */
 .story{position:relative;margin-top:44px}
 .thread{position:absolute;top:0;bottom:0;inset-inline-start:23px;width:2px;background:#2b2924}
@@ -367,10 +371,10 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 <section class="band">
   <div class="wrap">
     <div class="excl rv">
-      <img src="img/crown.webp" alt="" loading="lazy">
-      <div><div class="kick" data-t="exK">حصريًا في المحل</div><h2 data-t="exH">تصاميم خاصة… ما تنعرض أونلاين</h2>
+      <div class="tx"><div class="kick" data-t="exK">حصريًا في المحل</div><h2 data-t="exH">تصاميم خاصة… ما تنعرض أونلاين</h2>
       <p data-t="exP">عندنا موديلات وتصاميم خاصة نحتفظ فيها لزبايننا. مرّ علينا وشوفها بنفسك، وخلّ ثوبك ما يشبه أحد.</p>
       <a class="btn p" id="exMap" href="#" data-t="exB">زورونا في المحل</a></div>
+      <div class="ph"><img src="img/excl.webp" alt="ثوب أبيض بأزرار ذهبية داخل حقيبة جلدية سوداء" loading="lazy"></div>
     </div>
   </div>
 </section>
