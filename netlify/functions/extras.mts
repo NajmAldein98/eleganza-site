@@ -221,15 +221,50 @@ export default async (req: Request, context: Context) => {
     const code = String(body.code || "");
     if (code.length === want.length && timingSafeEqual(Buffer.from(code), Buffer.from(want))) {
       await s.setJSON("owner-lock", { fails: 0, until: 0 });
-      return json(req, { token: sign({ role: "owner", exp: Date.now() + 30 * 24 * 3600 * 1000 }) });
+      return json(req, { role: "owner", token: sign({ role: "owner", exp: Date.now() + 30 * 24 * 3600 * 1000 }) });
+    }
+    // رمز الموظفين: يحدده المدير من صفحة الفريق، وينحفظ مشفّراً
+    const sc: any = await s.get("config/staff-code", { type: "json" });
+    if (sc && /^\d{4}$/.test(code) && pinHash(code, sc.salt) === sc.hash) {
+      await s.setJSON("owner-lock", { fails: 0, until: 0 });
+      return json(req, { role: "staff", token: sign({ role: "staff", exp: Date.now() + 30 * 24 * 3600 * 1000 }) });
     }
     lock.fails += 1; if (lock.fails >= MAX_FAILS) { lock.fails = 0; lock.until = Date.now() + LOCK_MS; }
     await s.setJSON("owner-lock", lock);
     return err(req, "الرمز غير صحيح", 401);
   }
 
+  /* ===== للموظفين: عرض الطلبات وتغيير المرحلة فقط ===== */
+  const td = verify(body.token);
+  if (td && td.role === "staff") {
+    if (action === "orders") {
+      const list = await listJSON<Order>("order/");
+      return json(req, { role: "staff", orders: list.sort((a, b) => b.created - a.created).map((o) => ({
+        id: o.id, file: o.file, name: o.name, item: o.item, fabric: o.fabric, tailor: o.tailor, stage: o.stage, due: o.due, note: o.note, created: o.created })) });
+    }
+    if (action === "order-stage") {
+      const stage = Math.max(0, Math.min(STAGES - 1, parseInt(body.stage)));
+      if (isNaN(stage)) return err(req, "مرحلة غير صحيحة");
+      const r = await update<Order>("order/" + str(body.id, 10), (x) => {
+        if (x.stage !== stage) { x.stage = stage; x.history.push({ t: Date.now(), stage }); if (stage === STAGES - 1 && !x.done) x.done = Date.now(); x.updated = Date.now(); }
+      });
+      if (typeof r === "string") return err(req, r);
+      return json(req, { order: { id: r.id, file: r.file, name: r.name, item: r.item, fabric: r.fabric, tailor: r.tailor, stage: r.stage, due: r.due, note: r.note, created: r.created } });
+    }
+    return err(req, "هذي الصلاحية للمدير فقط", 403);
+  }
+
   /* ===== للمالك فقط ===== */
   if (!ownerOk(body.token)) return err(req, "للمالك فقط", 401);
+
+  if (action === "staff-code-set") {
+    const c = str(body.code, 8);
+    if (!/^\d{4}$/.test(c)) return err(req, "رمز الموظفين لازم يكون ٤ أرقام");
+    if (c === Netlify.env.get("OWNER_CODE")) return err(req, "اختر رمزاً غير رمز المدير");
+    const salt = randomBytes(12).toString("hex");
+    await s.setJSON("config/staff-code", { salt, hash: pinHash(c, salt), t: Date.now() });
+    return json(req, { ok: true });
+  }
 
   if (action === "orders") {
     const list = await listJSON<Order>("order/");

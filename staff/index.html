@@ -71,7 +71,7 @@ textarea{padding:10px 12px;min-height:70px}
 <main id="vLogin">
   <form class="card" id="lf" style="max-width:420px;margin:40px auto;display:grid;gap:12px">
     <h2>دخول الفريق</h2>
-    <label>رمز المالك<input id="lc" type="password" inputmode="numeric" maxlength="7" dir="ltr" autocomplete="current-password"></label>
+    <label>رمز الدخول (المدير أو الموظفين)<input id="lc" type="password" inputmode="numeric" maxlength="7" dir="ltr" autocomplete="current-password"></label>
     <button class="btn" type="submit">دخول</button>
     <div class="msg" id="lm" role="alert"></div>
   </form>
@@ -104,6 +104,12 @@ textarea{padding:10px 12px;min-height:70px}
     </form>
     <div class="card"><div class="row"><input id="oq" placeholder="ابحث بالاسم أو رقم الطلب أو الجوال" style="flex:1"><label class="chk"><input type="checkbox" id="oDone"> إظهار الجاهزة</label></div></div>
     <div id="ol" style="display:grid;gap:12px;margin-top:12px"></div>
+    <form class="card owner-only" id="scf" style="margin-top:16px">
+      <h2>رمز الموظفين</h2>
+      <p class="mute" style="margin:0 0 10px">الموظف يدخل بهذا الرمز ويقدر يحرّك مراحل الطلبات بس. ما يشوف أرقام العملاء ولا الواتساب ولا باقي الأقسام.</p>
+      <div class="row"><input id="sc_code" type="password" inputmode="numeric" maxlength="4" dir="ltr" placeholder="٤ أرقام" style="max-width:160px"><button class="btn" type="submit">حفظ الرمز</button></div>
+      <div class="msg" id="scm" role="status"></div>
+    </form>
   </section>
 
   <section id="prefs" class="hide">
@@ -144,7 +150,7 @@ const KEY="eleganza_owner_token";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const num=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
-let tok=null;try{tok=localStorage.getItem(KEY)}catch(e){}
+let tok=null,ROLE="owner";try{tok=localStorage.getItem(KEY);ROLE=localStorage.getItem(KEY+"_role")||"owner"}catch(e){}
 let STAGES=["تم استلام طلبك","تجهيز القماش","مرحلة الخياطة","الفحص والجودة","الكي والتغليف","جاهز للاستلام"];
 async function api(a,b={}){let r;try{r=await fetch(API+a,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({...b,token:tok})})}catch(e){throw new Error("تعذّر الاتصال")}
   const j=await r.json().catch(()=>({}));if(r.status===401&&a!=="owner-login"){logout();throw new Error("انتهت الجلسة، ادخل من جديد")}if(!r.ok)throw new Error(j.error||"خطأ");return j}
@@ -153,9 +159,9 @@ const intl=p=>"966"+String(p).replace(/^0/,"");
 const waTo=(p,m)=>"https://wa.me/"+intl(p)+"?text="+encodeURIComponent(m);
 const fmt=t=>new Date(t).toLocaleDateString("ar-SA-u-ca-gregory",{day:"numeric",month:"short"});
 function show(on){$("vLogin").classList.toggle("hide",on);$("vApp").classList.toggle("hide",!on);$("logout").classList.toggle("hide",!on)}
-function logout(){tok=null;try{localStorage.removeItem(KEY)}catch(e){}show(false)}
+function logout(){tok=null;ROLE="owner";try{localStorage.removeItem(KEY);localStorage.removeItem(KEY+"_role")}catch(e){}show(false)}
 $("logout").onclick=logout;
-$("lf").onsubmit=async e=>{e.preventDefault();say("lm","لحظة…");try{const r=await api("owner-login",{code:$("lc").value.replace(/\D/g,"")});tok=r.token;try{localStorage.setItem(KEY,tok)}catch(x){}say("lm","");start()}catch(er){say("lm",er.message,true)}};
+$("lf").onsubmit=async e=>{e.preventDefault();say("lm","لحظة…");try{const r=await api("owner-login",{code:$("lc").value.replace(/\D/g,"")});tok=r.token;ROLE=r.role||"owner";try{localStorage.setItem(KEY,tok);localStorage.setItem(KEY+"_role",ROLE)}catch(x){}say("lm","");start()}catch(er){say("lm",er.message,true)}};
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));["orders","prefs","seats","gifts"].forEach(v=>$(v).classList.toggle("hide",v!==b.dataset.v));LOAD[b.dataset.v]()});
 
 /* الطلبات */
@@ -170,7 +176,7 @@ function drawOrders(){const q=$("oq").value.trim(),done=$("oDone").checked;
   $("ol").innerHTML=L.length?L.map(o=>'<div class="card o"><div class="h"><span class="id">#'+esc(o.id)+'</span><b>'+esc(o.name)+'</b>'+(o.file?'<span class="pill">ملف '+esc(o.file)+'</span>':'')+'<span class="mut">'+esc(o.item)+(o.fabric?' · '+esc(o.fabric):'')+'</span></div>'+
     '<div class="prog">'+STAGES.map((_,i)=>'<i class="'+(i<=o.stage?"on":"")+'"></i>').join("")+'</div>'+
     '<div class="row"><span class="pill '+(o.stage>=5?"ok":"")+'">'+esc(STAGES[o.stage])+'</span>'+(o.due?'<span class="pill '+(late(o)?"late":"")+'">التسليم '+esc(o.due)+'</span>':'')+(o.tailor?'<span class="pill">'+esc(o.tailor)+'</span>':'')+(o.note?'<span class="mut" style="font-size:14px">'+esc(o.note)+'</span>':'')+'</div>'+
-    '<div class="row">'+(o.stage<5?'<button class="sm g" data-a="next" data-id="'+o.id+'">انقل إلى: '+esc(STAGES[o.stage+1])+'</button>':'')+'<a class="sm g" target="_blank" rel="noopener" href="'+esc(waTo(o.phone,custMsg(o)))+'">واتساب العميل</a><button class="sm" data-a="qr" data-id="'+o.id+'">ملصق الياقة</button><button class="sm" data-a="edit" data-id="'+o.id+'">تعديل</button><button class="sm r" data-a="del" data-id="'+o.id+'">حذف</button></div></div>').join(""):'<div class="card mut">ما فيه طلبات.</div>'}
+    '<div class="row">'+(o.stage<5?'<button class="sm g" data-a="next" data-id="'+o.id+'">انقل إلى: '+esc(STAGES[o.stage+1])+'</button>':'')+(ROLE==="staff"?(o.stage>0?'<button class="sm" data-a="prev" data-id="'+o.id+'">رجّع إلى: '+esc(STAGES[o.stage-1])+'</button>':''):'<a class="sm g" target="_blank" rel="noopener" href="'+esc(waTo(o.phone,custMsg(o)))+'">واتساب العميل</a><button class="sm" data-a="qr" data-id="'+o.id+'">ملصق الياقة</button><button class="sm" data-a="edit" data-id="'+o.id+'">تعديل</button><button class="sm r" data-a="del" data-id="'+o.id+'">حذف</button>')+'</div></div>').join(""):'<div class="card mut">ما فيه طلبات.</div>'}
 async function loadOrders(){try{O=(await api("orders")).orders;drawOrders()}catch(e){say("om",e.message,true)}}
 function fillForm(o){$("o_id").value=o?o.id:"";["name","phone","item","fabric","tailor","due","note"].forEach(k=>$("o_"+k).value=o?o[k]||"":"");$("o_stage").value=o?o.stage:0;$("ofT").textContent=o?"تعديل طلب #"+o.id:"طلب جديد";$("ofX").classList.toggle("hide",!o)}
 $("ofX").onclick=()=>fillForm(null);
@@ -180,7 +186,8 @@ $("of").onsubmit=async e=>{e.preventDefault();say("om","لحظة…");const orde
 $("oq").oninput=drawOrders;$("oDone").onchange=drawOrders;
 $("ol").onclick=async e=>{const b=e.target.closest("[data-a]");if(!b)return;const o=O.find(x=>x.id===b.dataset.id);if(!o)return;
   if(b.dataset.a==="edit"){fillForm(o);scrollTo({top:0,behavior:"smooth"})}
-  if(b.dataset.a==="next"){b.disabled=true;try{const r=await api("order-save",{order:{...o,stage:o.stage+1}});Object.assign(o,r.order);drawOrders()}catch(er){alert(er.message)}}
+  if(b.dataset.a==="next"||b.dataset.a==="prev"){const to=o.stage+(b.dataset.a==="next"?1:-1);b.disabled=true;
+    try{const r=ROLE==="staff"?await api("order-stage",{id:o.id,stage:to}):await api("order-save",{order:{...o,stage:to}});Object.assign(o,r.order);drawOrders()}catch(er){alert(er.message);b.disabled=false}}
   if(b.dataset.a==="del"){if(!confirm("حذف الطلب #"+o.id+" نهائياً؟"))return;try{await api("order-delete",{id:o.id});O=O.filter(x=>x!==o);drawOrders()}catch(er){alert(er.message)}}
   if(b.dataset.a==="qr"){const u=SITE+"/thobe/?c="+o.cert;let svg="";if(window.qrcode){const q=qrcode(0,"M");q.addData(u);q.make();svg=q.createSvgTag({cellSize:5,margin:1,scalable:true})}
     $("lbl").innerHTML=svg+'<b>إليغانزا · شهادة ميلاد الثوب</b><span>طلب #'+esc(o.id)+' · '+esc(o.name)+'</span><div class="row" style="justify-content:center"><button class="btn" type="button" id="pr">اطبع</button><button class="sm" type="button" id="cl" style="color:#111;border-color:#ccc">إغلاق</button></div>';
@@ -215,10 +222,15 @@ const GS={new:"جديدة",paid:"مدفوعة",used:"مستخدمة",cancelled:"
 async function loadGifts(){try{const g=(await api("gifts")).gifts;$("gl").innerHTML=g.length?g.map(x=>'<div class="o" style="border-bottom:1px solid var(--line);padding-bottom:12px"><div class="h"><span class="id">'+esc(x.code)+'</span><b>إلى '+esc(x.to)+'</b><span class="mut">من '+esc(x.from)+' · '+num(x.count)+' ثوب · '+esc(x.occasion||"")+' · '+fmt(x.t)+'</span></div>'+(x.msg?'<div class="mut">«'+esc(x.msg)+'»</div>':'')+'<div class="row"><select data-c="'+esc(x.code)+'" style="width:auto;min-height:38px">'+Object.entries(GS).map(([k,v])=>'<option value="'+k+'"'+(x.status===k?" selected":"")+'>'+v+'</option>').join("")+'</select><a class="sm g" target="_blank" rel="noopener" href="'+esc(waTo(x.phone,"هلا "+x.from+"، بخصوص هدية الثوب ("+x.code+") من إليغانزا:"))+'">واتساب المُهدي</a><a class="sm" target="_blank" rel="noopener" href="'+SITE+'/gift/?c='+esc(x.code)+'">البطاقة</a></div></div>').join(""):'<span class="mut">ما فيه هدايا.</span>'}catch(e){$("gl").textContent=e.message}}
 $("gl").onchange=async e=>{const s=e.target.closest("[data-c]");if(!s)return;try{await api("gift-status",{code:s.dataset.c,status:s.value})}catch(er){alert(er.message)}};
 
+$("scf").onsubmit=async e=>{e.preventDefault();const c=$("sc_code").value.replace(/\D/g,"");if(!/^\d{4}$/.test(c)){say("scm","الرمز ٤ أرقام",true);return}
+  say("scm","لحظة…");try{await api("staff-code-set",{code:c});$("sc_code").value="";say("scm","انحفظ رمز الموظفين. أعطه للموظفين، وغيّره متى ما بغيت.")}catch(er){say("scm",er.message,true)}};
+function applyRole(){const st=ROLE==="staff";document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("hide",st&&b.dataset.v!=="orders"));
+  $("of").classList.toggle("hide",st);$("scf").classList.toggle("hide",st);document.querySelector(".top h1").textContent=st?"صفحة الفريق · موظف":"صفحة الفريق · المدير";
+  if(st){document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.v==="orders")));["prefs","seats","gifts"].forEach(v=>$(v).classList.add("hide"));$("orders").classList.remove("hide")}}
 const LOAD={orders:loadOrders,prefs:loadPrefs,seats:loadSeats,gifts:loadGifts};
 async function start(){show(true);
   try{const j=await (await fetch("/content.json",{cache:"no-store"})).json();if(j&&j.journey){const s=j.journey.split("\n").map(l=>l.split("|")[0].trim()).filter(Boolean);if(s.length>=6)STAGES=s.slice(0,6)}}catch(e){}
-  stageOpts();loadOrders()}
+  stageOpts();applyRole();loadOrders()}
 if(tok)start();else show(false);
 }
 </script>
