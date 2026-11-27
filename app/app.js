@@ -28,7 +28,7 @@ const STG_EN=["Order received","Fabric preparation","Tailoring","Quality check",
 let STG_AR_T=STG_AR;
 const STAGES=()=>LANG==="en"?STG_EN:STG_AR_T;
 const FAB=()=>lines(LANG==="en"?FAB_EN:FAB_AR_T).map((r,i)=>({i,sea:r[0],n:r[1],shade:r[2],feel:r[3],feat:r[4],care:r[5],c:/^#[0-9a-f]{6}$/i.test(r[6]||"")?r[6]:"#eeeeee"}));
-const CLIP=["s0","s1","s2","s3","s3","s4"];
+const CLIP=["s0","s1","s2","s3","s3b","s4"];
 const vid=(n,extra="")=>`<video src="../media/${n}.mp4" poster="../media/${n}.jpg" autoplay muted loop playsinline ${extra}></video>`;
 
 /* ===== خيارات التصميم (نفس الموقع) ===== */

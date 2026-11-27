@@ -4,7 +4,7 @@ const API=/netlify\.app$|^localhost|^127\./.test(location.hostname)?"/api/elg/":
 const $=id=>document.getElementById(id);
 const E=()=>window.ELG;
 const L=()=>(E()&&E().lang)||"ar";
-const CLIP=["s0","s1","s2","s3","s3","s4"];
+const CLIP=["s0","s1","s2","s3","s3b","s4"];
 const vtag=(n,lazy)=>'<video src="media/'+n+'.mp4" poster="media/'+n+'.jpg" muted loop playsinline '+(lazy?'preload="none" data-lazy="1"':'autoplay')+'></video>';
 const X={
  ar:{eiK:"مقاعد الموسم",eiSeats:"ثوب باقي",fName:"اسمك",fPhone:"رقم جوالك",eiPcs:"كم ثوب تبغى؟",eiBtn:"احجز مقعدي",
