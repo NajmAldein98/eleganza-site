@@ -96,7 +96,7 @@ async function seatsInfo() {
 
 export default async (req: Request, context: Context) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors(req) });
-  if (!/^\d{7}$/.test(Netlify.env.get("OWNER_CODE") || "")) return err(req, "الخادم غير مُعد بعد", 500);
+  if (!/^(\d{4}|\d{7})$/.test(Netlify.env.get("OWNER_CODE") || "")) return err(req, "الخادم غير مُعد بعد", 500);
   await loadSecret();
   const action = context.params.action;
   const body: any = req.method === "POST" ? await req.json().catch(() => ({})) : {};

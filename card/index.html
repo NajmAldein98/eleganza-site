@@ -38,8 +38,8 @@
     </fieldset>
     <div id="nameBox"><label for="rName" data-i="name"></label><input id="rName" autocomplete="name" maxlength="40"></div>
     <div><label for="rPhone" data-i="phone"></label><input id="rPhone" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="05xxxxxxxx"></div>
-    <div><label for="rCode" data-i="code"></label><input id="rCode" type="password" inputmode="numeric" maxlength="7" autocomplete="new-password" dir="ltr"></div>
-    <div><label for="rCode2" data-i="code2"></label><input id="rCode2" type="password" inputmode="numeric" maxlength="7" autocomplete="new-password" dir="ltr"></div>
+    <div><label for="rCode" data-i="code"></label><input id="rCode" type="password" inputmode="numeric" maxlength="4" autocomplete="new-password" dir="ltr"></div>
+    <div><label for="rCode2" data-i="code2"></label><input id="rCode2" type="password" inputmode="numeric" maxlength="4" autocomplete="new-password" dir="ltr"></div>
     <div class="err" id="rErr" role="alert"></div>
     <button class="btn" id="rBtn" data-i="create"></button>
     <button class="btn ghost" data-back data-i="back"></button>
@@ -107,7 +107,7 @@ $('rBtn').onclick = async () => {
   const e = $('rErr'); e.textContent = '';
   const anonymous = document.querySelector('input[name=vis]:checked').value === 'anon';
   const code = digits($('rCode').value), code2 = digits($('rCode2').value);
-  if (!/^\d{7}$/.test(code)) { e.textContent = tr('errCode7'); return; }
+  if (!/^\d{4}$/.test(code)) { e.textContent = tr('errCode7'); return; }
   if (code !== code2) { e.textContent = tr('errMatch'); return; }
   busy('rBtn', true);
   try {

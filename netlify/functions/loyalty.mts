@@ -1,6 +1,6 @@
 // خادم بطاقة ولاء إليجانزا — Netlify Functions + Netlify Blobs
 // المسارات: /api/loyalty/<action>
-// المتغير المطلوب في Netlify: OWNER_CODE (رمز المالك ٧ أرقام)
+// المتغير المطلوب في Netlify: OWNER_CODE (رمز المالك ٤ أرقام، والقديم ٧ أرقام يشتغل بعد)
 import type { Config, Context } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
@@ -55,7 +55,9 @@ function verify(token: unknown): any {
   return data;
 }
 const hashCode = (code: string, salt: string) => scryptSync(code, salt, 32).toString("hex");
-const validCode = (c: unknown) => typeof c === "string" && /^\d{7}$/.test(c);
+// البطايق الجديدة برمز ٤ أرقام، والبطايق القديمة برمز ٧ أرقام تفتح زي ما هي
+const validCode = (c: unknown) => typeof c === "string" && /^(\d{4}|\d{7})$/.test(c);
+const validNew = (c: unknown) => typeof c === "string" && /^\d{4}$/.test(c);
 const normPhone = (p: unknown) => {
   let d = String(p || "").replace(/[^\d]/g, "");
   if (d.startsWith("00966")) d = "0" + d.slice(5); else if (d.startsWith("966")) d = "0" + d.slice(3);
@@ -107,7 +109,7 @@ function applyStamp(c: Card, force: boolean): string | void {
 
 export default async (req: Request, context: Context) => {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors(req) });
-  if (!/^\d{7}$/.test(Netlify.env.get("OWNER_CODE") || "")) return err(req, "الخادم غير مُعد بعد", 500);
+  if (!/^(\d{4}|\d{7})$/.test(Netlify.env.get("OWNER_CODE") || "")) return err(req, "الخادم غير مُعد بعد", 500);
   await loadSecret();
   const action = context.params.action;
   const body: any = req.method === "POST" ? await req.json().catch(() => ({})) : {};
@@ -124,7 +126,7 @@ export default async (req: Request, context: Context) => {
   if (action === "register") {
     const phone = normPhone(body.phone);
     if (!phone) return err(req, "رقم الجوال غير صحيح (مثال: 05xxxxxxxx)");
-    if (!validCode(body.code)) return err(req, "الرمز لازم يكون ٧ أرقام");
+    if (!validNew(body.code)) return err(req, "الرمز لازم يكون ٤ أرقام");
     const anonymous = !!body.anonymous;
     const name = String(body.name || "").trim().slice(0, 40);
     if (!anonymous && name.length < 2) return err(req, "اكتب اسمك أو اختر «مجهول»");
@@ -227,7 +229,7 @@ export default async (req: Request, context: Context) => {
     return json(req, { ok: true });
   }
   if (action === "reset-code") { // العميل نسي رمزه: المالك يحدد له رمز جديد
-    if (!validCode(body.code)) return err(req, "الرمز لازم يكون ٧ أرقام");
+    if (!validNew(body.code)) return err(req, "الرمز لازم يكون ٤ أرقام");
     const r = await updateCard(String(body.id), (c) => { c.salt = randomBytes(16).toString("hex"); c.hash = hashCode(body.code, c.salt); c.fails = 0; c.lockUntil = 0; c.history.push({ t: Date.now(), what: "تغيير رمز البطاقة" }); });
     return typeof r === "string" ? err(req, r) : json(req, { ok: true });
   }
