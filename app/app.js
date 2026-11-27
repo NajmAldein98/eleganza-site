@@ -169,7 +169,7 @@ function loyaltyCard(){const Ly=S.me&&S.me.loyalty;
 function lum(h){const n=parseInt(h.slice(1),16);return(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))/255}
 const mir=pts=>pts.map(([x,y])=>[400-x,y]);
 const poly=(pts,f,s)=>'<polygon points="'+pts.map(p=>p.join(",")).join(" ")+'" fill="'+f+'" stroke="'+s+'" stroke-width="1.4" stroke-linejoin="round"/>';
-function thobeReal(D){
+function thobeReal(D,model){
   const c=D.color,dark=lum(c)<.45,ln=dark?"rgba(255,255,255,.28)":"rgba(60,45,20,.24)",gold="#d9b14a",embc=dark?"#c9a54a":"#b89a5a",btn=dark?"#e8e3d8":"#fff";
   let s='<defs>'+
    '<pattern id="wv" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path d="M0 0H3" stroke="'+(dark?"#fff":"#000")+'" stroke-opacity=".05" stroke-width="1"/></pattern>'+
@@ -178,11 +178,16 @@ function thobeReal(D){
    '<linearGradient id="fold" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset=".5" stop-color="#000" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>'+
    '<linearGradient id="hg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#e9cf8f"/><stop offset="1" stop-color="#9a7b43"/></linearGradient>'+
    '<filter id="ds" x="-20%" y="-10%" width="140%" height="130%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#5a4320" flood-opacity=".28"/></filter></defs>';
+  if(model){
+    /* العارض: رأس بغترة وعقال، والثوب نفسه بنفس الاختيارات */
+    s+='<g transform="translate(200,52) scale(1.45) translate(-200,-40)"><path d="M174 34 q26 -38 52 0 q8 34 0 64 l-14 6 q-4 -20 -6 -30 h-12 q-2 10 -6 30 l-14 -6 q-8 -30 0 -64z" fill="#fff" stroke="#d9d2c4" stroke-width="1"/><path d="M188 60 h24 v16 h-24z" fill="#b98a62"/><ellipse cx="200" cy="44" rx="15" ry="19" fill="#c99b72"/><path d="M187 52 q13 12 26 0 q-2 12 -13 14 q-11 -2 -13 -14z" fill="#2b2118" opacity=".85"/><path d="M193 40 h3 M204 40 h3" stroke="#2b2118" stroke-width="1.6" stroke-linecap="round"/><path d="M182 34 q18 -14 36 0 q-4 -16 -18 -16 q-14 0 -18 16z" fill="#fff" stroke="#e2dccf" stroke-width=".8"/><path d="M175 34 q25 -38 50 0" fill="none" stroke="#b5452f" stroke-width="1.4" stroke-dasharray="2.5 2.5"/><path d="M178 27 q22 -10 44 0" fill="none" stroke="#1c1813" stroke-width="4.2" stroke-linecap="round"/><path d="M180 20 q20 -8 40 0" fill="none" stroke="#1c1813" stroke-width="3.4" stroke-linecap="round"/></g>';
+    s+='<g><g transform="translate(0,62)" filter="url(#ds)">';
+  }else{
   s+='<ellipse cx="200" cy="600" rx="130" ry="10" fill="#5a4320" opacity=".18"/>';
   s+='<g class="sway">';
   /* العلّاقة */
   s+='<path d="M200 8 q0 -6 6 -6 q7 0 7 7 q0 6 -9 10 L200 26" fill="none" stroke="#9a7b43" stroke-width="3" stroke-linecap="round"/><path d="M200 26 L118 82 q-6 5 2 6 L280 88 q8 -1 2 -6 Z" fill="url(#hg)" stroke="#8a6c36" stroke-width="1"/>';
-  s+='<g transform="translate(0,30)" filter="url(#ds)">';
+  s+='<g transform="translate(0,30)" filter="url(#ds)">';}
   const B="M170 70 Q200 86 230 70 L286 92 L346 290 L306 303 L274 172 L284 548 Q200 556 116 548 L126 172 L94 303 L54 290 L114 92 Z";
   s+='<path d="'+B+'" fill="'+c+'" stroke="'+ln+'" stroke-width="1.4" stroke-linejoin="round"/>';
   s+='<path d="'+B+'" fill="url(#wv)"/><path d="'+B+'" fill="url(#sh)"/><path d="'+B+'" fill="url(#vt)"/>';
@@ -207,7 +212,8 @@ function thobeReal(D){
   else s+='<path d="M170 42 Q200 54 230 42 L237 73 Q200 96 163 73 Z" fill="'+c+'" stroke="'+ln+'" stroke-width="1.4"/><path d="M170 42 Q200 54 230 42 L237 73 Q200 96 163 73 Z" fill="url(#sh)" opacity=".6"/><path d="M196 52 L196 84 M204 52 L204 84" stroke="'+ln+'"/>';
   if(D.emb==="yes"){s+='<g fill="none" stroke="'+embc+'" stroke-width="1.6" stroke-dasharray="1.5 3" stroke-linecap="round"><path d="M187 88 V212 M213 88 V212"/><path d="M162 80 Q200 104 238 80"/></g>';for(let y=96;y<210;y+=14)s+='<path d="M'+(D.placket==="hidden"?213:200)+' '+(y-3)+' l3 3 l-3 3 l-3 -3z" fill="'+embc+'" opacity=".7"/>'}
   s+='</g></g>';
-  return '<svg viewBox="0 0 400 615" role="img" aria-label="'+L("معاينة الثوب","Thobe preview")+'">'+s+'</svg>'}
+  if(model)s+='<path d="M150 610 l-6 22 h26 l2 -22z M250 610 l6 22 h-26 l-2 -22z" fill="#3a2c1a"/>';
+  return '<svg viewBox="0 '+(model?"-14 400 660":"0 400 615")+'" role="img" aria-label="'+L("معاينة الثوب","Thobe preview")+'">'+s+'</svg>'}
 
 /* ===== صمّم ===== */
 function rows(st){return [[L("اللون","Colour"),"color"]].concat(GROUPS.filter(g=>shown(g,st)).map(g=>[gt(g,st),g.k]))}
@@ -274,7 +280,7 @@ document.addEventListener("click",e=>{
  const a=e.target.closest("[data-act]");if(!a)return;const act=a.dataset.act;
  if(act==="close")closeSheet();
  if(act==="opt"){S.D[a.dataset.k]=a.dataset.v;LS.set("elg_design2",JSON.stringify(S.D));const y=scrollY;render();scrollTo(0,y)}
- if(act==="runway"){sheet(`<div class="runv"><video id="runV" src="../media/runway.mp4" poster="../media/runway.jpg" autoplay muted loop playsinline></video><button class="snd" id="runS" type="button">🔇 ${L("الصوت","Sound")}</button></div><a class="btn" href="${wa(designMsg())}" target="_blank" rel="noopener">${L("أرسل اختياراتي واتساب","Send my choices on WhatsApp")}</a>`);
+ if(act==="runway"){sheet(`<div class="runway"><video id="runV" src="../media/runway.mp4" poster="../media/runway.jpg" autoplay muted loop playsinline></video><span class="light l1"></span><span class="light l2"></span><div class="floor"></div><div class="model">${thobeReal(S.D,true)}</div><div class="flash"></div><div class="name">${esc(lab("color",S.D.color))} · ${esc(lab("collar",S.D.collar))} · ${esc(lab("sleeve",S.D.sleeve))}</div><button class="snd" id="runS" type="button">🔇 ${L("الصوت","Sound")}</button></div><a class="btn" href="${wa(designMsg())}" target="_blank" rel="noopener">${L("أرسل اختياراتي واتساب","Send my choices on WhatsApp")}</a>`);
   const v=$("runV"),b=$("runS");b.onclick=()=>{v.muted=!v.muted;b.textContent=(v.muted?"🔇 ":"🔊 ")+L("الصوت","Sound");if(!v.muted)v.play().catch(()=>{})}}
  if(act==="clip"){const i=+a.dataset.i;sheet(`<div class="vbox" style="aspect-ratio:9/16;height:min(62vh,560px);margin:0 auto">${vid(CLIP[i])}<div class="ov"></div><div class="tx"><div class="kick" style="color:#E3CB93">${L("مرحلة","Stage")} ${num(i+1)}</div><b class="ttl h2">${esc(STAGES()[i])}</b></div></div>`)}
  if(act==="fab")sheet(fabStory(FAB()[+a.dataset.f]||FAB()[0]));
