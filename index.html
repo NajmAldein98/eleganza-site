@@ -399,7 +399,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 @keyframes gemGlow{0%,56%,100%{opacity:.3}70%{opacity:1}86%{opacity:.4}}
 @media(prefers-reduced-motion:reduce){.gem::before{animation:none;opacity:.6}.gem::after{animation:none;opacity:0}}
 </style>
-<link rel="stylesheet" href="extras.css">
+<link rel="stylesheet" href="extras.css?v=7">
 </head>
 <body>
 <div id="intro"><video id="iv" playsinline muted preload="none" aria-hidden="true"></video><div class="ibtns"><button id="snd" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span data-t="snd">تشغيل الصوت</span></button><button id="skip" type="button" data-t="skip">تخطي</button></div></div>
@@ -1218,7 +1218,7 @@ $("reset").addEventListener("click",()=>{CD={...DEF};fillForm();$("msg").textCon
   document.getElementById("langBtn")?.addEventListener("click",()=>setTimeout(()=>{labels();set(n)},0));
 })();
 </script>
-<script src="extras.js" defer></script>
+<script src="extras.js?v=7" defer></script>
 <!-- مساعد إليغانزا (MyChatBot) -->
 <link rel="stylesheet" href="https://storage.googleapis.com/mychatbot-widget-assets/v1/style.css" />
 <script src="https://storage.googleapis.com/mychatbot-widget-assets/v1/widget.js"></script>
