@@ -145,7 +145,8 @@ let jio=null;
 function jclips(){const jr=document.querySelector("#journey .jr");if(!jr)return;let box=$("jclips");
   if(!box){box=document.createElement("div");box.id="jclips";box.className="jclips";jr.after(box)}
   const st=E().lines(E().C.journey).map(r=>r[0]).slice(0,6);
-  box.innerHTML=st.map((t,i)=>'<div class="jclip">'+vtag(CLIP[i]||"s4",true)+'<span><b>'+num(i+1)+'</b>'+esc(t)+'</span></div>').join("");
+  const CAP=L()==="en"?["Fabric is collected and washed","Fabric is ironed and washed"]:["رفع القماش وغسله","كوي وغسل القماش"];
+  box.innerHTML=st.map((t,i)=>'<div class="jclip">'+vtag(CLIP[i]||"s4",true)+(CAP[i]?'<em class="jcap">'+esc(CAP[i])+'</em>':'')+'<span><b>'+num(i+1)+'</b>'+esc(t)+'</span></div>').join("");
   if(!("IntersectionObserver" in window)){box.querySelectorAll("video").forEach(v=>{v.preload="auto";v.play().catch(()=>{})});return}
   if(jio)jio.disconnect();jio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){v.play().catch(()=>{})}else v.pause()}),{threshold:.35});
   box.querySelectorAll("video").forEach(v=>jio.observe(v))}
