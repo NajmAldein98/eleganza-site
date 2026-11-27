@@ -14,7 +14,7 @@ const STANDALONE=(window.matchMedia&&(matchMedia("(display-mode: standalone)").m
 if(STANDALONE)document.body.classList.add("pwa");
 
 /* ===== روابط التواصل ===== */
-const SOC={whatsapp:"966575300170",maps:"https://maps.app.goo.gl/Sui759a3WStGrewH7",instagram:"https://www.instagram.com/eleganza_tailor",tiktok:"",snapchat:""};
+const SOC={whatsapp:"966575300170",maps:"https://maps.app.goo.gl/Sui759a3WStGrewH7",instagram:"https://www.instagram.com/eleganza_tailor",tiktok:"https://www.tiktok.com/@eleganza.ksa",snapchat:""};
 const wa=m=>"https://wa.me/"+SOC.whatsapp+(m?"?text="+encodeURIComponent(m):"");
 const httpsOk=u=>/^https:\/\//.test(u||"");
 
@@ -98,7 +98,7 @@ $("contactBtn").onclick=()=>{const items=[
   [wa(L("السلام عليكم","Hello")),I.wa,"#25D366",L("واتساب","WhatsApp"),L("راسلنا مباشرة","Message us directly")],
   [SOC.maps,I.pin,"#EA4335",L("موقعنا على الخرائط","Find us on Maps"),L("صاري فرعي، بجوار دوار الفلك، جدة","Sari branch rd, by Falak roundabout, Jeddah")],
   [SOC.instagram,I.ig,"linear-gradient(45deg,#f58529,#dd2a7b,#8134af)",L("إنستغرام","Instagram"),"@eleganza_tailor"],
-  [SOC.tiktok,I.tt,"#111",L("تيك توك","TikTok"),""],
+  [SOC.tiktok,I.tt,"#111",L("تيك توك","TikTok"),"@"+((SOC.tiktok.match(/@([A-Za-z0-9._]+)/)||[])[1]||"eleganza.ksa")],
   [SOC.snapchat,I.sc,"#FFFC00",L("سناب شات","Snapchat"),""]];
  sheet('<div class="kick">'+L("تواصل معنا","Contact us")+'</div><h2 class="h2">'+L("اختر الطريقة اللي تناسبك","Choose how to reach us")+'</h2><div class="soc">'+items.map(([u,ic,bg,t,sub])=>{
   const inner='<span class="ic" style="background:'+bg+(bg==="#FFFC00"?";color:#111":"")+'">'+ic+'</span><span class="grow"><b>'+esc(t)+'</b>'+(sub||!httpsOk(u)?'<small>'+esc(httpsOk(u)?sub:L("قريباً","Coming soon"))+'</small>':"")+'</span>';

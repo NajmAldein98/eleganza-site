@@ -778,7 +778,7 @@ const DEF={
   whatsapp:"966575300170",
   instagram:"https://www.instagram.com/eleganza_tailor",
   snapchat:"",
-  tiktok:"",
+  tiktok:"https://www.tiktok.com/@eleganza.ksa",
   stories:"سبع دقايق | سباق مع الوقت… ونهاية ما توقعها أحد. | \nلا تسحب الخيط | صندوق قديم، وخيط واحد لو انسحب تغيّر كل شي. | \nالدفتر | العم صالح يفتح دفتره القديم ويحكي. | \nالورقة في الجيب | ورقة صغيرة في جيب ثوب… ومفاجأة ما كانت على البال. | "
 };
 /* المحتوى بالإنجليزي */
@@ -1032,7 +1032,8 @@ const SOC={
 function social(){
   const n=String(C.whatsapp||"").replace(/\D/g,"");
   const igH=(safe(C.instagram).match(/instagram\.com\/([A-Za-z0-9._]+)/)||[])[1];
-  const items=[["wa",t("wa"),wa(t("book")),n?"+"+n:""],["ig",t("ig"),safe(C.instagram),igH?"@"+igH:""],["map",t("map"),safe(C.mapsUrl),t("mapSub")],["sc",t("sc"),safe(C.snapchat),""],["tt",t("tt"),safe(C.tiktok),""]];
+  const ttH=(safe(C.tiktok).match(/tiktok\.com\/@([A-Za-z0-9._]+)/)||[])[1];
+  const items=[["wa",t("wa"),wa(t("book")),n?"+"+n:""],["ig",t("ig"),safe(C.instagram),igH?"@"+igH:""],["map",t("map"),safe(C.mapsUrl),t("mapSub")],["sc",t("sc"),safe(C.snapchat),""],["tt",t("tt"),safe(C.tiktok),ttH?"@"+ttH:""]];
   $("soc").innerHTML=items.map(([k,tt,u,sub])=>{const [bg,ic]=SOC[k];const inner='<span class="ic" style="background:'+bg+'">'+ic+'</span><b>'+tt+'</b>'+(sub?'<small>'+esc(sub)+'</small>':'')+'<span class="go">'+(u?t("go"):t("soon"))+'</span>';
     return u?'<a class="sc rv" data-k="'+k+'" style="--c:'+(k==="ig"?"#ee2a7b":k==="map"?"#ea4335":k==="sc"?"#fffc00":k==="tt"?"#25f4ee":"#25d366")+'" href="'+esc(u)+'" target="_blank" rel="noopener">'+inner+'</a>':'<div class="sc soon rv" data-k="'+k+'">'+inner+'</div>'}).join("");
   watch();
