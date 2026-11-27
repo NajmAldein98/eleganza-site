@@ -852,9 +852,12 @@ if(seen||matchMedia("(prefers-reduced-motion: reduce)").matches){intro.remove()}
   iv.addEventListener("ended",()=>setTimeout(endIntro,700));
   iv.addEventListener("error",endIntro);
   iv.src="img/intro.mp4";iv.preload="auto";
-  iv.muted=false;
-  iv.play().catch(()=>{iv.muted=true;$("snd").hidden=false;iv.play().catch(endIntro)});
-  $("snd").addEventListener("click",()=>{iv.muted=false;iv.currentTime=0;iv.play().catch(()=>{});$("snd").hidden=true;clearTimeout(guard);guard=setTimeout(endIntro,8000)});
+  iv.volume=.5;iv.muted=false;
+  // الصوت يشتغل لحاله بنص القوة. إذا منعه المتصفح، يشتغل الفيديو بدون صوت ويرجع الصوت مع أول لمسة أو تمرير
+  iv.play().catch(()=>{iv.muted=true;iv.play().catch(endIntro);
+    const unmute=()=>{if(!ended){iv.muted=false;iv.volume=.5}["pointerdown","touchstart","keydown","wheel","scroll"].forEach(ev=>removeEventListener(ev,unmute,true))};
+    ["pointerdown","touchstart","keydown","wheel","scroll"].forEach(ev=>addEventListener(ev,unmute,{capture:true,passive:true}))});
+  $("snd").remove();
   $("skip").addEventListener("click",endIntro);
 }
 
