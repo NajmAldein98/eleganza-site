@@ -1,4 +1,5 @@
 // خادم إضافات إليجانزا — Netlify Functions + Netlify Blobs
+// نشر: ٢٧ نوفمبر ٢٠٢٦
 // المسارات: /api/elg/<action>
 // يستخدم نفس OWNER_CODE ونفس مفتاح التوقيع حق بطاقة الولاء، فدخول المالك واحد للاثنين.
 import type { Config, Context } from "@netlify/functions";
