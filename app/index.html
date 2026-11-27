@@ -53,6 +53,37 @@ a{color:inherit}
 .pointer{position:fixed;bottom:calc(8px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:30;background:var(--bk);color:var(--goldL);padding:10px 16px;border-radius:14px;font-size:14px;box-shadow:0 10px 30px #0004;animation:nudge 1.4s ease-in-out infinite;white-space:nowrap}
 .pointer::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--bk);border-bottom:0}
 @keyframes nudge{50%{transform:translateX(-50%) translateY(-6px)}}
+/* ===== أزرار الأعلى ===== */
+.hact{margin-inline-start:auto;display:flex;gap:6px;position:relative;z-index:1;align-items:center}
+.hbtn{border:1px solid var(--line);background:#FBF4E6;border-radius:99px;min-height:40px;padding:0 12px;font-size:13px;font-weight:600;color:var(--gold2);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.hbtn svg{width:18px;height:18px}
+.hbtn.lang{min-width:44px;justify-content:center;font-family:"IBM Plex Sans Arabic",sans-serif}
+.soc{display:grid;gap:10px}
+.soc a,.soc span.off{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 14px;text-decoration:none;min-height:60px}
+.soc .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:#fff;flex:none}
+.soc .ic svg{width:22px;height:22px}
+.soc b{display:block}.soc small{color:var(--mute)}
+.soc span.off{opacity:.55}
+/* ===== معاينة الثوب الواقعية ===== */
+.stage3d{position:relative;border-radius:20px;overflow:hidden;background:radial-gradient(60% 45% at 50% 18%,#fffaf0,#efe1c6 55%,#d9c39a);border:1px solid var(--line);aspect-ratio:3/4.4}
+.stage3d::before{content:"";position:absolute;inset:0;background:radial-gradient(40% 30% at 50% 0,#ffffffb0,transparent 70%);pointer-events:none}
+.stage3d svg{position:absolute;inset:4% 6% 2%;width:88%;height:94%}
+.stage3d .sway{transform-origin:200px 8px;animation:sway2 5s ease-in-out infinite}
+@keyframes sway2{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+.stage3d .ctag{position:absolute;bottom:10px;inset-inline-start:10px;background:#fffc;border:1px solid var(--line);border-radius:99px;font-size:12px;padding:3px 10px;color:var(--gold2)}
+.stw{display:grid;grid-template-columns:minmax(0,44%) minmax(0,1fr);gap:10px;align-items:start}
+.stw .stage3d{position:sticky;top:84px}
+.stw .cfgs{padding:12px}
+.stw .cfgs h3:first-child{margin-top:0}
+.stw .chip{padding:6px 11px;font-size:13px;min-height:38px}
+.stw .sw{width:30px;height:30px}
+.cfgs{display:grid;gap:4px}
+.cfgs h3{font-size:14px;margin-top:10px;color:var(--mute);font-family:"IBM Plex Sans Arabic";font-weight:600}
+.sumbox{font-size:14px;margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.sumbox li span{color:var(--mute)}
+.runv{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:9/16;max-height:66vh;margin:0 auto;background:#000}
+.runv video{width:100%;height:100%;object-fit:cover;display:block}
+.runv .snd{position:absolute;top:12px;inset-inline-end:12px;border:1px solid #ffffff44;background:#0007;color:#fff;border-radius:99px;min-height:40px;padding:0 14px;font-size:13px}
 /* ===== التطبيق ===== */
 .app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);display:flex;flex-direction:column;position:relative}
 body:not(.pwa) .app{margin:16px auto 0;border-radius:30px 30px 0 0;box-shadow:0 -10px 40px #9a7b4322;overflow:hidden;min-height:90vh}
@@ -60,7 +91,7 @@ header.top{position:sticky;top:0;z-index:6;padding:calc(10px + env(safe-area-ins
 header.top .thread{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.6}
 .thread path{stroke-dasharray:3 5;animation:sew 14s linear infinite}
 @keyframes sew{to{stroke-dashoffset:-160}}
-.hello{margin-inline-start:auto;font-size:13px;color:var(--mute);text-align:left;position:relative}
+.hello{font-size:12px;color:var(--mute);text-align:end;position:relative;line-height:1.3}
 .hello b{display:block;color:var(--ink);font-size:14px}
 main{flex:1;padding:16px 16px calc(100px + env(safe-area-inset-bottom));display:grid;gap:14px;align-content:start}
 main>*{animation:up .5s both cubic-bezier(.2,.8,.2,1)}
@@ -98,7 +129,7 @@ main>*:nth-child(2){animation-delay:.06s}main>*:nth-child(3){animation-delay:.12
 .hero{height:220px}
 .steps{list-style:none;margin:12px 0 0;padding:0;display:grid}
 .steps li{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;padding:7px 0;position:relative}
-.steps li::before{content:"";position:absolute;right:15px;top:36px;bottom:-7px;width:2px;background:repeating-linear-gradient(var(--line) 0 4px,transparent 4px 7px)}
+.steps li::before{content:"";position:absolute;inset-inline-start:15px;top:36px;bottom:-7px;width:2px;background:repeating-linear-gradient(var(--line) 0 4px,transparent 4px 7px)}
 .steps li:last-child::before{display:none}
 .steps li.done::before{background:var(--gold)}
 .dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;background:var(--card);z-index:1;font-size:13px;color:var(--mute)}
@@ -188,22 +219,22 @@ nav.tabs button.on::before{content:"";position:absolute;top:-7px;width:26px;heig
 <section id="guide" class="hide" aria-label="طريقة تثبيت التطبيق">
   <div class="ghead">
     <span class="gw"><img src="../img/logo-crown.png" alt="إليغانزا للخياطة"><i class="gem" style="left:78.9%;top:23.3%;--gs:15%"></i></span>
-    <a href="../">الموقع ←</a>
+    <a href="../" id="gSite">الموقع ←</a>
   </div>
   <div class="gcard">
-    <div class="kick">تطبيق إليغانزا</div>
-    <h1>ثبّت التطبيق على جوالك</h1>
+    <div class="kick" id="gKick">تطبيق إليغانزا</div>
+    <h1 id="gH">ثبّت التطبيق على جوالك</h1>
     <p class="mute" style="margin:0" id="gLead">تابع ثوبك من القص إلى الاستلام، وصمّمه، واعرف قصة قماشه، وبطاقة ولائك معك دائماً.</p>
     <div id="gBody"></div>
   </div>
-  <div class="arrowdown">أو جرّب التطبيق هنا الآن</div>
+  <div class="arrowdown" id="gOr">أو جرّب التطبيق هنا الآن</div>
 </section>
 
 <div class="app">
   <header class="top">
     <svg class="thread" viewBox="0 0 400 90" preserveAspectRatio="none" aria-hidden="true"><path d="M-10 70 C 80 20, 160 95, 240 50 S 360 10, 420 40" fill="none" stroke="#B69A66" stroke-width="1.4"/></svg>
     <span class="gw"><img src="../img/logo-crown.png" alt="إليغانزا للخياطة"><i class="gem" style="left:78.9%;top:23.3%;--gs:15%"></i></span>
-    <div class="hello" id="hello"></div>
+    <div class="hact"><div class="hello" id="hello"></div><button class="hbtn" id="contactBtn" type="button"></button><button class="hbtn lang" id="langBtn" type="button"></button></div>
   </header>
   <main id="view"><div class="skel"></div></main>
   <nav class="tabs" id="nav" aria-label="أقسام التطبيق"></nav>
@@ -212,226 +243,7 @@ nav.tabs button.on::before{content:"";position:absolute;top:-7px;width:26px;heig
 <div class="sheet" id="sheet"><div class="inn" id="sheetIn"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
-<script>
-{
-const API=/netlify\.app$|^localhost|^127\./.test(location.hostname)?"/api/elg/":"https://eleganza-tailor.netlify.app/api/elg/";
-const WA_DEF="966575300170";
-const $=id=>document.getElementById(id);
-const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const num=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
-const LS={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
-
-/* ===== هل فُتح من أيقونة الجوال؟ ===== */
-const STANDALONE=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||(window.matchMedia&&matchMedia("(display-mode: fullscreen)").matches)||window.navigator.standalone===true||/[?&]src=pwa/.test(location.search);
-if(STANDALONE)document.body.classList.add("pwa");
-
-/* ===== شرح التثبيت (المتصفح فقط) ===== */
-const UA=navigator.userAgent||"";
-const IOS=/iPhone|iPad|iPod/.test(UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-const ANDROID=/Android/.test(UA);
-const INAPP=/Instagram|FBAN|FBAV|Snapchat|TikTok|musical_ly|Line\/|Twitter/i.test(UA);
-const SHARE_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
-const PLUS_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>';
-const DOTS_IC='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>';
-let deferred=null;
-function guide(){if(STANDALONE)return;$("guide").classList.remove("hide");const b=$("gBody");
-  if(INAPP){b.innerHTML=`<ol class="gsteps"><li><span><b>افتح الرابط في المتصفح</b>اضغط ${DOTS_IC} أو ⋯ أعلى الشاشة، واختر «فتح في المتصفح» أو «Open in ${IOS?"Safari":"Chrome"}».</span></li><li><span><b>وبعدها أضفه للشاشة الرئيسية</b>بتطلع لك الخطوات هناك.</span></li></ol><button class="btn ghost" style="margin-top:14px" id="copyLink">انسخ رابط التطبيق</button>`;
-    $("copyLink").onclick=async()=>{try{await navigator.clipboard.writeText(location.origin+location.pathname);toast("انتسخ الرابط، الصقه في المتصفح")}catch(e){toast(location.origin+location.pathname)}};return}
-  if(IOS){b.innerHTML=`<ol class="gsteps"><li><span><b>اضغط زر المشاركة</b>الزر ${SHARE_IC} أسفل الشاشة في Safari (أو أعلاها في الآيباد).</span></li><li><span><b>اختر «إضافة إلى الشاشة الرئيسية»</b>انزل في القائمة شوي لين تلقاها ${PLUS_IC}</span></li><li><span><b>اضغط «إضافة»</b>بتطلع أيقونة التاج في جوالك. افتح التطبيق منها دائماً.</span></li></ol>`;
-    if(!/Safari/.test(UA)||/CriOS|FxiOS|EdgiOS/.test(UA))b.innerHTML+='<p class="note" style="margin:12px 0 0">إذا ما لقيت الخيار، افتح الرابط في Safari.</p>';
-    const p=document.createElement("div");p.className="pointer";p.textContent="زر المشاركة هنا ↓";document.body.appendChild(p);setTimeout(()=>p.remove(),9000);return}
-  if(ANDROID){b.innerHTML=`<button class="btn" style="margin-top:16px" id="instBtn">${PLUS_IC.replace('stroke="currentColor"','stroke="#fff"')} ثبّت التطبيق الآن</button><ol class="gsteps" id="andSteps"><li><span><b>اضغط القائمة ${DOTS_IC}</b>أعلى الشاشة في Chrome.</span></li><li><span><b>اختر «تثبيت التطبيق»</b>أو «إضافة إلى الشاشة الرئيسية».</span></li><li><span><b>اضغط «تثبيت»</b>ويصير التطبيق مع تطبيقات جوالك.</span></li></ol>`;
-    const ib=$("instBtn");ib.classList.toggle("hide",!deferred);ib.onclick=async()=>{if(!deferred)return;deferred.prompt();const r=await deferred.userChoice.catch(()=>null);deferred=null;ib.classList.add("hide");if(r&&r.outcome==="accepted")toast("تم التثبيت، افتح التطبيق من أيقونة التاج")};return}
-  b.innerHTML=`<p style="margin:16px 0 0">افتح هذا الرابط من جوالك، أو امسح الرمز بالكاميرا:</p><div class="qrbox" id="qr"></div><p class="mute" style="text-align:center;margin:8px 0 0" dir="ltr">${esc(location.origin+location.pathname)}</p>`;
-  const draw=()=>{if(!window.qrcode||!$("qr"))return;const q=qrcode(0,"M");q.addData(location.origin+location.pathname);q.make();$("qr").innerHTML=q.createSvgTag({cellSize:5,margin:0,scalable:true})};if(window.qrcode)draw();else window.addEventListener("qrready",draw,{once:true})}
-window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;const ib=$("instBtn");if(ib)ib.classList.remove("hide")});
-window.addEventListener("appinstalled",()=>{deferred=null;toast("تم التثبيت 👑")});
-
-/* ===== بيانات ===== */
-let WA=WA_DEF,STAGES=["تم استلام طلبك","تجهيز القماش","مرحلة الخياطة","الفحص والجودة","الكي والتغليف","جاهز للاستلام"];
-let FABS="صيفي | قطن ناعم | أبيض ثلجي | ناعم ومطفي | خفيف ويتنفس، مناسب لحر جدة | غسيل بارد وكي متوسط | #f5f2ea\nصيفي | ياباني فاخر | أبيض عاجي | ناعم بلمعة هادئة | انسدال جميل ومظهر رسمي | غسيل لطيف وكي على حرارة منخفضة | #f1ede3\nصيفي | رمادي فاتح | رمادي فضي | خفيف ومتماسك | لون عملي وأنيق للدوام | غسيل بارد مع الألوان الفاتحة | #cfd0cf\nشتوي | صوف ناعم | رمادي دخاني | دافئ ومخملي | دفا بدون ثقل | تنظيف جاف يفضّل | #8e8a83\nشتوي | كحلي شتوي | كحلي عميق | سميك وناعم | حضور رسمي للمناسبات | غسيل بارد مقلوب | #28314a\nشتوي | بني داكن | بني شوكولا | دافئ بملمس واضح | لون دافي وراقي | غسيل بارد وكي متوسط | #5b4636";
-const lines=t=>String(t||"").split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(r=>r[0]);
-let FAB=[];
-function setFabs(t){FAB=lines(t).map((r,i)=>({i,sea:r[0],n:r[1],shade:r[2],feel:r[3],feat:r[4],care:r[5],c:/^#[0-9a-f]{6}$/i.test(r[6]||"")?r[6]:"#eeeeee"}))}
-setFabs(FABS);
-const CLIP=["s0","s1","s2","s3","s3","s4"];
-const vid=(n,extra="")=>`<video src="../media/${n}.mp4" poster="../media/${n}.jpg" autoplay muted loop playsinline ${extra}></video>`;
-const wa=m=>"https://wa.me/"+WA+"?text="+encodeURIComponent(m);
-async function api(a,body){let r;try{r=await fetch(API+a,{method:body?"POST":"GET",headers:{"content-type":"application/json"},body:body?JSON.stringify(body):undefined})}catch(e){throw new Error("تعذّر الاتصال، تأكد من الإنترنت")}
-  const j=await r.json().catch(()=>({}));if(!r.ok){const er=new Error(j.error||"صار خطأ، جرّب مرة ثانية");er.status=r.status;throw er}return j}
-const S={tab:"home",tok:LS.get("elg_tok"),me:null,seats:null,design:{collar:"عادية",sleeve:"سادة",close:"أزرار",pocket:"نعم",fab:1}};
-try{const d=JSON.parse(LS.get("elg_design")||"null");if(d)Object.assign(S.design,d)}catch(e){}
-
-/* ===== أدوات ===== */
-function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove("show"),2800)}
-function burst(el){const r=el.getBoundingClientRect();for(let i=0;i<14;i++){const s=document.createElement("i");s.className="spark";const a=i/14*Math.PI*2,d=30+Math.random()*30;
- s.style.cssText=`left:${r.left+r.width/2}px;top:${r.top+r.height/2}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;background:${i%2?"#B69A66":"#E3CB93"}`;document.body.appendChild(s);setTimeout(()=>s.remove(),900)}}
-function sheet(html){$("sheetIn").innerHTML='<div class="grab"></div><div class="row"><span class="grow"></span><button class="x" data-act="close" aria-label="إغلاق">×</button></div>'+html;$("sheet").classList.add("open")}
-function closeSheet(){$("sheet").classList.remove("open");$("sheetIn").innerHTML=""}
-const I={
- home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 11 12 4l9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>',
- studio:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 3h6l5 4-2 4-2-1v11H8V10l-2 1-2-4z"/></svg>',
- scan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg>',
- ward:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18M10 12h.01M14 12h.01"/></svg>',
- me:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>',
- hang:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4a2 2 0 1 1 2 2c-1 0-2 1-2 2l9 6H3l9-6"/><path d="M5 14v6h14v-6"/></svg>',
- bolt:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
- gift:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8S10 3 7.5 4.5 9 8 12 8zm0 0s2-5 4.5-3.5S15 8 12 8z"/></svg>',
- heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>',
- card:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/></svg>',
- star:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg>',
- wa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/><path d="M9 9c0 3 3 6 6 6l1-1.5-2-1-1 1c-1-.5-2-1.5-2.5-2.5l1-1-1-2z"/></svg>',
- key:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M16 7l3 3"/></svg>',
- team:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 11l2 2 4-4"/></svg>',
- out:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/></svg>'};
-const TABS=[["home","طلباتي",I.home],["studio","صمّم",I.studio],["fabric","القماش",I.scan],["ward","خزانتي",I.ward],["me","حسابي",I.me]];
-const SALEH='<img src="../media/saleh-face.webp" alt="العم صالح">';
-
-/* ===== الدخول ===== */
-function vLogin(){return `<div class="saleh"><div class="av">${SALEH}</div><div class="bubble"><div class="ttl">العم صالح</div>حيّاك الله في إليغانزا! ادخل برقم ملفك عشان تشوف ثوبك وين وصل.</div></div>
- <form class="card" id="loginF" style="display:grid;gap:14px">
-  <label class="field">رقم الملف<input class="in" id="lFile" inputmode="numeric" autocomplete="username" dir="ltr" placeholder="10001" required></label>
-  <label class="field">كلمة المرور (آخر ٤ أرقام من جوالك)<input class="in" id="lPass" type="password" inputmode="numeric" autocomplete="current-password" dir="ltr" maxlength="6" placeholder="••••" required></label>
-  <button class="btn" type="submit">دخول</button><div class="msg" id="lMsg" role="alert"></div>
- </form>
- <p class="mute" style="text-align:center;margin:0">رقم ملفك يوصلك في رسالة الواتساب بعد أول طلب.<br>ما عندك ملف للحين؟ <a href="${wa("السلام عليكم، أبغى أفصّل ثوب وأفتح ملف في إليغانزا")}" target="_blank" rel="noopener" style="color:var(--gold2)">احجز موعد مقاس</a></p>
- <div class="list">${[["studio","صمّم ثوبك قبل لا تجي",I.studio],["fabric","تعرّف على أقمشتنا",I.scan]].map(([t,l,ic])=>`<button class="item" data-go="${t}"><span class="ic">${ic}</span><span class="grow"><b>${l}</b></span></button>`).join("")}</div>`}
-async function login(f,p){const r=await api("app-login",{file:f,pass:p});S.tok=r.token;LS.set("elg_tok",r.token);await loadMe();render()}
-async function loadMe(){if(!S.tok){S.me=null;return}try{S.me=await api("app-me",{token:S.tok});LS.set("elg_me",JSON.stringify(S.me))}catch(e){if(e.status===401){logout(true);return}const c=LS.get("elg_me");if(c){try{S.me=JSON.parse(c)}catch(x){}}toast(e.message)}}
-function logout(silent){S.tok=null;S.me=null;LS.del("elg_tok");LS.del("elg_me");if(!silent)toast("تم تسجيل الخروج");render()}
-
-/* ===== طلباتي ===== */
-const SALEH_LINES=n=>[`وصلنا قماشك يا ${n}، وجالسين نسجّل تصميمك ومقاساتك.`,`نجهّز قماشك الحين على مقاسك بالضبط.`,`الخيّاط شغّال على ثوبك الحين. لا تحاتي!`,`نراجع كل غرزة في ثوبك قبل ما يطلع.`,`ثوبك يتكوى ويتغلّف، قربنا مرة!`,`ثوبك جاهز ينتظرك يا ${n}، حيّاك الله.`];
-function timeline(o){return '<ol class="steps">'+STAGES.map((s,i)=>{const done=i<o.stage||(o.stage===5&&i===5),c=done?"done":i===o.stage?"now":"";
- return `<li class="${c}"><span class="dot">${done?"✓":num(i+1)}</span><span>${esc(s)}${i===o.stage&&o.stage<5?'<br><span class="mute">المرحلة الحالية'+(o.tailor?" · "+esc(o.tailor):"")+'</span>':""}</span>${i<=o.stage?`<button class="clip" data-act="clip" data-i="${i}">▶ المقطع</button>`:""}</li>`}).join("")+"</ol>"}
-const dueTxt=d=>{if(!d)return"";const t=Date.parse(d+"T12:00:00+03:00");if(isNaN(t))return"";return new Date(t).toLocaleDateString("ar-SA-u-ca-gregory",{weekday:"long",day:"numeric",month:"long"})};
-function vHome(){if(!S.me)return vLogin();const m=S.me,first=(m.name||"").split(" ")[0]||"";
- const active=m.orders.filter(o=>o.stage<5),ready=m.orders.filter(o=>o.stage===5&&o.done&&Date.now()-o.done<14*864e5);
- const lead=active[0]||ready[0];
- const line=lead?SALEH_LINES(first)[lead.stage]:`هلا ${first}! ما عندك طلب مفتوح الحين. متى نشوفك؟`;
- let h=`<div class="saleh"><div class="av">${SALEH}</div><div class="bubble"><div class="ttl">العم صالح</div><span id="salehTxt" class="typing" data-t="${esc(line)}"><span></span><span></span><span></span></span></div></div>`;
- if(lead)h+=`<section class="vbox hero">${vid(CLIP[lead.stage])}<div class="ov"></div><div class="tx"><div class="kick" style="color:#E3CB93">طلب ${num(lead.id)} · ${esc(STAGES[lead.stage])}</div><h2 class="h2" style="margin-top:4px">${lead.stage===5?"ثوبك جاهز للاستلام 🎉":"ثوبك في الطريق إليك"}</h2></div></section>`;
- h+=[...active,...ready].map(o=>`<section class="card"><div class="kick">طلب ${num(o.id)}</div><h2 class="h2" style="margin-top:4px">${esc(o.item)}</h2><div class="mute">${o.fabric?esc(o.fabric)+" · ":""}${o.due&&o.stage<5?"التسليم المتوقع "+dueTxt(o.due):""}</div>${timeline(o)}${o.cert?`<a class="btn ghost" style="margin-top:12px" href="../thobe/?c=${encodeURIComponent(o.cert)}" target="_blank" rel="noopener">شهادة ميلاد ثوبك</a>`:""}</section>`).join("");
- if(!active.length&&!ready.length)h+=`<section class="card"><div class="empty">ما عندك طلبات مفتوحة.<br><a class="btn" style="margin-top:14px" href="${wa("السلام عليكم، أبغى أحجز موعد مقاس — ملف رقم "+m.file)}" target="_blank" rel="noopener">احجز موعد مقاس</a></div></section>`;
- const s=S.seats;if(s&&s.open&&s.total){const c=2*Math.PI*48,off=c*(1-s.left/s.total);
-  h+=`<section class="card gold"><div class="row">${`<div style="width:110px;height:110px;flex:none;position:relative"><svg viewBox="0 0 110 110" style="width:100%;height:100%;transform:rotate(-90deg)"><circle cx="55" cy="55" r="48" fill="none" stroke="#ffffff40" stroke-width="9"/><circle cx="55" cy="55" r="48" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c}" data-off="${off}" style="transition:stroke-dashoffset 1.4s"/></svg><b style="position:absolute;inset:0;display:grid;place-content:center;text-align:center;font:700 32px/1 'Reem Kufi'">${num(s.left)}<small style="font:500 12px 'IBM Plex Sans Arabic'">ثوب باقي</small></b></div>`}<div class="grow"><div class="mute">${esc(s.title||"مقاعد الموسم")}</div><h2 class="h2" style="margin:4px 0 10px">احجز قبل الزحمة</h2><button class="btn dark" data-act="book" ${s.left<=0?"disabled":""}>${s.left<=0?"خلصت المقاعد":"احجز مقعدي"}</button></div></div></section>`}
- h+=loyaltyCard();
- h+=`<button class="item" data-act="rush"><span class="ic" style="background:#F6DDD3;color:var(--red)">${I.bolt}</span><span class="grow"><b>تعديل مستعجل</b><br><span class="mute">مناسبة قريبة والثوب يبي تعديل؟ نلحقك.</span></span></button>`;
- return h}
-function loyaltyCard(){const L=S.me&&S.me.loyalty;
- if(!L)return `<a class="item" href="../card/" target="_blank" rel="noopener"><span class="ic">${I.card}</span><span class="grow"><b>بطاقة الولاء</b><br><span class="mute">سجّل برقم جوالك واجمع الأختام: خصم على السادس، والحادي عشر مجاناً.</span></span></a>`;
- const left=L.discountAt-L.stamps;
- return `<a class="card gold" href="../card/" target="_blank" rel="noopener" style="text-decoration:none;display:block"><div class="row"><b class="grow ttl">بطاقة الولاء</b><span style="font-size:13px">${num(L.stamps)} من ${num(L.total)}</span></div>
- <div class="stamps">${Array.from({length:L.total},(_,i)=>`<span class="${i<L.stamps?"on":""} ${i===L.discountAt-1||i===L.total-1?"gift":""}">${i<L.stamps?"":i===L.discountAt-1?"خصم":i===L.total-1?"مجاناً":num(i+1)}</span>`).join("")}</div>
- <p style="margin:12px 0 0;font-size:14px">${L.freePending?"عندك ثوب مجاني ينتظرك 🎉":L.discountPending?"عندك خصم على ثوبك القادم 🎉":left>0?"باقي "+num(left)+" على خصم الثوب السادس.":"باقي "+num(L.total-L.stamps)+" على الثوب المجاني."}</p></a>`}
-
-/* ===== صمّم ===== */
-function thobeSVG(d,bare){const f=FAB[d.fab]||FAB[0],lum=(()=>{const h=f.c.slice(1);const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return(.299*r+.587*g+.114*b)/255})(),dark=lum<.6;
- const st=dark?"#00000055":"#B5A98F",tr=dark?"#E3CB93":"#9A7B43",pale=dark?"#ffffff22":"#F1E8D6";
- const collar={"عادية":`<path d="M88 34 Q100 46 112 34" fill="none" stroke="${tr}" stroke-width="3"/>`,"نصف":`<path d="M86 32 Q100 50 114 32 L114 27 Q100 40 86 27Z" fill="${pale}" stroke="${tr}" stroke-width="1.5"/>`,"واقفة":`<rect x="86" y="20" width="28" height="14" rx="4" fill="${pale}" stroke="${tr}" stroke-width="1.5"/>`}[d.collar];
- const close=d.close==="أزرار"?[56,70,84,98].map(y=>`<circle cx="100" cy="${y}" r="2.6" fill="${tr}"/>`).join(""):`<line x1="100" y1="46" x2="100" y2="104" stroke="${tr}" stroke-width="2"/><rect x="97" y="100" width="6" height="9" rx="2" fill="#B69A66"/>`;
- const cuff=d.sleeve==="كبك"?`<rect x="18" y="146" width="22" height="12" rx="2" fill="${pale}" stroke="${tr}"/><rect x="160" y="146" width="22" height="12" rx="2" fill="${pale}" stroke="${tr}"/><circle cx="29" cy="152" r="2.5" fill="#B69A66"/><circle cx="171" cy="152" r="2.5" fill="#B69A66"/>`:"";
- const pocket=d.pocket==="نعم"?`<path d="M62 62h20v4H62z" fill="${tr}"/>`:"";
- const g=`<path d="M84 30 Q100 38 116 30 L150 44 L184 150 L160 158 L140 96 L142 290 L58 290 L60 96 L40 158 L16 150 L50 44Z" fill="${f.c}" stroke="${st}" stroke-width="2"/><path d="M60 96 L58 290M140 96L142 290" stroke="${dark?"#00000033":"#E1D8C6"}"/>${collar}${close}${cuff}${pocket}`;
- return bare?g:`<svg viewBox="0 0 200 300" aria-label="معاينة الثوب">${g}</svg>`}
-function model(d){return `<svg viewBox="0 0 200 380"><ellipse cx="100" cy="372" rx="50" ry="7" fill="#000" opacity=".5"/><circle cx="100" cy="36" r="20" fill="#C9A37A"/><path d="M76 30c6-22 42-22 48 0-8-6-40-6-48 0z" fill="#fff"/><path d="M74 40c-6 12-4 30 6 40M126 40c6 12 4 30-6 40" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M77 30c3-4 43-4 46 0" stroke="#B5452F" stroke-width="2" stroke-dasharray="3 3" fill="none"/><g transform="translate(0,70)">${thobeSVG(d,true)}</g></svg>`}
-function vStudio(){const d=S.design;const g=(k,t,opts)=>`<h3>${t}</h3><div class="chips">${opts.map(v=>`<button class="chip ${d[k]===v?"on":""}" data-act="opt" data-k="${k}" data-v="${v}">${v}</button>`).join("")}</div>`;
- return `<div><div class="kick">استوديو إليغانزا</div><h1 class="h1" style="margin-top:4px">صمّم ثوبك قبل لا تجي</h1></div>
- <section class="card"><div class="studio"><div class="thobe">${thobeSVG(d)}</div>
- <div class="opt"><h3>القماش</h3><div class="chips">${FAB.map(f=>`<button class="sw ${d.fab===f.i?"on":""}" style="background:${f.c}" data-act="opt" data-k="fab" data-v="${f.i}" aria-label="${esc(f.n)}"></button>`).join("")}</div><div class="mute" style="margin-top:4px">${esc((FAB[d.fab]||FAB[0]).n)}</div>
- ${g("collar","الياقة",["عادية","نصف","واقفة"])}${g("sleeve","الكم",["سادة","كبك"])}${g("close","الإغلاق",["أزرار","سحاب"])}${g("pocket","جيب الصدر",["نعم","لا"])}</div></div></section>
- <button class="btn" data-act="runway">شاهد ثوبك على منصة العرض</button>
- <a class="btn ghost" href="${wa(designMsg())}" target="_blank" rel="noopener">أرسل تصميمي للمحل</a>
- <p class="mute" style="text-align:center;margin:0">التطريز والتصاميم الخاصة تشوفها في المحل.</p>`}
-function designMsg(){const d=S.design,f=FAB[d.fab]||FAB[0];return `السلام عليكم، هذا تصميم ثوبي من تطبيق إليغانزا${S.me?" (ملف "+S.me.file+")":""}:\nالقماش: ${f.n}\nالياقة: ${d.collar}\nالكم: ${d.sleeve}\nالإغلاق: ${d.close}\nجيب الصدر: ${d.pocket}`}
-
-/* ===== القماش ===== */
-function vFabric(){return `<div><div class="kick">قصة القماش</div><h1 class="h1" style="margin-top:4px">امسح رول القماش في المحل</h1><p class="mute" style="margin:4px 0 0">كل رول في المحل عليه رمز. افتح كاميرا جوالك ووجّهها عليه، وتنفتح قصته هنا.</p></div>
- <div class="scan"><span class="corner" style="top:14px;right:14px;border-width:3px 3px 0 0"></span><span class="corner" style="top:14px;left:14px;border-width:3px 0 0 3px"></span><span class="corner" style="bottom:14px;right:14px;border-width:0 3px 3px 0"></span><span class="corner" style="bottom:14px;left:14px;border-width:0 0 3px 3px"></span><span class="beam"></span></div>
- <section class="card"><b class="ttl h3">أقمشتنا</b><div class="list" style="margin-top:10px">${FAB.map(f=>`<button class="item" data-act="fab" data-f="${f.i}"><span class="ic" style="background:${f.c};border:1px solid var(--line)"></span><span class="grow"><b>${esc(f.n)}</b><br><span class="mute">${esc(f.sea)} · ${esc(f.feel)}</span></span></button>`).join("")}</div></section>`}
-function fabStory(f){return `<div class="kick">قصة القماش</div><h2 class="h2">${esc(f.n)}</h2><div class="swbig" style="background-color:${f.c}"></div>
- <p style="margin:0">${esc(f.feat)}.</p><dl class="kv"><dt>الموسم</dt><dd>${esc(f.sea)}</dd><dt>اللون</dt><dd>${esc(f.shade)}</dd><dt>الملمس</dt><dd>${esc(f.feel)}</dd><dt>العناية</dt><dd>${esc(f.care)}</dd></dl>
- <button class="btn" data-act="useFab" data-f="${f.i}">صمّم ثوبك من هذا القماش</button>
- <a class="btn ghost" href="${wa("السلام عليكم، أبغى أفصّل من قماش "+f.n)}" target="_blank" rel="noopener">اطلبه على واتساب</a>`}
-
-/* ===== خزانتي ===== */
-function vWard(){if(!S.me)return `<div><div class="kick">ذاكرة الخيّاط</div><h1 class="h1" style="margin-top:4px">خزانتي</h1></div><section class="card"><div class="empty">ادخل برقم ملفك عشان تشوف ثيابك وشهاداتها.<button class="btn" style="margin-top:14px" data-go="home">تسجيل الدخول</button></div></section>`;
- const done=S.me.orders.filter(o=>o.stage===5).sort((a,b)=>(b.done||0)-(a.done||0));const last=done[0];
- let h=`<div><div class="kick">ذاكرة الخيّاط</div><h1 class="h1" style="margin-top:4px">خزانتي</h1></div>`;
- if(last&&last.done&&Date.now()-last.done>300*864e5)h+=`<section class="card gold media">${vid("tape")}<div><div class="row" style="margin-bottom:6px"><span class="av" style="width:44px;height:44px">${SALEH}</span><div class="mute">تذكير من العم صالح</div></div><h2 class="h2" style="margin:4px 0 10px">مر وقت على آخر ثوب فصّلته عندنا… نجدده؟</h2><a class="btn dark" href="${wa("السلام عليكم، أبغى أجدد ثوبي بنفس المقاس — ملف "+S.me.file)}" target="_blank" rel="noopener">جدّده بنفس المقاس</a></div></section>`;
- h+=done.length?`<div class="list">${done.map(o=>`<a class="item" href="${o.cert?"../thobe/?c="+encodeURIComponent(o.cert):"#"}" target="_blank" rel="noopener"><span class="ic">${I.hang}</span><span class="grow"><b>${esc(o.item)}</b><br><span class="mute">${esc(o.fabric||"")} ${o.done?"· "+new Date(o.done).toLocaleDateString("ar-SA-u-ca-islamic",{month:"long",year:"numeric"}):""}</span></span><span class="tag">الشهادة</span></a>`).join("")}</div>`:`<section class="card"><div class="empty">أول ما تستلم ثوبك، ينحفظ هنا مع شهادة ميلاده.</div></section>`;
- h+=`<button class="item" data-act="memory"><span class="ic" style="background:#F5E7CC">${I.heart}</span><span class="grow"><b>ثوب الذكرى</b><br><span class="mute">عندك شماغ أبوك أو قماش له قصة؟ نخيطه في ثوبك.</span></span></button>`;
- return h}
-
-/* ===== حسابي ===== */
-function vMe(){const m=S.me;let h="";
- if(m)h+=`<section class="card gold"><div class="mute">ملف رقم</div><div style="font:700 40px/1.1 'Reem Kufi';letter-spacing:2px">${num(m.file)}</div><div style="margin-top:4px">${esc(m.name)}</div></section>`;
- else h+=`<section class="card"><div class="empty">ما سجّلت دخولك.<button class="btn" style="margin-top:14px" data-go="home">تسجيل الدخول</button></div></section>`;
- const it=(href,ic,t,s,ext)=>`<a class="item" href="${href}" ${ext?'target="_blank" rel="noopener"':""}><span class="ic">${ic}</span><span class="grow"><b>${t}</b>${s?`<br><span class="mute">${s}</span>`:""}</span></a>`;
- h+=`<div class="list">`;
- if(m)h+=`<button class="item" data-act="pin"><span class="ic">${I.key}</span><span class="grow"><b>${m.hasPin?"تغيير الرقم السري":"اختر رقماً سرياً خاصاً"}</b><br><span class="mute">${m.hasPin?"تدخل فيه بدل آخر ٤ أرقام من جوالك":"بدل آخر ٤ أرقام من جوالك، أأمن لك"}</span></span></button>`;
- h+=it("../card/",I.card,"بطاقة الولاء","",1)+it("../#gift",I.gift,"أهدِ ثوباً","والمقاس علينا",1)+it("../#prefs",I.star,"علّمنا وش تحب","وتوصلك الأخبار اللي تناسبك",1)+it("../#stories",I.studio,"قصص إليغانزا","حلقات قصيرة من عالمنا",1)+it(wa("السلام عليكم"),I.wa,"تواصل معنا واتساب","",1)+it("../staff/",I.team,"دخول الفريق","للموظفين فقط",1);
- if(m)h+=`<button class="item" data-act="logout"><span class="ic">${I.out}</span><span class="grow"><b>تسجيل الخروج</b></span></button>`;
- h+=`</div><section class="card" style="text-align:center"><div class="kick" style="justify-content:center">قريباً</div><b class="ttl h3">تحدي الشهر: أفضل طلّة بثوب إليغانزا</b><p class="mute" style="margin:4px 0 0">الفائز ياخذ ثوبه القادم مجاناً.</p></section>`;
- return h}
-
-/* ===== الرسم ===== */
-function render(){const t=S.tab;const V={home:vHome,studio:vStudio,fabric:vFabric,ward:vWard,me:vMe};
- $("view").innerHTML=V[t]();
- $("nav").innerHTML=TABS.map(([k,l,ic])=>`<button class="${k===t?"on":""}" data-tab="${k}" aria-current="${k===t?"page":"false"}">${ic}${l}</button>`).join("");
- $("hello").innerHTML=S.me?`مرحباً<b>${esc((S.me.name||"").split(" ")[0])}</b>`:"";
- const st=$("salehTxt");if(st)setTimeout(()=>{st.classList.remove("typing");st.textContent=st.dataset.t},800);
- document.querySelectorAll("[data-off]").forEach(c=>requestAnimationFrame(()=>requestAnimationFrame(()=>c.style.strokeDashoffset=c.dataset.off)));
- if(t==="home"&&!S.me){const f=$("loginF");if(f)f.onsubmit=async e=>{e.preventDefault();const m=$("lMsg");m.classList.remove("bad");m.textContent="لحظة…";
-  try{await login($("lFile").value.replace(/\D/g,""),$("lPass").value.replace(/\D/g,""));burst($("hello"));toast("أهلاً وسهلاً 👑")}catch(er){m.textContent=er.message;m.classList.add("bad")}}}}
-function go(t){S.tab=t;closeSheet();render();scrollTo({top:STANDALONE?0:($(".app")?document.querySelector(".app").offsetTop-8:0),behavior:"smooth"})}
-
-document.addEventListener("click",e=>{
- const tb=e.target.closest("[data-tab]");if(tb){go(tb.dataset.tab);return}
- const g=e.target.closest("[data-go]");if(g){go(g.dataset.go);return}
- if(e.target.id==="sheet"){closeSheet();return}
- const a=e.target.closest("[data-act]");if(!a)return;const act=a.dataset.act;
- if(act==="close")closeSheet();
- if(act==="opt"){const k=a.dataset.k;S.design[k]=k==="fab"?+a.dataset.v:a.dataset.v;LS.set("elg_design",JSON.stringify(S.design));render()}
- if(act==="runway"){const f=FAB[S.design.fab]||FAB[0];sheet(`<div class="runway">${vid("dunes")}<span class="light l1"></span><span class="light l2"></span><div class="floor"></div><div class="model">${model(S.design)}</div><div class="flash"></div><div class="name">${S.me?esc((S.me.name||"").split(" ")[0])+" · ":""}${esc(f.n)}</div></div><a class="btn" href="${wa(designMsg())}" target="_blank" rel="noopener">أرسل تصميمي للمحل</a>`)}
- if(act==="clip"){const i=+a.dataset.i;sheet(`<div class="vbox" style="aspect-ratio:9/16;height:min(62vh,560px);margin:0 auto">${vid(CLIP[i])}<div class="ov"></div><div class="tx"><div class="kick" style="color:#E3CB93">مرحلة ${num(i+1)}</div><b class="ttl h2">${esc(STAGES[i])}</b></div></div>`)}
- if(act==="fab")sheet(fabStory(FAB[+a.dataset.f]||FAB[0]));
- if(act==="useFab"){S.design.fab=+a.dataset.f;LS.set("elg_design",JSON.stringify(S.design));go("studio");toast("لبّسنا ثوبك قماش "+(FAB[S.design.fab]||FAB[0]).n)}
- if(act==="rush")sheet(`<div class="kick">تعديل مستعجل</div><h2 class="h2">وش يحتاج ثوبك؟</h2><div class="chips" id="rushC">${["تقصير","توسيع","تضييق","زر أو سحاب","شي ثاني"].map((t,i)=>`<button class="chip ${i===0?"on":""}" data-act="pick">${t}</button>`).join("")}</div><p class="mute" style="margin:0">بعد ما يفتح الواتساب، أرسل صورة الثوب ونرد عليك بالوقت والسعر.</p><button class="btn" data-act="rushGo">أرسل على واتساب</button>`);
- if(act==="pick")a.parentElement.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===a));
- if(act==="rushGo"){const t=(document.querySelector("#rushC .chip.on")||{}).textContent||"";window.open(wa("السلام عليكم، عندي تعديل مستعجل: "+t+(S.me?" — ملف "+S.me.file:"")),"_blank");closeSheet()}
- if(act==="memory")sheet(`<div class="vbox" style="height:200px">${vid("book")}<div class="ov"></div></div><div class="kick">ثوب الذكرى</div><h2 class="h2">قماش له قصة، يرجع يعيش معك</h2><p style="margin:0">جيب قطعة قماش غالية عليك، مثل شماغ أبوك أو بشت جدك، ونخيطها في ثوبك الجديد: بطانة الياقة أو داخل الكبك أو الجيب.</p><div class="list"><div class="note">١. اكتب لنا قصة القماش بسطرين</div><div class="note">٢. جيبه للمحل مع موعد المقاس</div><div class="note">٣. تنحفظ القصة في شهادة ميلاد ثوبك</div></div><a class="btn" href="${wa("السلام عليكم، أبغى ثوب ذكرى"+(S.me?" — ملف "+S.me.file:""))}" target="_blank" rel="noopener">أبغى ثوب ذكرى</a>`);
- if(act==="book"){const m=S.me;sheet(`<div class="kick">${esc(S.seats.title||"مقاعد الموسم")}</div><h2 class="h2">كم ثوب تبغى؟</h2><input class="in" id="bPcs" type="number" min="1" max="20" value="1" dir="ltr"><button class="btn" data-act="bookGo">احجز</button><div class="msg" id="bMsg"></div>`)}
- if(act==="bookGo"){(async()=>{const m=$("bMsg");m.textContent="لحظة…";m.classList.remove("bad");
-  try{const r=await api("book",{token:S.tok,pieces:$("bPcs").value});S.seats.left=r.left;closeSheet();render();toast("حجزنا لك المقعد رقم "+num(r.n)+"، بنتواصل معك لموعد المقاس 🎉")}catch(er){m.classList.add("bad");m.textContent=er.message}})()}
- if(act==="pin")sheet(`<div class="kick">الرقم السري</div><h2 class="h2">اختر رقماً سرياً من ٤ إلى ٦ أرقام</h2><input class="in" id="pin1" type="password" inputmode="numeric" maxlength="6" dir="ltr" placeholder="••••"><input class="in" id="pin2" type="password" inputmode="numeric" maxlength="6" dir="ltr" placeholder="أعد كتابته"><button class="btn" data-act="pinGo">احفظ</button><div class="msg" id="pMsg"></div>`);
- if(act==="pinGo"){(async()=>{const m=$("pMsg"),p1=$("pin1").value,p2=$("pin2").value;m.classList.add("bad");
-  if(!/^\d{4,6}$/.test(p1)){m.textContent="من ٤ إلى ٦ أرقام";return}if(p1!==p2){m.textContent="الرقمين مو متطابقين";return}
-  m.classList.remove("bad");m.textContent="لحظة…";try{await api("app-pin",{token:S.tok,pin:p1});S.me.hasPin=true;closeSheet();render();toast("انحفظ رقمك السري، ادخل فيه من الحين")}catch(er){m.classList.add("bad");m.textContent=er.message}})()}
- if(act==="logout")logout();
-});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
-
-/* ===== رمز القماش: /app/#fab-2 ===== */
-function hashRoute(){const m=location.hash.match(/^#fab-(\d+)$/);if(m){S.tab="fabric";render();const f=FAB[+m[1]];if(f)setTimeout(()=>sheet(fabStory(f)),300)}}
-window.addEventListener("hashchange",hashRoute);
-
-/* ===== التشغيل ===== */
-(async()=>{
- guide();
- if(STANDALONE&&!sessionStorage.getItem("elg_intro")){try{sessionStorage.setItem("elg_intro","1")}catch(e){}
-  const d=document.createElement("div");d.className="intro";d.innerHTML='<video src="../media/intro.mp4" poster="../media/intro.jpg" autoplay muted playsinline></video><button class="skip" type="button">تخطّي</button>';document.body.appendChild(d);
-  const end=()=>{if(!d.classList.contains("out")){d.classList.add("out");setTimeout(()=>d.remove(),700)}};d.querySelector(".skip").onclick=end;const v=d.querySelector("video");v.addEventListener("ended",end);v.addEventListener("error",end);setTimeout(end,6500)}
- const cached=LS.get("elg_me");if(S.tok&&cached){try{S.me=JSON.parse(cached)}catch(e){}}
- render();
- fetch("../content.json",{cache:"no-store"}).then(r=>r.json()).then(j=>{if(j&&j.whatsapp)WA=String(j.whatsapp).replace(/\D/g,"")||WA;if(j&&j.fabrics)setFabs(j.fabrics);if(j&&j.journey){const s=lines(j.journey).map(r=>r[0]);if(s.length>=6)STAGES=s.slice(0,6)}render();hashRoute()}).catch(()=>hashRoute());
- api("seats").then(s=>{S.seats=s;if(S.tab==="home")render()}).catch(()=>{});
- await loadMe();render();
- if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
-})();
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.tok)loadMe().then(render)});
-}
-</script>
+<script src="app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" defer onload="window.dispatchEvent(new Event('qrready'))"></script>
 </body>
 </html>
