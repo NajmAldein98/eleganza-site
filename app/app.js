@@ -179,9 +179,8 @@ function thobeReal(D,model){
    '<linearGradient id="hg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#e9cf8f"/><stop offset="1" stop-color="#9a7b43"/></linearGradient>'+
    '<filter id="ds" x="-20%" y="-10%" width="140%" height="130%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#5a4320" flood-opacity=".28"/></filter></defs>';
   if(model){
-    /* العارض: رأس بغترة وعقال، والثوب نفسه بنفس الاختيارات */
-    s+='<g transform="translate(200,52) scale(1.45) translate(-200,-40)"><path d="M174 34 q26 -38 52 0 q8 34 0 64 l-14 6 q-4 -20 -6 -30 h-12 q-2 10 -6 30 l-14 -6 q-8 -30 0 -64z" fill="#fff" stroke="#d9d2c4" stroke-width="1"/><path d="M188 60 h24 v16 h-24z" fill="#b98a62"/><ellipse cx="200" cy="44" rx="15" ry="19" fill="#c99b72"/><path d="M187 52 q13 12 26 0 q-2 12 -13 14 q-11 -2 -13 -14z" fill="#2b2118" opacity=".85"/><path d="M193 40 h3 M204 40 h3" stroke="#2b2118" stroke-width="1.6" stroke-linecap="round"/><path d="M182 34 q18 -14 36 0 q-4 -16 -18 -16 q-14 0 -18 16z" fill="#fff" stroke="#e2dccf" stroke-width=".8"/><path d="M175 34 q25 -38 50 0" fill="none" stroke="#b5452f" stroke-width="1.4" stroke-dasharray="2.5 2.5"/><path d="M178 27 q22 -10 44 0" fill="none" stroke="#1c1813" stroke-width="4.2" stroke-linecap="round"/><path d="M180 20 q20 -8 40 0" fill="none" stroke="#1c1813" stroke-width="3.4" stroke-linecap="round"/></g>';
-    s+='<g><g transform="translate(0,62)" filter="url(#ds)">';
+    /* العارض: الثوب نفسه بنفس الاختيارات، بدون رأس */
+    s+='<g><g transform="translate(0,0)" filter="url(#ds)">';
   }else{
   s+='<ellipse cx="200" cy="600" rx="130" ry="10" fill="#5a4320" opacity=".18"/>';
   s+='<g class="sway">';
@@ -212,8 +211,8 @@ function thobeReal(D,model){
   else s+='<path d="M170 42 Q200 54 230 42 L237 73 Q200 96 163 73 Z" fill="'+c+'" stroke="'+ln+'" stroke-width="1.4"/><path d="M170 42 Q200 54 230 42 L237 73 Q200 96 163 73 Z" fill="url(#sh)" opacity=".6"/><path d="M196 52 L196 84 M204 52 L204 84" stroke="'+ln+'"/>';
   if(D.emb==="yes"){s+='<g fill="none" stroke="'+embc+'" stroke-width="1.6" stroke-dasharray="1.5 3" stroke-linecap="round"><path d="M187 88 V212 M213 88 V212"/><path d="M162 80 Q200 104 238 80"/></g>';for(let y=96;y<210;y+=14)s+='<path d="M'+(D.placket==="hidden"?213:200)+' '+(y-3)+' l3 3 l-3 3 l-3 -3z" fill="'+embc+'" opacity=".7"/>'}
   s+='</g></g>';
-  if(model)s+='<path d="M150 610 l-6 22 h26 l2 -22z M250 610 l6 22 h-26 l-2 -22z" fill="#3a2c1a"/>';
-  return '<svg viewBox="0 '+(model?"-14 400 660":"0 400 615")+'" role="img" aria-label="'+L("معاينة الثوب","Thobe preview")+'">'+s+'</svg>'}
+  if(model)s+='<path d="M150 548 l-6 22 h26 l2 -22z M250 548 l6 22 h-26 l-2 -22z" fill="#3a2c1a"/>';
+  return '<svg viewBox="0 '+(model?"50 400 530":"0 400 615")+'" role="img" aria-label="'+L("معاينة الثوب","Thobe preview")+'">'+s+'</svg>'}
 
 /* ===== صمّم ===== */
 function rows(st){return [[L("اللون","Colour"),"color"]].concat(GROUPS.filter(g=>shown(g,st)).map(g=>[gt(g,st),g.k]))}
