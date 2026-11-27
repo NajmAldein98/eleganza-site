@@ -1,10 +1,9 @@
 // خادم إضافات إليجانزا — Netlify Functions + Netlify Blobs
-// نشر: ٢٧ نوفمبر ٢٠٢٦
 // المسارات: /api/elg/<action>
 // يستخدم نفس OWNER_CODE ونفس مفتاح التوقيع حق بطاقة الولاء، فدخول المالك واحد للاثنين.
 import type { Config, Context } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
-import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { createHmac, randomBytes, timingSafeEqual, scryptSync } from "node:crypto";
 
 const ALLOWED_ORIGINS = ["https://eleganza-tailor.com", "https://www.eleganza-tailor.com", "https://eleganza-tailor.netlify.app"];
 const STAGES = 6; // تم الاستلام، تجهيز القماش، الخياطة، الفحص، الكي والتغليف، جاهز
@@ -53,9 +52,25 @@ const hkey = (p: string) => createHmac("sha256", SECRET).update(p).digest("hex")
 const str = (v: unknown, n: number) => String(v ?? "").trim().slice(0, n);
 const rid = (n: number) => { const A = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; const b = randomBytes(n); let s = ""; for (const x of b) s += A[x % A.length]; return s; };
 
-type Order = { id: string; cert: string; name: string; phone: string; item: string; fabric: string; tailor: string; stage: number;
+type Order = { id: string; cert: string; file?: string; name: string; phone: string; item: string; fabric: string; tailor: string; stage: number;
   due: string; note: string; created: number; updated: number; done?: number; history: { t: number; stage: number }[]; fails?: number; lockUntil?: number };
 
+type CFile = { file: string; name: string; phone: string; salt?: string; pin?: string; fails?: number; lockUntil?: number; created: number };
+const pinHash = (pin: string, salt: string) => scryptSync(pin, salt, 32).toString("hex");
+// ملف العميل: رقم ثابت لكل جوال، يتولّد أول مرة يتسجّل له طلب
+async function ensureFile(phone: string, name: string): Promise<string> {
+  const s = db(); const ik = "filephone/" + hkey(phone);
+  const have = await s.get(ik); if (have) return have as string;
+  let n = 10001 + (await s.list({ prefix: "file/" })).blobs.length;
+  for (let i = 0; i < 30; i++, n++) {
+    const rec: CFile = { file: String(n), name, phone, created: Date.now() };
+    if ((await s.setJSON("file/" + n, rec, { onlyIfNew: true })).modified) {
+      if ((await s.set(ik, String(n), { onlyIfNew: true })).modified) return String(n);
+      await s.delete("file/" + n); return (await s.get(ik)) as string;
+    }
+  }
+  throw new Error("file");
+}
 async function listJSON<T>(prefix: string): Promise<T[]> {
   const s = db(); const { blobs } = await s.list({ prefix });
   const all = await Promise.all(blobs.map((b) => s.get(b.key, { type: "json" })));
@@ -93,7 +108,9 @@ export default async (req: Request, context: Context) => {
     return json(req, { open: !!cfg.open && (!cfg.deadline || Date.parse(cfg.deadline + "T23:59:59+03:00") > Date.now()), title: cfg.title, total: cfg.total, left, booked, deadline: cfg.deadline });
   }
   if (action === "book") {
-    const phone = normPhone(body.phone); const name = str(body.name, 40);
+    let phone = normPhone(body.phone); let name = str(body.name, 40);
+    const cd = verify(body.token);
+    if (cd && cd.role === "cust") { const f = (await s.get("file/" + cd.file, { type: "json" })) as CFile | null; if (f) { phone = f.phone; name = f.name; } }
     if (name.length < 2) return err(req, "اكتب اسمك");
     if (!phone) return err(req, "رقم الجوال غير صحيح (مثال: 05xxxxxxxx)");
     const { cfg, booked } = await seatsInfo();
@@ -156,6 +173,47 @@ export default async (req: Request, context: Context) => {
     const g: any = /^[A-Z0-9]{8}$/.test(c) ? await s.get("gift/" + c, { type: "json" }) : null;
     return g ? json(req, { code: g.code, from: g.from, to: g.to, occasion: g.occasion, msg: g.msg, count: g.count, status: g.status }) : err(req, "ما لقينا هذي الهدية", 404);
   }
+  /* ===== تطبيق العميل: الدخول برقم الملف وآخر ٤ أرقام من الجوال ===== */
+  if (action === "app-login") {
+    const file = str(body.file, 8).replace(/\D/g, ""); const pass = str(body.pass, 8).replace(/\D/g, "");
+    if (!file || !pass) return err(req, "اكتب رقم الملف وكلمة المرور");
+    const f = (await s.get("file/" + file, { type: "json" })) as CFile | null;
+    if (!f) return err(req, "رقم الملف غير صحيح أو كلمة المرور غلط", 401);
+    if ((f.lockUntil || 0) > Date.now()) return err(req, "محاولات كثيرة، جرّب بعد ربع ساعة", 429);
+    const ok = f.pin && f.salt ? pinHash(pass, f.salt) === f.pin : pass === f.phone.slice(-4);
+    if (!ok) {
+      await update<CFile>("file/" + file, (x) => { x.fails = (x.fails || 0) + 1; if (x.fails >= MAX_FAILS) { x.fails = 0; x.lockUntil = Date.now() + LOCK_MS; } });
+      return err(req, "رقم الملف غير صحيح أو كلمة المرور غلط", 401);
+    }
+    if (f.fails) await update<CFile>("file/" + file, (x) => { x.fails = 0; });
+    return json(req, { token: sign({ role: "cust", file, exp: Date.now() + 180 * 24 * 3600 * 1000 }), name: f.name });
+  }
+  if (action === "app-me" || action === "app-pin") {
+    const d = verify(body.token);
+    if (!d || d.role !== "cust") return err(req, "سجّل دخولك من جديد", 401);
+    const f = (await s.get("file/" + d.file, { type: "json" })) as CFile | null;
+    if (!f) return err(req, "سجّل دخولك من جديد", 401);
+    if (action === "app-pin") {
+      const pin = str(body.pin, 8);
+      if (!/^\d{4,6}$/.test(pin)) return err(req, "الرقم السري من ٤ إلى ٦ أرقام");
+      const salt = randomBytes(12).toString("hex");
+      await update<CFile>("file/" + d.file, (x) => { x.salt = salt; x.pin = pinHash(pin, salt); });
+      return json(req, { ok: true });
+    }
+    const all = await listJSON<Order>("order/");
+    const orders = all.filter((o) => o.phone === f.phone).sort((a, b) => b.created - a.created).map((o) => ({
+      id: o.id, item: o.item, fabric: o.fabric, tailor: o.tailor, stage: o.stage, due: o.due, created: o.created, done: o.done || null,
+      history: o.history.slice(-10), cert: o.stage >= STAGES - 1 ? o.cert : null }));
+    let loyalty = null;
+    try {
+      const ls = loyaltyStore();
+      const cid = await ls.get("phone/" + createHmac("sha256", SECRET).update(f.phone).digest("hex"));
+      const c: any = cid ? await ls.get("card/" + cid, { type: "json" }) : null;
+      if (c) loyalty = { stamps: (c.stamps || []).length, total: 10, discountAt: 5, discountPending: !!c.discountPending, freePending: c.freePending || 0 };
+    } catch {}
+    return json(req, { file: f.file, name: f.name, phone4: f.phone.slice(-4), hasPin: !!f.pin, orders, loyalty });
+  }
+
   if (action === "owner-login") {
     const want = Netlify.env.get("OWNER_CODE") as string;
     const lock: any = (await s.get("owner-lock", { type: "json" })) || { fails: 0, until: 0 };
@@ -175,6 +233,7 @@ export default async (req: Request, context: Context) => {
 
   if (action === "orders") {
     const list = await listJSON<Order>("order/");
+    for (const o of list) if (!o.file) { o.file = await ensureFile(o.phone, o.name); await update<Order>("order/" + o.id, (x) => { x.file = o.file; }); }
     return json(req, { orders: list.sort((a, b) => b.created - a.created).map(({ fails, lockUntil, ...o }) => o) });
   }
   if (action === "order-save") {
@@ -184,9 +243,10 @@ export default async (req: Request, context: Context) => {
     const fields = { name: str(o.name, 40), phone, item: str(o.item, 80), fabric: str(o.fabric, 60), tailor: str(o.tailor, 30), due: str(o.due, 10), note: str(o.note, 200) };
     if (!fields.name || !fields.item) return err(req, "اكتب اسم العميل ووصف الطلب");
     const stage = Math.max(0, Math.min(STAGES - 1, parseInt(o.stage) || 0));
+    const file = await ensureFile(phone, fields.name);
     if (o.id) {
       const r = await update<Order>("order/" + str(o.id, 10), (x) => {
-        Object.assign(x, fields);
+        Object.assign(x, fields); x.file = file;
         if (x.stage !== stage) { x.stage = stage; x.history.push({ t: Date.now(), stage }); if (stage === STAGES - 1 && !x.done) x.done = Date.now(); }
         x.updated = Date.now();
       });
@@ -195,7 +255,7 @@ export default async (req: Request, context: Context) => {
     let n = 1001 + (await s.list({ prefix: "order/" })).blobs.length;
     let order: Order | null = null;
     for (let i = 0; i < 20 && !order; i++, n++) {
-      const cand: Order = { id: String(n), cert: rid(10), ...fields, stage, created: Date.now(), updated: Date.now(), history: [{ t: Date.now(), stage }], ...(stage === STAGES - 1 ? { done: Date.now() } : {}) };
+      const cand: Order = { id: String(n), cert: rid(10), file, ...fields, stage, created: Date.now(), updated: Date.now(), history: [{ t: Date.now(), stage }], ...(stage === STAGES - 1 ? { done: Date.now() } : {}) };
       if ((await s.setJSON("order/" + cand.id, cand, { onlyIfNew: true })).modified) order = cand;
     }
     if (!order) return err(req, "حاول مرة ثانية");

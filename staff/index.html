@@ -164,10 +164,10 @@ function stageOpts(){$("o_stage").innerHTML=STAGES.map((s,i)=>'<option value="'+
 function late(o){if(!o.due||o.stage>=5)return false;return Date.parse(o.due+"T23:59:59+03:00")-Date.now()<36e5*30}
 function custMsg(o){const n=o.name.split(" ")[0];
   if(o.stage>=5)return "هلا "+n+"، ثوبك جاهز في إليغانزا ✨ طلب رقم "+o.id+".\nوهذي شهادة ميلاد ثوبك: "+SITE+"/thobe/?c="+o.cert;
-  return "هلا "+n+"، تم تسجيل طلبك في إليغانزا برقم "+o.id+".\nتقدر تتابع مرحلة ثوبك من هنا: "+SITE+"/#track (رقم الطلب وآخر ٤ أرقام من جوالك).";}
+  return "هلا "+n+"، تم تسجيل طلبك في إليغانزا برقم "+o.id+".\n"+(o.file?"رقم ملفك: "+o.file+"\nتابع ثوبك خطوة بخطوة من تطبيق إليغانزا: "+SITE+"/app/\nادخل برقم ملفك، وكلمة المرور آخر ٤ أرقام من جوالك.":"تقدر تتابع مرحلة ثوبك من هنا: "+SITE+"/#track");}
 function drawOrders(){const q=$("oq").value.trim(),done=$("oDone").checked;
-  const L=O.filter(o=>(done||o.stage<5)&&(!q||[o.id,o.name,o.phone,o.item].join(" ").includes(q))).sort((a,b)=>(late(b)-late(a))||String(a.due||"9").localeCompare(String(b.due||"9")));
-  $("ol").innerHTML=L.length?L.map(o=>'<div class="card o"><div class="h"><span class="id">#'+esc(o.id)+'</span><b>'+esc(o.name)+'</b><span class="mut">'+esc(o.item)+(o.fabric?' · '+esc(o.fabric):'')+'</span></div>'+
+  const L=O.filter(o=>(done||o.stage<5)&&(!q||[o.id,o.name,o.phone,o.item,o.file||""].join(" ").includes(q))).sort((a,b)=>(late(b)-late(a))||String(a.due||"9").localeCompare(String(b.due||"9")));
+  $("ol").innerHTML=L.length?L.map(o=>'<div class="card o"><div class="h"><span class="id">#'+esc(o.id)+'</span><b>'+esc(o.name)+'</b>'+(o.file?'<span class="pill">ملف '+esc(o.file)+'</span>':'')+'<span class="mut">'+esc(o.item)+(o.fabric?' · '+esc(o.fabric):'')+'</span></div>'+
     '<div class="prog">'+STAGES.map((_,i)=>'<i class="'+(i<=o.stage?"on":"")+'"></i>').join("")+'</div>'+
     '<div class="row"><span class="pill '+(o.stage>=5?"ok":"")+'">'+esc(STAGES[o.stage])+'</span>'+(o.due?'<span class="pill '+(late(o)?"late":"")+'">التسليم '+esc(o.due)+'</span>':'')+(o.tailor?'<span class="pill">'+esc(o.tailor)+'</span>':'')+(o.note?'<span class="mut" style="font-size:14px">'+esc(o.note)+'</span>':'')+'</div>'+
     '<div class="row">'+(o.stage<5?'<button class="sm g" data-a="next" data-id="'+o.id+'">انقل إلى: '+esc(STAGES[o.stage+1])+'</button>':'')+'<a class="sm g" target="_blank" rel="noopener" href="'+esc(waTo(o.phone,custMsg(o)))+'">واتساب العميل</a><button class="sm" data-a="qr" data-id="'+o.id+'">ملصق الياقة</button><button class="sm" data-a="edit" data-id="'+o.id+'">تعديل</button><button class="sm r" data-a="del" data-id="'+o.id+'">حذف</button></div></div>').join(""):'<div class="card mut">ما فيه طلبات.</div>'}
