@@ -301,8 +301,9 @@ a.sc:hover .go::after{transform:translateX(-5px)}
 footer{border-top:1px solid var(--line);padding:28px max(5vw,16px);color:var(--mut);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 footer img{height:34px;width:auto}
-.wa-float{position:fixed;bottom:18px;left:18px;z-index:35;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px #0009;transition:transform .3s}
+.wa-float{position:fixed;bottom:18px;left:50%;margin-left:-29px;z-index:35;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px #0009;transition:transform .3s}
 .wa-float:hover{transform:scale(1.08)}
+@media(max-width:600px){.wa-float{bottom:calc(14px + env(safe-area-inset-bottom))}}
 .wa-float svg{width:30px;height:30px}
 /* ظهور تدريجي */
 .rv{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
