@@ -4,6 +4,8 @@ const API=/netlify\.app$|^localhost|^127\./.test(location.hostname)?"/api/elg/":
 const $=id=>document.getElementById(id);
 const E=()=>window.ELG;
 const L=()=>(E()&&E().lang)||"ar";
+const CLIP=["s0","s1","s2","s3","s3","s4"];
+const vtag=(n,lazy)=>'<video src="media/'+n+'.mp4" poster="media/'+n+'.jpg" muted loop playsinline '+(lazy?'preload="none" data-lazy="1"':'autoplay')+'></video>';
 const X={
  ar:{eiK:"مقاعد الموسم",eiSeats:"ثوب باقي",fName:"اسمك",fPhone:"رقم جوالك",eiPcs:"كم ثوب تبغى؟",eiBtn:"احجز مقعدي",
   eiLead:"عدد الثياب اللي نقدر نسلّمها قبل الموسم محدود. احجز مقعدك الحين ونتواصل معك لموعد المقاس.",eiDefTitle:"مقاعد ثياب العيد",eiDone:"تم حجز مقعدك رقم {n}. بنتواصل معك على واتساب لموعد المقاس.",eiFull:"خلصت المقاعد",eiUntil:"الحجز متاح حتى {d}",
@@ -13,7 +15,7 @@ const X={
   a1:["الصيف","الشتاء"],a2:["الدوام والاستخدام اليومي","المناسبات والزواجات"],a3:["مطفي وهادئ","لمعة خفيفة"],a4:["الأبيض","ألوان فاتحة","ألوان غامقة"],
   qzEmpty:"جاوب على الأسئلة وتطلع لك التوصية هنا.",qzPick:"ترشيحنا لك",qzAlt:"خيار ثاني يناسبك: ",qzOrder:"اطلب هذا القماش",qzSee:"شوفه في المكتبة",qzMsg:"السلام عليكم، مستشار القماش رشّح لي: ",qzLeft:"باقي {n} من ٤",
   tkK:"تتبّع ثوبك",tkH:"وين وصل ثوبك؟",tkL:"اكتب رقم طلبك وآخر ٤ أرقام من جوالك، وشوف المرحلة اللي وصلها ثوبك الحين.",tkId:"رقم الطلب",tk4:"آخر ٤ أرقام من جوالك",tkBtn:"تتبّع",tkPh:"رقم الطلب تلقاه في رسالة الواتساب اللي توصلك بعد المقاس.",
-  tkOrder:"طلب رقم {id}",tkDue:"موعد التسليم المتوقع: {d}",tkCert:"شهادة ميلاد ثوبك",tkBy:"الخيّاط: {t}",
+  tkOrder:"طلب رقم {id}",tkDue:"موعد التسليم المتوقع: {d}",tkCert:"شهادة ميلاد ثوبك",tkClip:"لقطة من مرحلة ثوبك الحالية",jcK:"شاهد ثوبك يتصنع",tkBy:"الخيّاط: {t}",
   gfK:"ثوب هدية",gfH:"أهدِ ثوبًا… والمقاس علينا",gfL:"لأبوك، لأخوك، أو لعريس. أنت تختار الهدية، وصاحبها يجينا بس للمقاس واختيار القماش.",gfFrom:"اسمك",gfTo:"اسم المُهدى إليه",gfOcc:"المناسبة",gfCount:"عدد الثياب",gfMsg:"رسالتك على البطاقة",gfBtn:"جهّز بطاقة الهدية",gcFor:"هدية إلى",
   gfNote:"قيمة الهدية تُدفع في المحل أو بالتحويل، ونتواصل معك لتأكيدها.",occ:["رمضان والعيد","زواج","تخرّج","مولود","بدون مناسبة"],gcFrom:"من {n}",gcCount:"{n} ثوب",
   gfReady:"بطاقة الهدية جاهزة",gfCode:"رمز الهدية",gfSend:"أرسل البطاقة للمُهدى إليه",gfShop:"أكّد الهدية مع المحل",gfOpen:"افتح البطاقة",
@@ -31,7 +33,7 @@ const X={
   a1:["Summer","Winter"],a2:["Work and everyday","Occasions and weddings"],a3:["Matte and calm","A subtle sheen"],a4:["White","Light colours","Dark colours"],
   qzEmpty:"Answer the questions and your recommendation appears here.",qzPick:"Our pick for you",qzAlt:"Another good match: ",qzOrder:"Order this fabric",qzSee:"See it in the library",qzMsg:"Hello, the fabric advisor recommended: ",qzLeft:"{n} of 4 left",
   tkK:"Track your thobe",tkH:"Where is your thobe?",tkL:"Enter your order number and the last 4 digits of your mobile to see which stage your thobe has reached.",tkId:"Order number",tk4:"Last 4 digits of your mobile",tkBtn:"Track",tkPh:"Your order number is in the WhatsApp message you receive after your measurements.",
-  tkOrder:"Order no. {id}",tkDue:"Expected delivery: {d}",tkCert:"Your thobe's birth certificate",tkBy:"Tailor: {t}",
+  tkOrder:"Order no. {id}",tkDue:"Expected delivery: {d}",tkCert:"Your thobe's birth certificate",tkClip:"A glimpse of your thobe's current stage",jcK:"Watch your thobe being made",tkBy:"Tailor: {t}",
   gfK:"Gift a thobe",gfH:"Gift a thobe… we'll handle the fitting",gfL:"For your father, your brother or a groom. You choose the gift; they just visit us for measurements and fabric.",gfFrom:"Your name",gfTo:"Recipient's name",gfOcc:"Occasion",gfCount:"Number of thobes",gfMsg:"Your message on the card",gfBtn:"Prepare the gift card",gcFor:"A gift for",
   gfNote:"The gift is paid in store or by transfer; we'll contact you to confirm it.",occ:["Ramadan & Eid","Wedding","Graduation","Newborn","Just because"],gcFrom:"From {n}",gcCount:"{n} thobe(s)",
   gfReady:"Your gift card is ready",gfCode:"Gift code",gfSend:"Send the card to the recipient",gfShop:"Confirm the gift with the shop",gfOpen:"Open the card",
@@ -95,6 +97,7 @@ let lastTrack=null;
 function drawTrack(o){const st=E().lines(E().C.journey).map(r=>r[0]);const stages=st.length>=6?st.slice(0,6):st;
   $("tkOut").innerHTML='<div class="tbox"><div class="thead"><b>'+esc(x("tkOrder",{id:num(o.id)}))+'</b><small>'+esc(o.item)+(o.due?' · '+esc(x("tkDue",{d:fmtDate(o.due)})):'')+'</small></div><ol class="tline">'+
    stages.map((s,i)=>{const c=i<o.stage||(o.stage===stages.length-1&&i===o.stage)?"ok":i===o.stage?"now":"";return '<li class="'+c+'"><span class="d">'+(c==="ok"?"✓":num(i+1))+'</span><span><b>'+esc(s)+'</b>'+(i===o.stage&&o.tailor?'<small>'+esc(x("tkBy",{t:o.tailor}))+'</small>':'')+'</span></li>'}).join("")+'</ol></div>'+
+   '<div class="tvid">'+vtag(CLIP[Math.min(o.stage,5)],false)+'<span>'+x("tkClip")+'</span></div>'+
    (o.cert?'<div class="btns" style="margin-top:16px"><a class="btn p" href="thobe/?c='+encodeURIComponent(o.cert)+'">'+x("tkCert")+'</a></div>':'')}
 $("tkForm").addEventListener("submit",async e=>{e.preventDefault();msg("tkMsg",x("wait"));
   try{const o=await api("track",{id:$("tkId").value.replace(/\D/g,""),last4:$("tk4").value.replace(/\D/g,"")});lastTrack=o;msg("tkMsg","");drawTrack(o)}catch(er){msg("tkMsg",er.message,true)}});
@@ -137,10 +140,20 @@ $("pfForm").addEventListener("submit",async e=>{e.preventDefault();const p=okPho
   keys.forEach((k,i)=>{answers[k]=(PF["p"+(i+1)]||[]).map(j=>X.ar["o"+(i+1)][j])});
   msg("pfMsg",x("wait"));try{await api("prefs",{name:$("pfName").value,phone:p,answers});msg("pfMsg",x("pfDone"))}catch(er){msg("pfMsg",er.message,true)}});
 
+/* ===== مقاطع رحلة الثوب ===== */
+let jio=null;
+function jclips(){const jr=document.querySelector("#journey .jr");if(!jr)return;let box=$("jclips");
+  if(!box){box=document.createElement("div");box.id="jclips";box.className="jclips";jr.after(box)}
+  const st=E().lines(E().C.journey).map(r=>r[0]).slice(0,6);
+  box.innerHTML=st.map((t,i)=>'<div class="jclip">'+vtag(CLIP[i]||"s4",true)+'<span><b>'+num(i+1)+'</b>'+esc(t)+'</span></div>').join("");
+  if(!("IntersectionObserver" in window)){box.querySelectorAll("video").forEach(v=>{v.preload="auto";v.play().catch(()=>{})});return}
+  if(jio)jio.disconnect();jio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){v.play().catch(()=>{})}else v.pause()}),{threshold:.35});
+  box.querySelectorAll("video").forEach(v=>jio.observe(v))}
+
 /* ===== اللغة والرسم ===== */
 function texts(){document.querySelectorAll("[data-x]").forEach(el=>{const v=x(el.dataset.x);if(typeof v==="string")el.textContent=v})}
 let curLang=null;
-function all(){if(!E())return;const lg=L();if(lg!==curLang){curLang=lg;texts();quizQs();prefQs();giftForm();drawSeats();if(lastTrack)drawTrack(lastTrack)}stories();quizRes();E().watch()}
+function all(){if(!E())return;const lg=L();if(lg!==curLang){curLang=lg;texts();quizQs();prefQs();giftForm();drawSeats();if(lastTrack)drawTrack(lastTrack)}stories();quizRes();jclips();E().watch()}
 window.addEventListener("elg:render",all);
 all();
 if(location.hash&&["#track","#gift","#prefs","#quiz","#stories","#eid"].includes(location.hash))setTimeout(()=>{const t=document.querySelector(location.hash);if(t&&!t.hidden)t.scrollIntoView()},600);

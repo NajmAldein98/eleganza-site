@@ -1,5 +1,5 @@
 [build]
-  command = "rm -rf dist && mkdir dist && cp -r index.html extras.js extras.css img card thobe gift staff .nojekyll dist/"
+  command = "rm -rf dist && mkdir dist && cp -r index.html extras.js extras.css img media card thobe gift staff .nojekyll dist/"
   publish = "dist"
   # Netlify يُستخدم لخادم بطاقة الولاء فقط (الموقع نفسه على GitHub Pages).
   # تخطَّ النشر إذا ما تغيّر الخادم، عشان ما تنصرف نقاط Netlify على كل تعديل في الموقع.
