@@ -49,6 +49,7 @@ html[dir=rtl] .glidebar{transform-origin:100% 50%}
 .sc .shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,#ffe7a855 48%,transparent 66%);transform:translateX(-120%);animation:shine 1.1s ease-out forwards;pointer-events:none}
 @keyframes shine{to{transform:translateX(120%)}}
 .spark{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(#fff3c4,#d6a73a);pointer-events:none;z-index:2}
+.socT span{display:none}.hsoc .all{display:none}
 .socT{display:none;width:42px;height:42px;border-radius:50%;border:1px solid #b69a6666;background:#ffffff08;place-items:center;cursor:pointer;padding:0;position:relative}
 .socT svg{width:20px;height:20px;fill:none;stroke:var(--g2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s cubic-bezier(.3,.7,.2,1.4)}
 .socT[aria-expanded=true] svg{transform:rotate(180deg)}
@@ -56,7 +57,15 @@ html[dir=rtl] .glidebar{transform-origin:100% 50%}
 @keyframes hint{0%{opacity:.9;transform:scale(.9)}100%{opacity:0;transform:scale(1.35)}}
 @keyframes popin{from{opacity:0;transform:translateY(-12px) scale(.6)}to{opacity:1;transform:none}}
 @media(max-width:600px){
-.socT{display:grid}
+.socT{display:inline-flex;align-items:center;gap:6px;width:auto;height:42px;padding:0 14px 0 12px;border-radius:999px;background:var(--g);border-color:var(--g);color:#111}
+.socT span{display:inline;font:700 14px "IBM Plex Sans Arabic",Tahoma,sans-serif;white-space:nowrap}
+.socT svg{stroke:#111;width:18px;height:18px}
+.socT::after{border-radius:999px}
+#hdrC{display:none!important}
+.hsoc button{width:40px;height:40px}.hsoc button svg{width:18px;height:18px}
+.hsoc{gap:8px!important;flex-wrap:wrap;align-items:center;padding-inline:12px!important}
+.hsoc .all{display:inline-flex;width:auto!important;height:40px;padding:0 14px;border-radius:999px;background:transparent;border:1px solid var(--g);color:var(--g2);font:700 14px "IBM Plex Sans Arabic",Tahoma,sans-serif;align-items:center;gap:6px}
+.hsoc .all svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}
 .hact{gap:8px}#hdrC{padding:0 14px!important;font-size:14px!important}
 .hsoc{display:flex;position:absolute;top:100%;inset-inline:0;justify-content:center;gap:14px;padding:16px 16px 18px;background:#111111f5;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid #b69a6640;box-shadow:0 18px 30px #0008;opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .3s,transform .4s cubic-bezier(.3,.7,.2,1),visibility .3s}
 .hsoc.open{opacity:1;visibility:visible;transform:none}
@@ -417,7 +426,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
     <a class="logo" href="#top" aria-label="إليغانزا للخياطة"><span class="gw"><img src="img/logo-crown.png" alt="إليغانزا"><i class="gem" style="left:78.9%;top:23.3%;--gs:15%;--d:0s"></i></span></a>
     <nav aria-label="أقسام الموقع"><a href="#loyalty" data-t="n8">بطاقة الولاء</a><a href="app/" target="_blank" rel="noopener" data-t="n12">التطبيق</a><a href="#offers" data-t="n2">العروض</a><a href="#stories" data-t="n9">قصص إليغانزا</a><a href="#story" data-t="n3">قصتنا</a><a href="#fabrics" data-t="n4">الأقمشة</a><a href="#track" data-t="n10">تتبّع ثوبك</a><a href="#gift" data-t="n11">ثوب هدية</a><a href="#faq" data-t="n6">أسئلة</a><a href="#contact" data-t="n7">تواصل</a></nav>
     <div class="hsoc" id="hsoc"></div>
-    <div class="hact"><button class="socT" id="socT" type="button" aria-expanded="false" aria-controls="hsoc" aria-label="التواصل الاجتماعي"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><button class="lang" id="langBtn" type="button" aria-label="Change language"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9zM4.6 7.5h14.8M4.6 16.5h14.8"/></svg><span id="langLbl">English</span></button>
+    <div class="hact"><button class="socT" id="socT" type="button" aria-expanded="false" aria-controls="hsoc" aria-label="التواصل الاجتماعي"><span data-t="socL">التواصل الاجتماعي</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><button class="lang" id="langBtn" type="button" aria-label="Change language"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 4 5.6 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.6-4-9s1.4-6.4 4-9zM4.6 7.5h14.8M4.6 16.5h14.8"/></svg><span id="langLbl">English</span></button>
     <a class="btn p" id="hdrC" href="#contact" data-t="hdrC" style="min-height:42px;padding:0 18px;font-size:15px">تواصل معنا</a></div>
   </div>
 </header>
@@ -812,7 +821,7 @@ const T={
   pFrom:"السعر التقديري يبدأ من",pCur:"ريال",pNote:"السعر النهائي يتحدد حسب القماش اللي تختاره في المحل.",
   shade:"درجة اللون",texture:"الملمس",season:"الموسم",features:"المميزات",care:"العناية",fabric:"القماش",compare:"قارن",cmpH:"مقارنة بين قماشين",cmpPick:"اختر قماش ثاني للمقارنة.",noFab:"لا توجد أقمشة في هذا الموسم بعد.",
   days:"يوم",hrs:"ساعة",mins:"دقيقة",secs:"ثانية",wa:"واتساب",ig:"إنستقرام",map:"موقعنا على قوقل",mapSub:"افتح الخريطة",sc:"سناب شات",tt:"تيك توك",go:"اضغط هنا",soon:"قريبًا",
-  hi:"السلام عليكم، ",mine:"هذي اختياراتي لثوب من إليغانزا",againMsg:"أبغى أعيد تفصيل نفس الثوب بهذي التفاصيل",ref:"رقم القياس/الاسم: ",book:"السلام عليكم، أبغى أحجز موعد قياس في إليغانزا",fabMsg:"السلام عليكم، أبغى أفصّل ثوب من قماش: ",langBtn:"English",seasons:["صيفي","شتوي"]},
+  hi:"السلام عليكم، ",mine:"هذي اختياراتي لثوب من إليغانزا",againMsg:"أبغى أعيد تفصيل نفس الثوب بهذي التفاصيل",ref:"رقم القياس/الاسم: ",book:"السلام عليكم، أبغى أحجز موعد قياس في إليغانزا",fabMsg:"السلام عليكم، أبغى أفصّل ثوب من قماش: ",langBtn:"English",socL:"التواصل الاجتماعي",allS:"الكل",seasons:["صيفي","شتوي"]},
  en:{hb3:"Eleganza app",n12:"App",n9:"Eleganza stories",n10:"Track your thobe",n11:"Gift a thobe",n8:"Loyalty card",lyK:"Loyalty card",lyH:"Every thobe is a stamp. The tenth is on us.",lyL:"A digital card saved on your phone that collects a stamp for every thobe we tailor for you.",ly1:"Register with your name or anonymously, with your own secret code",ly2:"5th stamp: 50% off your sixth thobe",ly3:"10th stamp: your eleventh thobe is free",lyB:"Get your card now",lyB2:"Open my card",lyDisc:"50% off",lyCard:"Loyalty card · Tailoring",lyWin:"Congratulations! You won",lyWin2:"Your next thobe is free, a gift from Eleganza",lyTap:"Tap the card and start collecting stamps",skip:"Skip",snd:"Sound on",mtH:"We'll be back soon",mtWa:"Message us on WhatsApp",n1:"Design",n2:"Offers",n3:"Our story",n4:"Fabrics",n5:"Order journey",n6:"FAQ",n7:"Contact",hdrC:"Contact us",hb1:"Explore our collection",hb2:"Design your thobe",
   ofK:"Offers & announcements",ofH:"Limited-time offers",oeH:"Exclusive offers… for a limited time",oeP:"Discounts and gifts for a short time only. See the current offers before the clock runs out.",oeB:"View offers",
   mkK:"Design your own thobe",mkH:"Choose your details… and see them live",mkL:"Once we have your measurements, pick the colour and details you like, then send us your order card in one tap.",orH:"Your order card",mrefL:"Measurement number or name (if any)",send:"Send my choices on WhatsApp",save:"Save to my wardrobe",saved:"Saved ✓",mkN:"Embroidery and the final fabric are confirmed with you in the shop. “My wardrobe” is saved on your device so you can come back anytime.",
@@ -825,7 +834,7 @@ const T={
   pFrom:"Estimated price from",pCur:"SAR",pNote:"The final price depends on the fabric you choose in the shop.",
   shade:"Shade",texture:"Texture",season:"Season",features:"Features",care:"Care",fabric:"Fabric",compare:"Compare",cmpH:"Compare two fabrics",cmpPick:"Pick a second fabric to compare.",noFab:"No fabrics for this season yet.",
   days:"days",hrs:"hours",mins:"min",secs:"sec",wa:"WhatsApp",ig:"Instagram",map:"Find us on Google",mapSub:"Open the map",sc:"Snapchat",tt:"TikTok",go:"Tap here",soon:"Coming soon",
-  hi:"Hello, ",mine:"here are my choices for an Eleganza thobe",againMsg:"I'd like to re-tailor the same thobe with these details",ref:"Measurement number/name: ",book:"Hello, I'd like to book a measurement appointment at Eleganza",fabMsg:"Hello, I'd like a thobe tailored from this fabric: ",langBtn:"العربية",seasons:["Summer","Winter"]}
+  hi:"Hello, ",mine:"here are my choices for an Eleganza thobe",againMsg:"I'd like to re-tailor the same thobe with these details",ref:"Measurement number/name: ",book:"Hello, I'd like to book a measurement appointment at Eleganza",fabMsg:"Hello, I'd like a thobe tailored from this fabric: ",langBtn:"العربية",socL:"Social media",allS:"All",seasons:["Summer","Winter"]}
 };
 let lang="ar";try{const q=localStorage.getItem("elg_lang");if(q==="en")lang="en"}catch(e){}
 const t=k=>T[lang][k]??T.ar[k]??"";
@@ -1044,7 +1053,7 @@ const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const SOCC={wa:"#25d366",ig:"#ee2a7b",map:"#ea4335",sc:"#fffc00",tt:"#25f4ee"};
 function headerSoc(){
   const ks=[["wa",t("wa")],["ig",t("ig")],["map",t("map")],["sc",t("sc")],["tt",t("tt")]];
-  $("hsoc").innerHTML=ks.map(([k,n])=>'<button type="button" data-soc="'+k+'" style="--c:'+SOCC[k]+'" aria-label="'+esc(n)+'" title="'+esc(n)+'">'+SOC[k][1]+'</button>').join("");
+  $("hsoc").innerHTML=ks.map(([k,n])=>'<button type="button" data-soc="'+k+'" style="--c:'+SOCC[k]+'" aria-label="'+esc(n)+'" title="'+esc(n)+'">'+SOC[k][1]+'</button>').join("")+'<button type="button" class="all" data-all="1"><span>'+t("allS")+'</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>';
 }
 const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
 let gliding=false;
@@ -1066,6 +1075,7 @@ socT.addEventListener("click",e=>{e.stopPropagation();setSoc(!$("hsoc").classLis
 document.addEventListener("click",e=>{if(!e.target.closest("#hsoc,#socT"))setSoc(false)});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")setSoc(false)});
 addEventListener("scroll",()=>{if(!gliding&&$("hsoc").classList.contains("open")&&scrollY>40)setSoc(false)},{passive:true});
+$("hsoc").addEventListener("click",e=>{if(e.target.closest("[data-all]")){setSoc(false);goContact()}});
 $("hsoc").addEventListener("click",async e=>{
   const b=e.target.closest("[data-soc]");if(!b||gliding)return;const k=b.dataset.soc;
   const rip=document.createElement("span");rip.className="rip";b.appendChild(rip);setTimeout(()=>rip.remove(),700);
@@ -1089,10 +1099,11 @@ $("hsoc").addEventListener("click",async e=>{
   const fo=fl.animate([{opacity:1,transform:last},{opacity:0,transform:last+" scale(1.8)"}],{duration:350,fill:"forwards"});fo.onfinish=()=>fl.remove();
   bar.remove();spotlight(k);gliding=false;
 });
-$("hdrC").addEventListener("click",async e=>{if(reduce||gliding)return;e.preventDefault();gliding=true;const tg=$("contact").getBoundingClientRect().top+scrollY-70;
+$("hdrC").addEventListener("click",e=>{if(reduce||gliding)return;e.preventDefault();goContact()});
+async function goContact(){if(gliding)return;if(reduce){$("contact").scrollIntoView();return}gliding=true;const tg=$("contact").getBoundingClientRect().top+scrollY-70;
   const bar=document.createElement("div");bar.className="glidebar";document.body.appendChild(bar);
   await glideTo(tg,1100,(p,ee)=>{bar.style.transform="scaleX("+ee.toFixed(3)+")"});bar.remove();gliding=false;
-  const cards=[...$("soc").querySelectorAll(".sc")];cards.forEach((c,i)=>{c.classList.add("in");setTimeout(()=>{const sh=document.createElement("span");sh.className="shine";c.appendChild(sh);setTimeout(()=>sh.remove(),1200)},i*120)})});
+  const cards=[...$("soc").querySelectorAll(".sc")];cards.forEach((c,i)=>{c.classList.add("in");setTimeout(()=>{const sh=document.createElement("span");sh.className="shine";c.appendChild(sh);setTimeout(()=>sh.remove(),1200)},i*120)})}
 
 /* رحلة الطلب والسياسة */
 const JI=['<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>','<path d="M3 6h18v12H3zM3 10h18M3 14h18"/>','<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5 20 16M8.5 16.5 20 8"/>','<circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5M8 11l2 2 4-4"/>','<path d="M4 16h16l-2-6H6zM12 10V5a2 2 0 1 1 2 2"/>','<path d="M20 7L9 18l-5-5"/>'];
