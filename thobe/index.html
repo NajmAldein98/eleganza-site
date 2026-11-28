@@ -56,7 +56,7 @@ const c=new URLSearchParams(location.search).get("c")||"";
     const d=await r.json();if(!r.ok)throw new Error(d.error||"تعذّر الاتصال");
     $("t").textContent=d.item;
     const date=new Date(d.date).toLocaleDateString("ar-SA-u-ca-islamic",{day:"numeric",month:"long",year:"numeric"});
-    const rows=[["القماش",d.fabric],["خاطه",d.tailor],["تاريخ الميلاد",date],["رقم الطلب",num(d.id)],["العناية","اغسله بماء بارد، وكوِه على حرارة متوسطة من الداخل"]].filter(r=>r[1]);
+    const rows=[["القماش",d.fabric],["تاريخ الميلاد",date],["رقم الطلب",num(d.id)],["العناية","اغسله بماء بارد، وكوِه على حرارة متوسطة من الداخل"]].filter(r=>r[1]);
     const msg="السلام عليكم، أبغى أفصّل ثوب مثل ثوبي رقم "+d.id+" ("+d.item+(d.fabric?"، "+d.fabric:"")+")";
     $("body").innerHTML='<dl>'+rows.map(([a,b])=>'<dt>'+a+'</dt><dd>'+esc(b)+'</dd>').join("")+'</dl><div class="btns"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/'+WA+'?text='+encodeURIComponent(msg)+'">فصّل لي مثله</a><a class="btn s" href="/#stories">قصص إليجانزا</a></div><div class="seal">صُنع بعناية في إليغانزا — جدة</div>';
   }catch(e){$("t").textContent="ما لقينا هذا الثوب";$("body").innerHTML='<p class="mut">تأكد من الرمز، أو تواصل معنا.</p><div class="btns"><a class="btn s" href="/">الموقع</a></div>'}

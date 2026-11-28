@@ -24,7 +24,7 @@ const X={
   p1:"القماش اللي تحبه",p2:"الطابع اللي يشبهك",p3:"الألوان اللي تميل لها",p4:"تحب الثوب يكون",p5:"وش أكثر مناسبة تفصّل لها؟",p6:"وش يهمك من أخبارنا؟",
   o1:["خفيف","ثقيل","الاثنين"],o2:["رسمي","شبابي","الاثنين"],o3:["الأبيض","ألوان فاتحة","ألوان غامقة"],o4:["واسع ومريح","ضابط على الجسم"],o5:["الدوام اليومي","رمضان والعيد","الزواجات والمناسبات"],o6:["التشكيلات الجديدة","العروض والخصومات","حلقات القصص الجديدة"],
   multi:"تقدر تختار أكثر من واحد",pfCount:"جاوبت {n} من ٦",pfNeed:"جاوب على سؤال واحد على الأقل",pfDone:"انحفظ ذوقك، شكرًا لك. بنرسل لك اللي يناسبك بس.",
-  badPhone:"رقم الجوال غير صحيح (مثال: 05xxxxxxxx)",net:"تعذّر الاتصال، جرّب مرة ثانية",wait:"لحظة…"},
+  badPhone:"رقم الجوال غير صحيح. السعودي يبدأ بـ 05، وغير السعودي اكتبه مع مفتاح الدولة مثل +971",net:"تعذّر الاتصال، جرّب مرة ثانية",wait:"لحظة…"},
  en:{eiK:"Season seats",eiSeats:"thobes left",fName:"Your name",fPhone:"Your mobile",eiPcs:"How many thobes?",eiBtn:"Book my seat",
   eiLead:"We can only deliver a limited number of thobes before the season. Book your seat now and we'll contact you for your measurement appointment.",eiDefTitle:"Eid thobe seats",eiDone:"Seat no. {n} is yours. We'll message you on WhatsApp to set your measurement appointment.",eiFull:"All seats are taken",eiUntil:"Booking open until {d}",
   soK:"Eleganza stories",soH:"Short stories… each with an ending you won't expect",soL:"A series of filmed tales from the world of Eleganza. Watch them in order — new episodes keep coming.",ep:"Episode",soon:"Coming soon",watch:"Watch episode",
@@ -42,11 +42,14 @@ const X={
   p1:"Fabric you like",p2:"Your style",p3:"Colours you lean to",p4:"You like your thobe",p5:"Your most common occasion",p6:"What news interests you?",
   o1:["Light","Heavy","Both"],o2:["Formal","Youthful","Both"],o3:["White","Light colours","Dark colours"],o4:["Loose and comfortable","Fitted"],o5:["Daily work","Ramadan & Eid","Weddings & occasions"],o6:["New collections","Offers & discounts","New story episodes"],
   multi:"You can pick more than one",pfCount:"{n} of 6 answered",pfNeed:"Answer at least one question",pfDone:"Your taste is saved — thank you. We'll only send what suits you.",
-  badPhone:"Invalid mobile number (e.g. 05xxxxxxxx)",net:"Connection failed, please try again",wait:"One moment…"}};
+  badPhone:"Invalid mobile number. Saudi numbers start with 05; other numbers need the country code, e.g. +971…",net:"Connection failed, please try again",wait:"One moment…"}};
 const x=(k,v)=>{let s=(X[L()]||X.ar)[k];if(s==null)s=X.ar[k];if(typeof s==="string"&&v)for(const n in v)s=s.split("{"+n+"}").join(v[n]);return s};
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const num=n=>L()==="ar"?String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]):String(n);
-const okPhone=p=>{let d=String(p||"").replace(/\D/g,"");if(d.startsWith("966"))d="0"+d.slice(3);if(d.startsWith("5"))d="0"+d;return /^05\d{8}$/.test(d)?d:null};
+const okPhone=p=>{const raw=String(p||"").trim();let d=raw.replace(/\D/g,"");const intl=raw.startsWith("+")||d.startsWith("00");if(d.startsWith("00"))d=d.slice(2);
+  if(intl||d.startsWith("966")){if(/^9665\d{8}$/.test(d))return "0"+d.slice(3);if(!intl)return null;return /^[1-9]\d{7,14}$/.test(d)?"+"+d:null}
+  if(d.startsWith("5")&&d.length===9)d="0"+d;return /^05\d{8}$/.test(d)?d:null};
+const CAPS=()=>L()==="en"?["Fabric is collected and washed","Fabric is ironed and cut"]:["رفع القماش وغسله","كوي وقص القماش"];
 const wa=m=>E()?E().wa(m):"#";
 const fmtDate=d=>{try{return new Date(d.length===10?d+"T12:00:00+03:00":d).toLocaleDateString(L()==="ar"?"ar-SA-u-ca-gregory":"en-GB",{day:"numeric",month:"long"})}catch(e){return d}};
 async function api(a,body){let r;try{r=await fetch(API+a,{method:body?"POST":"GET",headers:{"content-type":"application/json"},body:body?JSON.stringify(body):undefined})}catch(e){throw new Error(x("net"))}
@@ -94,10 +97,10 @@ function quizRes(){const box=$("qzRes");const done=[1,2,3,4].filter(n=>(QZ["z"+n
 
 /* ===== تتبّع الثوب ===== */
 let lastTrack=null;
-function drawTrack(o){const st=E().lines(E().C.journey).map(r=>r[0]);const stages=st.length>=6?st.slice(0,6):st;
+function drawTrack(o){const jr=E().lines(E().C.journey).slice(0,6);const stages=jr.map(r=>r[0]);const cap=CAPS()[Math.min(o.stage,5)];
   $("tkOut").innerHTML='<div class="tbox"><div class="thead"><b>'+esc(x("tkOrder",{id:num(o.id)}))+'</b><small>'+esc(o.item)+(o.due?' · '+esc(x("tkDue",{d:fmtDate(o.due)})):'')+'</small></div><ol class="tline">'+
-   stages.map((s,i)=>{const c=i<o.stage||(o.stage===stages.length-1&&i===o.stage)?"ok":i===o.stage?"now":"";return '<li class="'+c+'"><span class="d">'+(c==="ok"?"✓":num(i+1))+'</span><span><b>'+esc(s)+'</b>'+(i===o.stage&&o.tailor?'<small>'+esc(x("tkBy",{t:o.tailor}))+'</small>':'')+'</span></li>'}).join("")+'</ol></div>'+
-   '<div class="tvid">'+vtag(CLIP[Math.min(o.stage,5)],false)+'<span>'+x("tkClip")+'</span></div>'+
+   stages.map((s,i)=>{const c=i<o.stage||(o.stage===stages.length-1&&i===o.stage)?"ok":i===o.stage?"now":"";return '<li class="'+c+'"><span class="d">'+(c==="ok"?"✓":num(i+1))+'</span><span><b>'+esc(s)+'</b>'+(jr[i]&&jr[i][1]?'<small>'+esc(jr[i][1])+'</small>':'')+'</span></li>'}).join("")+'</ol></div>'+
+   '<div class="tvid">'+vtag(CLIP[Math.min(o.stage,5)],false)+(cap?'<em class="jcap">'+esc(cap)+'</em>':'')+'<span>'+esc(stages[Math.min(o.stage,5)]||x("tkClip"))+'</span></div>'+
    (o.cert?'<div class="btns" style="margin-top:16px"><a class="btn p" href="thobe/?c='+encodeURIComponent(o.cert)+'">'+x("tkCert")+'</a></div>':'')}
 $("tkForm").addEventListener("submit",async e=>{e.preventDefault();msg("tkMsg",x("wait"));
   try{const o=await api("track",{id:$("tkId").value.replace(/\D/g,""),last4:$("tk4").value.replace(/\D/g,"")});lastTrack=o;msg("tkMsg","");drawTrack(o)}catch(er){msg("tkMsg",er.message,true)}});
@@ -145,7 +148,7 @@ let jio=null;
 function jclips(){const jr=document.querySelector("#journey .jr");if(!jr)return;let box=$("jclips");
   if(!box){box=document.createElement("div");box.id="jclips";box.className="jclips";jr.after(box)}
   const st=E().lines(E().C.journey).map(r=>r[0]).slice(0,6);
-  const CAP=L()==="en"?["Fabric is collected and washed","Fabric is ironed and cut"]:["رفع القماش وغسله","كوي وقص القماش"];
+  const CAP=CAPS();
   box.innerHTML=st.map((t,i)=>'<div class="jclip">'+vtag(CLIP[i]||"s4",true)+(CAP[i]?'<em class="jcap">'+esc(CAP[i])+'</em>':'')+'<span><b>'+num(i+1)+'</b>'+esc(t)+'</span></div>').join("");
   if(!("IntersectionObserver" in window)){box.querySelectorAll("video").forEach(v=>{v.preload="auto";v.play().catch(()=>{})});return}
   if(jio)jio.disconnect();jio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){v.play().catch(()=>{})}else v.pause()}),{threshold:.35});

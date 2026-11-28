@@ -67,7 +67,7 @@ const tr = (k, ...a) => { const v = I18N[LANG][k] ?? I18N.ar[k] ?? ''; return ty
 // ترجمة رسائل الخادم وسجل البطاقة للإنجليزي
 const SERVER_EN = {
   'الخادم غير مُعد بعد': 'The server isn’t set up yet',
-  'رقم الجوال غير صحيح (مثال: 05xxxxxxxx)': 'Invalid mobile number (e.g. 05xxxxxxxx)',
+  'رقم الجوال غير صحيح. السعودي يبدأ بـ 05، وغير السعودي اكتبه مع مفتاح الدولة مثل +971': 'Invalid mobile number. Saudi numbers start with 05; other numbers need the country code, e.g. +971…',
   'الرمز لازم يكون ٤ أرقام': 'The code must be 4 digits',
   'اكتب اسمك أو اختر «مجهول»': 'Enter your name or choose “Anonymous”',
   'هذا الرقم مسجّل من قبل، افتح بطاقتك من القائمة برمزك': 'This number is already registered, open your card from the list with your code',

@@ -408,7 +408,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
 @keyframes gemGlow{0%,56%,100%{opacity:.3}70%{opacity:1}86%{opacity:.4}}
 @media(prefers-reduced-motion:reduce){.gem::before{animation:none;opacity:.6}.gem::after{animation:none;opacity:0}}
 </style>
-<link rel="stylesheet" href="extras.css?v=7">
+<link rel="stylesheet" href="extras.css?v=8">
 </head>
 <body>
 <div id="intro"><video id="iv" playsinline muted preload="none" aria-hidden="true"></video><div class="ibtns"><button id="snd" type="button" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span data-t="snd">تشغيل الصوت</span></button><button id="skip" type="button" data-t="skip">تخطي</button></div></div>
@@ -496,7 +496,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
       <div>
         <p class="lead rv" id="eiLead" style="margin-top:0"></p>
         <form class="xform rv" id="eiForm" style="margin-top:20px">
-          <div class="xrow"><label><span data-x="fName">اسمك</span><input class="xin" id="eiName" autocomplete="name" required></label><label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="eiPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx" autocomplete="tel" required></label></div>
+          <div class="xrow"><label><span data-x="fName">اسمك</span><input class="xin" id="eiName" autocomplete="name" required></label><label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="eiPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx / +971…" autocomplete="tel" required></label></div>
           <label><span data-x="eiPcs">كم ثوب تبغى؟</span><input class="xin" id="eiPcs" type="number" min="1" max="20" value="1" dir="ltr" style="max-width:140px"></label>
           <div class="btns"><button class="btn p" type="submit" data-x="eiBtn">احجز مقعدي</button></div>
           <div class="xmsg" id="eiMsg" role="status"></div>
@@ -634,7 +634,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
     <p class="lead rv" data-x="gfL">لأبوك، لأخوك، أو لعريس. أنت تختار الهدية، وصاحبها يجينا بس للمقاس واختيار القماش.</p>
     <div class="gift">
       <form class="xform rv" id="gfForm">
-        <div class="xrow"><label><span data-x="gfFrom">اسمك</span><input class="xin" id="gfFrom" autocomplete="name" required></label><label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="gfPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx" autocomplete="tel" required></label></div>
+        <div class="xrow"><label><span data-x="gfFrom">اسمك</span><input class="xin" id="gfFrom" autocomplete="name" required></label><label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="gfPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx / +971…" autocomplete="tel" required></label></div>
         <label><span data-x="gfTo">اسم المُهدى إليه</span><input class="xin" id="gfTo" required></label>
         <div><span data-x="gfOcc" style="font-weight:500;font-size:15px">المناسبة</span><div class="xchips" id="gfOcc" style="margin-top:8px"></div></div>
         <label><span data-x="gfCount">عدد الثياب</span><input class="xin" id="gfCount" type="number" min="1" max="10" value="1" dir="ltr" style="max-width:140px"></label>
@@ -669,7 +669,7 @@ nav{display:none}.cfg,.story-grid{grid-template-columns:minmax(0,1fr)}.stage{pos
       <form class="pside xform rv" id="pfForm">
         <div class="pnum" id="pfCount"></div>
         <label><span data-x="pfName">اسمك (اختياري)</span><input class="xin" id="pfName" autocomplete="name"></label>
-        <label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="pfPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx" autocomplete="tel" required></label>
+        <label><span data-x="fPhone">رقم جوالك</span><input class="xin" id="pfPhone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx / +971…" autocomplete="tel" required></label>
         <label class="xchk"><input type="checkbox" id="pfOk" required><span data-x="pfOk">أوافق توصلني أخبار إليغانزا على واتساب، وأقدر أوقفها متى ما بغيت.</span></label>
         <button class="btn p" type="submit" data-x="pfBtn">احفظ ذوقي</button>
         <div class="xmsg" id="pfMsg" role="status"></div>
@@ -1230,7 +1230,7 @@ $("reset").addEventListener("click",()=>{CD={...DEF};fillForm();$("msg").textCon
   document.getElementById("langBtn")?.addEventListener("click",()=>setTimeout(()=>{labels();set(n)},0));
 })();
 </script>
-<script src="extras.js?v=7" defer></script>
+<script src="extras.js?v=8" defer></script>
 <!-- مساعد إليغانزا (MyChatBot) -->
 <link rel="stylesheet" href="https://storage.googleapis.com/mychatbot-widget-assets/v1/style.css" />
 <script src="https://storage.googleapis.com/mychatbot-widget-assets/v1/widget.js"></script>

@@ -59,9 +59,17 @@ const hashCode = (code: string, salt: string) => scryptSync(code, salt, 32).toSt
 const validCode = (c: unknown) => typeof c === "string" && /^(\d{4}|\d{7})$/.test(c);
 const validNew = (c: unknown) => typeof c === "string" && /^\d{4}$/.test(c);
 const normPhone = (p: unknown) => {
-  let d = String(p || "").replace(/[^\d]/g, "");
-  if (d.startsWith("00966")) d = "0" + d.slice(5); else if (d.startsWith("966")) d = "0" + d.slice(3);
-  if (d.startsWith("5")) d = "0" + d;
+  // السعودي: 05xxxxxxxx. غير السعودي: لازم مع مفتاح الدولة (+ أو 00) وينحفظ بصيغة +<الأرقام>
+  const raw = String(p || "").trim();
+  let d = raw.replace(/[^\d]/g, "");
+  const intl = raw.startsWith("+") || d.startsWith("00");
+  if (d.startsWith("00")) d = d.slice(2);
+  if (intl || d.startsWith("966")) {
+    if (/^9665\d{8}$/.test(d)) return "0" + d.slice(3);
+    if (!intl) return null;
+    return /^[1-9]\d{7,14}$/.test(d) ? "+" + d : null;
+  }
+  if (d.startsWith("5") && d.length === 9) d = "0" + d;
   return /^05\d{8}$/.test(d) ? d : null;
 };
 const phoneKey = (p: string) => "phone/" + createHmac("sha256", secret()).update(p).digest("hex");
@@ -125,7 +133,7 @@ export default async (req: Request, context: Context) => {
 
   if (action === "register") {
     const phone = normPhone(body.phone);
-    if (!phone) return err(req, "رقم الجوال غير صحيح (مثال: 05xxxxxxxx)");
+    if (!phone) return err(req, "رقم الجوال غير صحيح. السعودي يبدأ بـ 05، وغير السعودي اكتبه مع مفتاح الدولة مثل +971");
     if (!validNew(body.code)) return err(req, "الرمز لازم يكون ٤ أرقام");
     const anonymous = !!body.anonymous;
     const name = String(body.name || "").trim().slice(0, 40);

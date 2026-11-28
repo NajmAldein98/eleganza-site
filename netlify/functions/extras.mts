@@ -43,9 +43,17 @@ function verify(token: unknown): any {
 }
 const ownerOk = (t: unknown) => { const d = verify(t); return d && d.role === "owner"; };
 const normPhone = (p: unknown) => {
-  let d = String(p || "").replace(/[^\d]/g, "");
-  if (d.startsWith("00966")) d = "0" + d.slice(5); else if (d.startsWith("966")) d = "0" + d.slice(3);
-  if (d.startsWith("5")) d = "0" + d;
+  // السعودي: 05xxxxxxxx. غير السعودي: لازم مع مفتاح الدولة (+ أو 00) وينحفظ بصيغة +<الأرقام>
+  const raw = String(p || "").trim();
+  let d = raw.replace(/[^\d]/g, "");
+  const intl = raw.startsWith("+") || d.startsWith("00");
+  if (d.startsWith("00")) d = d.slice(2);
+  if (intl || d.startsWith("966")) {
+    if (/^9665\d{8}$/.test(d)) return "0" + d.slice(3);
+    if (!intl) return null;
+    return /^[1-9]\d{7,14}$/.test(d) ? "+" + d : null;
+  }
+  if (d.startsWith("5") && d.length === 9) d = "0" + d;
   return /^05\d{8}$/.test(d) ? d : null;
 };
 const hkey = (p: string) => createHmac("sha256", SECRET).update(p).digest("hex").slice(0, 32);
@@ -86,7 +94,7 @@ async function update<T>(key: string, fn: (x: T) => string | void): Promise<T | 
   }
   return "حاول مرة ثانية";
 }
-const certView = (o: Order) => ({ item: o.item, fabric: o.fabric, tailor: o.tailor, date: o.done || o.updated, ready: o.stage >= STAGES - 1, id: o.id });
+const certView = (o: Order) => ({ item: o.item, fabric: o.fabric, date: o.done || o.updated, ready: o.stage >= STAGES - 1, id: o.id });
 async function seatsInfo() {
   const s = db();
   const cfg: any = (await s.get("config/seats", { type: "json" })) || { open: false, title: "", total: 0, deadline: "", season: "s0" };
@@ -112,7 +120,7 @@ export default async (req: Request, context: Context) => {
     const cd = verify(body.token);
     if (cd && cd.role === "cust") { const f = (await s.get("file/" + cd.file, { type: "json" })) as CFile | null; if (f) { phone = f.phone; name = f.name; } }
     if (name.length < 2) return err(req, "اكتب اسمك");
-    if (!phone) return err(req, "رقم الجوال غير صحيح (مثال: 05xxxxxxxx)");
+    if (!phone) return err(req, "رقم الجوال غير صحيح. السعودي يبدأ بـ 05، وغير السعودي اكتبه مع مفتاح الدولة مثل +971");
     const { cfg, booked } = await seatsInfo();
     if (!cfg.open) return err(req, "الحجز مقفل حالياً");
     const dupe = await s.get("bookphone/" + cfg.season + "/" + hkey(phone));
@@ -129,7 +137,7 @@ export default async (req: Request, context: Context) => {
   }
   if (action === "prefs") {
     const phone = normPhone(body.phone);
-    if (!phone) return err(req, "رقم الجوال غير صحيح (مثال: 05xxxxxxxx)");
+    if (!phone) return err(req, "رقم الجوال غير صحيح. السعودي يبدأ بـ 05، وغير السعودي اكتبه مع مفتاح الدولة مثل +971");
     const a = body.answers || {};
     const clean: Record<string, string[]> = {};
     for (const k of ["weight", "style", "colors", "occasions", "news", "fit"]) {
@@ -150,7 +158,7 @@ export default async (req: Request, context: Context) => {
       await update<Order>("order/" + id, (x) => { x.fails = (x.fails || 0) + 1; if (x.fails >= MAX_FAILS) { x.fails = 0; x.lockUntil = Date.now() + LOCK_MS; } });
       return err(req, "الرقم ما يطابق الطلب", 401);
     }
-    return json(req, { id: o.id, item: o.item, stage: o.stage, due: o.due, tailor: o.tailor, history: o.history.slice(-10), cert: o.stage >= STAGES - 1 ? o.cert : null });
+    return json(req, { id: o.id, item: o.item, stage: o.stage, due: o.due, history: o.history.slice(-10), cert: o.stage >= STAGES - 1 ? o.cert : null });
   }
   if (action === "cert") {
     const c = str(body.c, 16).toUpperCase();
@@ -162,7 +170,7 @@ export default async (req: Request, context: Context) => {
   if (action === "gift") {
     const from = str(body.from, 40), to = str(body.to, 40), phone = normPhone(body.phone);
     if (from.length < 2 || to.length < 2) return err(req, "اكتب اسمك واسم المُهدى إليه");
-    if (!phone) return err(req, "رقم جوالك غير صحيح (مثال: 05xxxxxxxx)");
+    if (!phone) return err(req, "رقم الجوال غير صحيح. السعودي يبدأ بـ 05، وغير السعودي اكتبه مع مفتاح الدولة مثل +971");
     const code = rid(8);
     const g = { code, from, to, phone, occasion: str(body.occasion, 30), msg: str(body.msg, 240), count: Math.max(1, Math.min(10, parseInt(body.count) || 1)), status: "new", t: Date.now() };
     await s.setJSON("gift/" + code, g);
@@ -202,7 +210,7 @@ export default async (req: Request, context: Context) => {
     }
     const all = await listJSON<Order>("order/");
     const orders = all.filter((o) => o.phone === f.phone).sort((a, b) => b.created - a.created).map((o) => ({
-      id: o.id, item: o.item, fabric: o.fabric, tailor: o.tailor, stage: o.stage, due: o.due, created: o.created, done: o.done || null,
+      id: o.id, item: o.item, fabric: o.fabric, stage: o.stage, due: o.due, created: o.created, done: o.done || null,
       history: o.history.slice(-10), cert: o.stage >= STAGES - 1 ? o.cert : null }));
     let loyalty = null;
     try {

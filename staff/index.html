@@ -91,7 +91,7 @@ textarea{padding:10px 12px;min-height:70px}
       <input type="hidden" id="o_id">
       <div class="f">
         <label>اسم العميل<input id="o_name" required></label>
-        <label>جوال العميل<input id="o_phone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx" required></label>
+        <label>جوال العميل<input id="o_phone" inputmode="tel" dir="ltr" placeholder="05xxxxxxxx / +971…" required></label>
         <label>الطلب<input id="o_item" placeholder="مثال: ثوبان صيفي" required></label>
         <label>القماش<input id="o_fabric" placeholder="مثال: ياباني فاخر"></label>
         <label>الخيّاط<input id="o_tailor"></label>
@@ -155,7 +155,7 @@ let STAGES=["تم استلام طلبك","تجهيز القماش","مرحلة �
 async function api(a,b={}){let r;try{r=await fetch(API+a,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({...b,token:tok})})}catch(e){throw new Error("تعذّر الاتصال")}
   const j=await r.json().catch(()=>({}));if(r.status===401&&a!=="owner-login"){logout();throw new Error("انتهت الجلسة، ادخل من جديد")}if(!r.ok)throw new Error(j.error||"خطأ");return j}
 const say=(id,t,bad)=>{$(id).textContent=t||"";$(id).classList.toggle("bad",!!bad)};
-const intl=p=>"966"+String(p).replace(/^0/,"");
+const intl=p=>{p=String(p);return p.startsWith("+")?p.slice(1):"966"+p.replace(/^0/,"")};
 const waTo=(p,m)=>"https://wa.me/"+intl(p)+"?text="+encodeURIComponent(m);
 const fmt=t=>new Date(t).toLocaleDateString("ar-SA-u-ca-gregory",{day:"numeric",month:"short"});
 function show(on){$("vLogin").classList.toggle("hide",on);$("vApp").classList.toggle("hide",!on);$("logout").classList.toggle("hide",!on)}
